@@ -1,0 +1,73 @@
+// Дан массив целых чисел [n_1,...,n_k] и число m. 
+// Найти все пары индексов (i, j) такие, что n_i + n_j == m. 
+// Сигнатура функции: inds(a : [int], m : int) -> [Pair<int, int>]. 
+// Усложнение: сделать эту функцию сложности O(n log(n)), а не O(n^2). 
+// Использовать функции: foldi, makeTree, setTree, lookupTree.
+
+import runtime;
+import ds/array;
+import ds/tree;
+
+// foldi : (arr : [?], init : ??, fn : (int, ??, ?) -> ??) -> ??;
+
+inds(a : [int], m : int) -> [Pair<int, int>] {
+    pairs : [Pair<int, int>] = [];                  // empty array of pairs of ints
+    foldi(a, pairs, \i, pairs1, a_i ->              // foreach i, pairs1 (arr type) = pairs, a_i = a[i] 
+        foldi(a, pairs1, \j, pairs2, a_j ->         // do foreach j (<=i), pairs2 (arr type) = pairs, a_j = a[j] check
+            if (a_i + a_j == m && i >= j) {
+                arrayPush(pairs2, Pair(j, i))       // cause j <= i
+            } else {
+                pairs2;                             // first lambda return pairs2 (arr type) = pairs
+            }
+        )
+    );
+}
+
+//	makeTree : () -> Tree<?, ??>; // empty tree
+//	setTree : (tree : Tree<?, ??>, key : ?, value : ??) -> Tree<?, ??>;
+//  lookupTree : (tree : Tree<?, ??>, key : ?) -> Maybe<??>;
+
+indsTree(arr : [int], m : int) -> [Pair<int, int>] {
+    tree : Tree = foldi(a, makeTree(), \i, t, v ->                      // create empty tree and for i, t = empty tree, v = a[i]
+            setTree(t, v, arrayPush(getTreeArrayValue(t, v), i)));      // do setTree for t with key as v and with value as i (we get the node value array and then push there a value)
+
+    foldi(a, [], \i, pairs, a_i ->                                  // foreach i, pairs = [], a_i = a[i]
+        switch (lookupTree(tree, m - a_i)) {                        // do find with key the value of the tree's node; we have a_i and now we need to find a node with key (m - a_i) and get the value (index) of the node
+            Some(index):                                            // if we have found the index (here it's arr type) then
+                fold(index, pairs, \pairs2, value ->                // foreach index (in arr of values in node): pairs2 and value = index[i]
+                    if (value >= i) {                               // -> 
+                            arrayPush(pairs2, Pair(i, value));
+                    } else { 
+                        pairs2;
+                    });
+            None(): pairs;                                          // if there is none then we have already found all pairs
+        });
+}
+
+main() {
+    arr = [4, 5, 6, 4, 5, 8, 12, 0, -1, 8, 123, 4];
+    println(inds(arr, 8));
+    println(indsTree(arr, 8));
+    quit(0);
+}
+
+
+// Pair(first : ?, second : ??);
+// ?,?? == generics
+
+// Apply a collecting function which takes an index, initial value and each element. O(n)
+//  native foldi : (xs : [?], init : ??, fn : (int, ??, ?)->??) -> ?? = Native.foldi;
+
+
+// A binary tree with keys of type ? and values of type ??
+//	Tree<?, ??> ::= TreeNode<?, ??>, TreeEmpty;
+//		TreeNode : (key : ?, value : ??, left : Tree<?, ??>, right : Tree<?, ??>, depth : int);
+//		TreeEmpty : ();
+
+// Make an empty tree
+//  makeTree : () -> Tree<?, ??>;
+
+// Add a node or updates value of existing one.
+//  setTree : (tree : Tree<?, ??>, key : ?, value : ??) -> Tree<?, ??>;
+
+//  lookupTree : (tree : Tree<?, ??>, key : ?) -> Maybe<??>;

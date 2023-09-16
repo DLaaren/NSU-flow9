@@ -1,0 +1,16 @@
+//  Написать функцию, считающую сумму целых чисел в массиве: [1, 2, 3] в 6.
+// Использовать функции: fold.
+
+import runtime;
+
+main(){
+    array : [int] = [1,2,3];
+    println( fold(array,0,\x,y -> x+y) );
+    quit(0);
+}
+
+
+// Apply a collecting function.  
+// This is a left fold, i.e., it folds with the start of
+// the array first, i.e., fold([x1, x2, x3], x0, o) = ((x0 o x1) o x2) o x3.  O(n)
+// native fold : (xs : [?], init : ??, fn : (??, ?)->??) -> ?? = Native.fold;
