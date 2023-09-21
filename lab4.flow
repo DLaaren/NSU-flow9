@@ -13,9 +13,9 @@ import ds/tree;
 inds(a : [int], m : int) -> [Pair<int, int>] {
     pairs : [Pair<int, int>] = [];                  // empty array of pairs of ints
     foldi(a, pairs, \i, pairs1, a_i ->              // foreach i, pairs1 (arr type) = pairs, a_i = a[i] 
-        foldi(a, pairs1, \j, pairs2, a_j ->         // do foreach j (<=i), pairs2 (arr type) = pairs, a_j = a[j] check
-            if (a_i + a_j == m && i >= j) {
-                arrayPush(pairs2, Pair(j, i))       // cause j <= i
+        foldi(a, pairs1, \j, pairs2, a_j ->         // do foreach j (>=i), pairs2 (arr type) = pairs, a_j = a[j] check
+            if (a_i + a_j == m && i <= j) {
+                arrayPush(pairs2, Pair(i, j))       
             } else {
                 pairs2;                             // first lambda return pairs2 (arr type) = pairs
             }
@@ -28,15 +28,15 @@ inds(a : [int], m : int) -> [Pair<int, int>] {
 //  lookupTree : (tree : Tree<?, ??>, key : ?) -> Maybe<??>;
 
 indsTree(arr : [int], m : int) -> [Pair<int, int>] {
-    tree : Tree = foldi(a, makeTree(), \i, t, v ->                      // create empty tree and for i, t = empty tree, v = a[i]
+    tree : Tree = foldi(arr, makeTree(), \i, t, v ->                      // create empty tree and for i, t = empty tree, v = a[i]
             setTree(t, v, arrayPush(getTreeArrayValue(t, v), i)));      // do setTree for t with key as v and with value as i (we get the node value array and then push there a value)
 
-    foldi(a, [], \i, pairs, a_i ->                                  // foreach i, pairs = [], a_i = a[i]
+    foldi(arr, [], \i, pairs, a_i ->                                  // foreach i, pairs = [], a_i = a[i]
         switch (lookupTree(tree, m - a_i)) {                        // do find with key the value of the tree's node; we have a_i and now we need to find a node with key (m - a_i) and get the value (index) of the node
             Some(index):                                            // if we have found the index (here it's arr type) then
-                fold(index, pairs, \pairs2, value ->                // foreach index (in arr of values in node): pairs2 and value = index[i]
-                    if (value >= i) {                               // -> 
-                            arrayPush(pairs2, Pair(i, value));
+                fold(index, pairs, \pairs2, j ->                // foreach index (in arr of values in node): pairs2 and value = index[i]
+                    if (j >= i) {                               // -> 
+                            arrayPush(pairs2, Pair(i, j));
                     } else { 
                         pairs2;
                     });
@@ -45,7 +45,7 @@ indsTree(arr : [int], m : int) -> [Pair<int, int>] {
 }
 
 main() {
-    arr = [4, 5, 6, 4, 5, 8, 12, 0, -1, 8, 123, 4];
+    arr = [-4, -5, 6, 4, 5, 8, 12, 0, -1, 8, 123, 4];
     println(inds(arr, 8));
     println(indsTree(arr, 8));
     quit(0);

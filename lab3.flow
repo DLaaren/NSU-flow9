@@ -18,7 +18,7 @@ fib(n:int) -> [int] {
     }
 }
 
-fibTailRec(n : int, arr : [int]) -> [int]{
+fibTailRec(n : int, arr : [int]) -> [int] {
     if (n == 1){
         arr;
     } else {
@@ -26,19 +26,22 @@ fibTailRec(n : int, arr : [int]) -> [int]{
     }
 }
 
-fibArrRef(n : int) -> [int]{
+fibArrRef(n : int) -> [int] {
     if (n == 0) {
         [0];
     } else if (n == 1) {
         [0, 1];
     } else {
-        arr : ref [int] = ref fib(n-1);
-        refArrayPush(arr, ^arr[length(^arr)-1] + ^arr[length(^arr)-2]);
+        arr : ref [int] = ref fibArrRef(1);
+        for (2, \i -> i <= n, \i -> {
+            refArrayPush(arr, ^arr[i-1] + ^arr[i-2]);
+            i + 1;
+        })
         ^arr;
     }
 }
 
-main(){
+main() {
     println(fib(7));
     println(fibTailRec(7, [0, 1]));
     println(fibArrRef(7));

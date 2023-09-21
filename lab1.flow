@@ -6,9 +6,9 @@ import runtime;
 import ds/array;
 import string;
 
-main(){
+main() {
     numberArray : [int] = [1, 2, 3, 4, 5, 6];
-    println(strGlue(map(numberArray, \i -> i2s(i)) , ","));
+    println( strGlue( map(numberArray, i2s) , ", " ) );
     quit(0);
 }
 

@@ -1,0 +1,267 @@
+379 isSameStructType$init
+432 flow$init
+446 flow
+461 flow$init
+466 redirectAdditionalFn$init
+496 redirectAdditionalFn$1
+517 redirectAdditionalFn
+523 fold$init
+552 length$init
+585 replace$init
+620 arrayPush$init
+639 arrayPush
+680 arrayPush$init
+685 refArrayPush$init
+707 refArrayPush
+740 refArrayPush$init
+745 extractStruct$init
+768 extractStruct
+792 extractStruct$1
+854 extractStruct
+870 extractStruct$init
+904 loggingEnabled$init
+926 securityModes$init
+950 isOWASPLevel1$init
+973 isOWASPLevel1
+1013 isOWASPLevel1$init
+1018 isVerboseOutput$init
+1043 isVerboseOutput
+1054 isVerboseOutput$1
+1057 isVerboseOutput
+1086 isVerboseOutput$init
+1091 isLoggingEnabled$init
+1117 isLoggingEnabled
+1153 isLoggingEnabled$init
+1158 for$init
+1171 for
+1238 for$init
+1263 println2$init
+1299 quit$init
+1328 localStorageEnabled$init
+1355 println$init
+1372 println
+1414 println$init
+1419 fib$init
+1432 fib
+1581 fib$init
+1586 fibArrRef$init
+1605 fibArrRef
+1713 fibArrRef$1
+1734 fibArrRef
+1753 fibArrRef$2
+1823 fibArrRef
+1846 fibArrRef$init
+1851 fibTailRec$init
+1871 fibTailRec
+1986 fibTailRec$init
+1991 main$init
+2005 main
+2090 main$init
+
+0 /home/dlaaren/flow9/lib/ds/tuples.flow 7 1
+39 /home/dlaaren/flow9/lib/ds/tuples.flow 3 1
+77 /home/dlaaren/flow9/lib/ds/tuples.flow 5 1
+141 /home/dlaaren/flow9/lib/ds/tuples.flow 4 1
+191 /home/dlaaren/flow9/lib/dynamic.flow 10 2
+217 /home/dlaaren/flow9/lib/maybe.flow 9 1
+234 /home/dlaaren/flow9/lib/maybe.flow 10 1
+261 /home/dlaaren/flow9/lib/ds/list.flow 11 2
+296 /home/dlaaren/flow9/lib/ds/list.flow 9 2
+318 /home/dlaaren/flow9/lib/securitymode.flow 5 2
+346 /home/dlaaren/flow9/lib/securitymode.flow 7 2
+379 /home/dlaaren/flow9/lib/dynamic.flow 5 1
+432 /home/dlaaren/flow9/lib/dynamic.flow 80 0
+446 /home/dlaaren/flow9/lib/dynamic.flow 81 1
+455 /home/dlaaren/flow9/lib/dynamic.flow 81 6
+460 /home/dlaaren/flow9/lib/dynamic.flow 82 0
+491 /home/dlaaren/flow9/lib/net/url.flow 29 68
+505 /home/dlaaren/flow9/lib/net/url.flow 29 82
+510 /home/dlaaren/flow9/lib/net/url.flow 29 82
+523 /home/dlaaren/flow9/lib/ds/array.flow 36 1
+552 /home/dlaaren/flow9/lib/ds/array.flow 7 1
+585 /home/dlaaren/flow9/lib/ds/array.flow 43 1
+620 /home/dlaaren/flow9/lib/ds/array.flow 373 0
+639 /home/dlaaren/flow9/lib/ds/array.flow 373 26
+648 /home/dlaaren/flow9/lib/ds/array.flow 373 26
+653 /home/dlaaren/flow9/lib/ds/array.flow 373 41
+658 /home/dlaaren/flow9/lib/ds/array.flow 373 41
+664 /home/dlaaren/flow9/lib/ds/array.flow 373 56
+669 /home/dlaaren/flow9/lib/ds/array.flow 373 26
+679 /home/dlaaren/flow9/lib/ds/array.flow 374 0
+685 /home/dlaaren/flow9/lib/ds/array.flow 375 0
+707 /home/dlaaren/flow9/lib/ds/array.flow 375 31
+716 /home/dlaaren/flow9/lib/ds/array.flow 375 31
+721 /home/dlaaren/flow9/lib/ds/array.flow 375 43
+727 /home/dlaaren/flow9/lib/ds/array.flow 375 64
+732 /home/dlaaren/flow9/lib/ds/array.flow 375 43
+739 /home/dlaaren/flow9/lib/ds/array.flow 376 0
+745 /home/dlaaren/flow9/lib/flowstructs.flow 10 1
+763 /home/dlaaren/flow9/lib/flowstructs.flow 48 0
+768 /home/dlaaren/flow9/lib/flowstructs.flow 49 1
+777 /home/dlaaren/flow9/lib/flowstructs.flow 49 1
+782 /home/dlaaren/flow9/lib/flowstructs.flow 49 9
+787 /home/dlaaren/flow9/lib/flowstructs.flow 49 12
+801 /home/dlaaren/flow9/lib/flowstructs.flow 49 37
+806 /home/dlaaren/flow9/lib/flowstructs.flow 49 59
+811 /home/dlaaren/flow9/lib/flowstructs.flow 49 37
+822 /home/dlaaren/flow9/lib/flowstructs.flow 51 16
+827 /home/dlaaren/flow9/lib/flowstructs.flow 51 16
+838 /home/dlaaren/flow9/lib/flowstructs.flow 52 2
+848 /home/dlaaren/flow9/lib/flowstructs.flow 53 8
+859 /home/dlaaren/flow9/lib/flowstructs.flow 49 1
+870 /home/dlaaren/flow9/lib/flowstructs.flow 54 0
+923 /home/dlaaren/flow9/lib/securitymode.flow 37 32
+944 /home/dlaaren/flow9/lib/securitymode.flow 21 41
+950 /home/dlaaren/flow9/lib/securitymode.flow 23 0
+973 /home/dlaaren/flow9/lib/securitymode.flow 24 1
+979 /home/dlaaren/flow9/lib/securitymode.flow 24 37
+989 /home/dlaaren/flow9/lib/securitymode.flow 24 1
+1005 /home/dlaaren/flow9/lib/securitymode.flow 24 49
+1012 /home/dlaaren/flow9/lib/securitymode.flow 25 0
+1018 /home/dlaaren/flow9/lib/securitymode.flow 47 0
+1043 /home/dlaaren/flow9/lib/securitymode.flow 48 1
+1049 /home/dlaaren/flow9/lib/securitymode.flow 48 45
+1054 /home/dlaaren/flow9/lib/securitymode.flow 48 49
+1067 /home/dlaaren/flow9/lib/securitymode.flow 48 1
+1085 /home/dlaaren/flow9/lib/securitymode.flow 49 0
+1091 /home/dlaaren/flow9/lib/securitymode.flow 43 0
+1117 /home/dlaaren/flow9/lib/securitymode.flow 44 1
+1119 /home/dlaaren/flow9/lib/securitymode.flow 44 1
+1121 /home/dlaaren/flow9/lib/securitymode.flow 44 2
+1134 /home/dlaaren/flow9/lib/securitymode.flow 44 21
+1146 /home/dlaaren/flow9/lib/securitymode.flow 44 43
+1152 /home/dlaaren/flow9/lib/securitymode.flow 45 0
+1158 /home/dlaaren/flow9/lib/runtime.flow 13 1
+1166 /home/dlaaren/flow9/lib/runtime.flow 340 0
+1171 /home/dlaaren/flow9/lib/runtime.flow 341 1
+1180 /home/dlaaren/flow9/lib/runtime.flow 341 5
+1185 /home/dlaaren/flow9/lib/runtime.flow 341 5
+1196 /home/dlaaren/flow9/lib/runtime.flow 341 22
+1201 /home/dlaaren/flow9/lib/runtime.flow 341 26
+1207 /home/dlaaren/flow9/lib/runtime.flow 341 35
+1212 /home/dlaaren/flow9/lib/runtime.flow 341 46
+1217 /home/dlaaren/flow9/lib/runtime.flow 341 22
+1232 /home/dlaaren/flow9/lib/runtime.flow 341 54
+1238 /home/dlaaren/flow9/lib/runtime.flow 342 0
+1263 /home/dlaaren/flow9/lib/runtime.flow 144 1
+1299 /home/dlaaren/flow9/lib/runtime.flow 80 1
+1352 /home/dlaaren/flow9/lib/runtime.flow 396 37
+1355 /home/dlaaren/flow9/lib/runtime.flow 145 1
+1372 /home/dlaaren/flow9/lib/runtime.flow 146 2
+1381 /home/dlaaren/flow9/lib/runtime.flow 146 6
+1392 /home/dlaaren/flow9/lib/runtime.flow 147 3
+1397 /home/dlaaren/flow9/lib/runtime.flow 147 3
+1412 /home/dlaaren/flow9/lib/runtime.flow 146 2
+1413 /home/dlaaren/flow9/lib/runtime.flow 147 0
+1419 /home/dlaaren/Desktop/flow9-labs/lab3.flow 10 0
+1432 /home/dlaaren/Desktop/flow9-labs/lab3.flow 11 4
+1441 /home/dlaaren/Desktop/flow9-labs/lab3.flow 11 8
+1446 /home/dlaaren/Desktop/flow9-labs/lab3.flow 11 13
+1457 /home/dlaaren/Desktop/flow9-labs/lab3.flow 12 9
+1472 /home/dlaaren/Desktop/flow9-labs/lab3.flow 13 15
+1477 /home/dlaaren/Desktop/flow9-labs/lab3.flow 13 20
+1488 /home/dlaaren/Desktop/flow9-labs/lab3.flow 14 9
+1493 /home/dlaaren/Desktop/flow9-labs/lab3.flow 14 12
+1508 /home/dlaaren/Desktop/flow9-labs/lab3.flow 16 26
+1513 /home/dlaaren/Desktop/flow9-labs/lab3.flow 16 32
+1519 /home/dlaaren/Desktop/flow9-labs/lab3.flow 16 26
+1530 /home/dlaaren/Desktop/flow9-labs/lab3.flow 17 8
+1535 /home/dlaaren/Desktop/flow9-labs/lab3.flow 17 27
+1540 /home/dlaaren/Desktop/flow9-labs/lab3.flow 17 35
+1545 /home/dlaaren/Desktop/flow9-labs/lab3.flow 17 37
+1552 /home/dlaaren/Desktop/flow9-labs/lab3.flow 17 42
+1557 /home/dlaaren/Desktop/flow9-labs/lab3.flow 17 50
+1562 /home/dlaaren/Desktop/flow9-labs/lab3.flow 17 52
+1570 /home/dlaaren/Desktop/flow9-labs/lab3.flow 17 8
+1580 /home/dlaaren/Desktop/flow9-labs/lab3.flow 18 0
+1586 /home/dlaaren/Desktop/flow9-labs/lab3.flow 29 0
+1605 /home/dlaaren/Desktop/flow9-labs/lab3.flow 30 4
+1614 /home/dlaaren/Desktop/flow9-labs/lab3.flow 30 8
+1619 /home/dlaaren/Desktop/flow9-labs/lab3.flow 30 13
+1630 /home/dlaaren/Desktop/flow9-labs/lab3.flow 31 9
+1645 /home/dlaaren/Desktop/flow9-labs/lab3.flow 32 15
+1650 /home/dlaaren/Desktop/flow9-labs/lab3.flow 32 20
+1661 /home/dlaaren/Desktop/flow9-labs/lab3.flow 33 9
+1666 /home/dlaaren/Desktop/flow9-labs/lab3.flow 33 12
+1681 /home/dlaaren/Desktop/flow9-labs/lab3.flow 35 30
+1686 /home/dlaaren/Desktop/flow9-labs/lab3.flow 35 30
+1698 /home/dlaaren/Desktop/flow9-labs/lab3.flow 36 8
+1703 /home/dlaaren/Desktop/flow9-labs/lab3.flow 36 16
+1722 /home/dlaaren/Desktop/flow9-labs/lab3.flow 36 22
+1727 /home/dlaaren/Desktop/flow9-labs/lab3.flow 36 27
+1743 /home/dlaaren/Desktop/flow9-labs/lab3.flow 36 30
+1762 /home/dlaaren/Desktop/flow9-labs/lab3.flow 37 12
+1767 /home/dlaaren/Desktop/flow9-labs/lab3.flow 37 31
+1773 /home/dlaaren/Desktop/flow9-labs/lab3.flow 37 35
+1778 /home/dlaaren/Desktop/flow9-labs/lab3.flow 37 37
+1785 /home/dlaaren/Desktop/flow9-labs/lab3.flow 37 43
+1791 /home/dlaaren/Desktop/flow9-labs/lab3.flow 37 47
+1796 /home/dlaaren/Desktop/flow9-labs/lab3.flow 37 49
+1804 /home/dlaaren/Desktop/flow9-labs/lab3.flow 37 12
+1811 /home/dlaaren/Desktop/flow9-labs/lab3.flow 38 12
+1816 /home/dlaaren/Desktop/flow9-labs/lab3.flow 38 16
+1832 /home/dlaaren/Desktop/flow9-labs/lab3.flow 36 8
+1839 /home/dlaaren/Desktop/flow9-labs/lab3.flow 40 9
+1845 /home/dlaaren/Desktop/flow9-labs/lab3.flow 41 0
+1851 /home/dlaaren/Desktop/flow9-labs/lab3.flow 21 0
+1871 /home/dlaaren/Desktop/flow9-labs/lab3.flow 22 4
+1880 /home/dlaaren/Desktop/flow9-labs/lab3.flow 22 8
+1885 /home/dlaaren/Desktop/flow9-labs/lab3.flow 22 13
+1896 /home/dlaaren/Desktop/flow9-labs/lab3.flow 23 8
+1906 /home/dlaaren/Desktop/flow9-labs/lab3.flow 25 8
+1911 /home/dlaaren/Desktop/flow9-labs/lab3.flow 25 21
+1917 /home/dlaaren/Desktop/flow9-labs/lab3.flow 25 24
+1922 /home/dlaaren/Desktop/flow9-labs/lab3.flow 25 39
+1927 /home/dlaaren/Desktop/flow9-labs/lab3.flow 25 43
+1932 /home/dlaaren/Desktop/flow9-labs/lab3.flow 25 43
+1938 /home/dlaaren/Desktop/flow9-labs/lab3.flow 25 55
+1945 /home/dlaaren/Desktop/flow9-labs/lab3.flow 25 60
+1950 /home/dlaaren/Desktop/flow9-labs/lab3.flow 25 64
+1955 /home/dlaaren/Desktop/flow9-labs/lab3.flow 25 64
+1961 /home/dlaaren/Desktop/flow9-labs/lab3.flow 25 76
+1969 /home/dlaaren/Desktop/flow9-labs/lab3.flow 25 24
+1975 /home/dlaaren/Desktop/flow9-labs/lab3.flow 25 8
+1985 /home/dlaaren/Desktop/flow9-labs/lab3.flow 26 0
+1991 /home/dlaaren/Desktop/flow9-labs/lab3.flow 44 0
+2005 /home/dlaaren/Desktop/flow9-labs/lab3.flow 44 7
+2010 /home/dlaaren/Desktop/flow9-labs/lab3.flow 45 12
+2016 /home/dlaaren/Desktop/flow9-labs/lab3.flow 45 4
+2023 /home/dlaaren/Desktop/flow9-labs/lab3.flow 46 4
+2028 /home/dlaaren/Desktop/flow9-labs/lab3.flow 46 27
+2033 /home/dlaaren/Desktop/flow9-labs/lab3.flow 46 30
+2043 /home/dlaaren/Desktop/flow9-labs/lab3.flow 46 12
+2049 /home/dlaaren/Desktop/flow9-labs/lab3.flow 46 4
+2056 /home/dlaaren/Desktop/flow9-labs/lab3.flow 47 4
+2061 /home/dlaaren/Desktop/flow9-labs/lab3.flow 47 12
+2067 /home/dlaaren/Desktop/flow9-labs/lab3.flow 47 4
+2074 /home/dlaaren/Desktop/flow9-labs/lab3.flow 48 4
+2079 /home/dlaaren/Desktop/flow9-labs/lab3.flow 48 4
+2089 /home/dlaaren/Desktop/flow9-labs/lab3.flow 49 0
+2114 --end-- 0 -1
+
+L 446 1 0 i
+L 496 1 0 url
+L 496 1 1 fn
+L 639 1 0 array
+L 639 1 1 value
+L 707 1 0 refArray
+L 707 1 1 elem
+L 745 1 0 a
+L 745 1 1 e
+L 792 0 2 t
+L 792 1 0 acc
+L 792 1 1 el
+L 1158 1 0 init
+L 1158 1 1 predicate
+L 1158 1 2 f
+L 1372 1 0 str
+L 1432 0 1 fibNums
+L 1432 1 0 n
+L 1605 0 1 arr
+L 1605 1 0 n
+L 1713 1 0 i
+L 1713 2 0 n
+L 1753 1 0 i
+L 1753 2 0 arr
+L 1871 1 0 n
+L 1871 1 1 arr
