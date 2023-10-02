@@ -10,16 +10,11 @@ import math/math;
 
 //custom flow structures
 
-Expression ::= Add, Subtract, Multiply, Divide, Negative, Power, Variable, Number;
+Expression ::= Multiply, Add, Const;
 
-Add(l : Expression, r : Expression);
-Subtract(l : Expression, r : Expression);
 Multiply(l : Expression, r : Expression);
-Divide(l : Expression, r : Expression);
-Negative(expr : Expression);
-Power (l : Expression, r : Number);
-Variable (var : string);
-Number (num : double);
+Add(l : Expression, r : Expression);
+Const (const : int);
 
 lingoGrammar() {
     compilePegGrammar("#include lab5.lingo");
@@ -28,28 +23,18 @@ lingoGrammar() {
 // 2.
 ExprToString(expr: Expression) -> string {
     switch(expr) {
-        Add(l, r) : "(" + ExprToString(l) + "+" + ExprToString(r) + ")";
-        Subtract(l, r) : "(" + ExprToString(l) + "-" + ExprToString(r) + ")";
         Multiply(l, r) : "(" + ExprToString(l) + "*" + ExprToString(r) + ")";
-        Divide(l, r) : "(" + ExprToString(l) + "/" + ExprToString(r) + ")";
-        Negative(e) : "(-" + ExprToString(e) + ")";
-        Power(l, r) : "(" + ExprToString(l) + "^" + ExprToString(r) + ")";
-        Variable(var) : var;
-        Number(num) : d2s(num);
+        Add(l, r) : "(" + ExprToString(l) + "+" + ExprToString(r) + ")";
+        Const(const) : i2s(const);
     }
 }
 
-inputVariablesIntoTree() -> Tree<string, double> {
-    variables = strSplit(getUrlParameter("vars"), ",");
-    fold(variables, makeTree(),\ tree, variable -> {setTree(tree, variable, s2d(getUrlParameter(variable)))});
-}
-
 // 3.
-calculate(expr: Expression, VarsTree: Tree<string, double>) -> Maybe<double> {
-    //define lamda "getValue"
+calculate(expr: Expression) -> Maybe<int> {
+    //define lamda "getValue
     getValue = \l, r, operator -> {
-        switch(calculate(l, VarsTree)) {
-            Some(left) : switch(calculate(r, VarsTree)) {
+        switch(calculate(l)) {
+            Some(left) : switch(calculate(r)) {
                 Some(right) : operator(left, right);
                 None() : None();
             };
@@ -57,26 +42,10 @@ calculate(expr: Expression, VarsTree: Tree<string, double>) -> Maybe<double> {
         }
     }
 
-    //also define operation "div"
-    div = \left, right -> 
-        if (right == 0.0) {
-            None();
-        } else {
-            Some(left / right);
-        }
-
     switch(expr) {
-        Add(l ,r) : getValue(l, r, \left, right -> Some(left + right));
-        Subtract(l, r) : getValue(l, r, \left, right -> Some(left - right));
         Multiply(l, r) : getValue(l, r, \left, right -> Some(left * right));
-        Divide(l, r) : getValue(l, r, div);
-        Negative(e) : switch(calculate(e, VarsTree)) {
-            Some(value) : Some(-value);
-            None() : None();
-        };
-        Power(l, r) : getValue(l, r, \left, right -> dpow2(left,right));
-        Variable(var) : lookupTree(VarsTree, var);
-        Number(num) : Some(num); 
+        Add(l ,r) : getValue(l, r, \left, right -> Some(left + right));
+        Const(const) : Some(const); 
     }
 }
 
@@ -85,22 +54,18 @@ main() {
     // get an expression
     expr = getUrlParameter("expr");
 
-    // get tree with constants
-    VarsTree : Tree<string, double> = inputVariablesIntoTree();
-
-    usage : string = "Usage: lab5.flow -- \"expr=<expression>\" \"vars=<variables>\" \"<variable1>=<value1>\" ...";
+    usage : string = "Usage: lab5.flow -- \"expr=<expression>\"";
 	
     if (expr == "") {
 		println("Expressinon expected");
 		println(usage);
 		quit(-1);
 	} else {
-		//e : Expression = parse(expr);
         e = parsic(lingoGrammar(), expr, defaultPegActions);
-		println(e);
+        println(e);
 
-        switch(calculate(e, VarsTree)) {
-            Some(result) : println(ExprToString(e) + " = " + d2s(result));
+        switch(calculate(e)) {
+            Some(result) : println(ExprToString(e) + " = " + i2s(result));
             None() : println("Error while calculating");
         }
 		quit(0);

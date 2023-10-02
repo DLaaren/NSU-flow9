@@ -1,8 +1,0 @@
-// Write a symbolic simplification function, which finds the smallest form
-// of a given algebraic expression, ruled by a set of identities.
-// "(a + b) * b"
-// "(x + 1) * (x - 1)"
-// "x + (y - y)"
-// "x*x*x+(x*x)*y"
-
-// 1. Реализуйте функцию упрощения рациональной функции по заданному набору тождеств.
