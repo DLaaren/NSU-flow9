@@ -1,0 +1,43 @@
+// 1. Реализуйте калькулятор для обратной польской записи (RPN) арифметических выражений. 
+// 2. Напишите функции перевода арифметический выражений в RPN и наоборот.
+
+import lingo/pegcode/driver;
+import string;
+import math/math;
+
+import postfix;
+
+lingoRPNGrammar() {
+    compilePegGrammar("#include postfix.lingo");
+}
+
+main() {
+    // get an RPNexpression
+    RPNexpr = getUrlParameter("RPNexpr");
+
+    usage : string = "Usage: postfix_calculator.flow -- \"RPNexpr=<RPNexpression>\"";
+	
+    if (RPNexpr == "") {
+		println("Expression expected");
+		println(usage);
+		quit(-1);
+	} else {
+        RPNe = parsic(lingoRPNGrammar(), RPNexpr, defaultPegActions);
+        println(RPNe);
+
+        switch(RPNcalculate(RPNe)) {
+            Some(result)    : println(RPNExprToString(RPNe) + " = " + d2s(result));
+            None()          : println("Error while calculating");
+        }
+
+        e = translateToInfix(RPNe);
+        println("translating to infix notation");
+        println(e);
+        println(ExprToString(e));
+        println("and back");
+        println(translateToPostfix(e));
+        println(RPNExprToString(translateToPostfix(e)));
+
+		quit(0);
+	}
+}

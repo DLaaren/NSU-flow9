@@ -1,7 +1,7 @@
 // lingo is a technology to make it easy to construct Domain Dpecific Languages or parsers.
 // It is a language for specifying grammas that can be used for parsing
 
-exp = num | sub | mult | add | div | var | pow | neg;
+exp = const | sub | mult | add | div | var | pow | neg;
 
 // we add bindings using ":" and actions in {} to construct the result
 
@@ -13,7 +13,7 @@ pow     = ws "(" ws exp:l ws "^" ws exp:r ws ")" ws      { Power(:l, :r) };
 neg     = ws "(" ws "-" ws exp:e ws ")" ws               { Negative(:e) };
 
 var     = (letter (letter | digit)*) $v             { Variable($v) };
-num     = ("-"? ((digit* "." digit+) | digit+)) $d  { Number(s2d($d)) };
+const     = ("-"? ((digit* "." digit+) | digit+)) $d  { Const(s2d($d)) };
 
 // character range
 letter = 'a'-'z' | 'A'-'Z' | '_';

@@ -1,0 +1,40 @@
+import lingo/pegcode/driver;
+import string;
+import math/math;
+
+import infix;
+
+lingoGrammar() {
+    compilePegGrammar("#include infix.lingo");
+}
+
+inputVariablesIntoTree() -> Tree<string, double> {
+    variables = strSplit(getUrlParameter("vars"), ",");
+    fold(variables, makeTree(),\ tree, variable -> {setTree(tree, variable, s2d(getUrlParameter(variable)))});
+}
+
+main() {
+    // get an expression
+    expr = getUrlParameter("expr");
+
+    // get tree with constants
+    VarsTree : Tree<string, double> = inputVariablesIntoTree();
+
+    usage : string = "Usage: infix_calculator.flow -- \"expr=<expression>\" \"vars=<variables>\" \"<variable1>=<value1>\" ...";
+	
+    if (expr == "") {
+		println("Expressinon expected");
+		println(usage);
+		quit(-1);
+	} else {
+		//e : Expression = parse(expr);
+        e = parsic(lingoGrammar(), expr, defaultPegActions);
+		println(e);
+
+        switch(calculate(e, VarsTree)) {
+            Some(result) : println(ExprToString(e) + " = " + d2s(result));
+            None() : println("Error while calculating");
+        }
+		quit(0);
+	}
+}

@@ -4,19 +4,21 @@ import math/math;
 
 //custom flow structures
 
-Expression ::= Add, Subtract, Multiply, Divide, Negative, Power, Variable, Const;
+export {
 
-Add(l : Expression, r : Expression);
-Subtract(l : Expression, r : Expression);
-Multiply(l : Expression, r : Expression);
-Divide(l : Expression, r : Expression);
-Negative(expr : Expression);
-Power (l : Expression, r : Const);
-Variable (var : string);
-Const (const : double);
+    Expression ::= Add, Subtract, Multiply, Divide, Negative, Power, Variable, Const;
 
-lingoGrammar() {
-    compilePegGrammar("#include lab7.lingo");
+    Add(l : Expression, r : Expression);
+    Subtract(l : Expression, r : Expression);
+    Multiply(l : Expression, r : Expression);
+    Divide(l : Expression, r : Expression);
+    Negative(expr : Expression);
+    Power (l : Expression, r : Const);
+    Variable (var : string);
+    Const (const : double);
+
+    ExprToString(expr: Expression) -> string;
+    calculate(expr: Expression, VarsTree: Tree<string, double>) -> Maybe<double>;
 }
 
 // 2.
@@ -31,11 +33,6 @@ ExprToString(expr: Expression) -> string {
         Variable(var) : var;
         Const(const) : d2s(const);
     }
-}
-
-inputVariablesIntoTree() -> Tree<string, double> {
-    variables = strSplit(getUrlParameter("vars"), ",");
-    fold(variables, makeTree(),\ tree, variable -> {setTree(tree, variable, s2d(getUrlParameter(variable)))});
 }
 
 // 3.
@@ -72,31 +69,4 @@ calculate(expr: Expression, VarsTree: Tree<string, double>) -> Maybe<double> {
         Variable(var) : lookupTree(VarsTree, var);
         Const(const) : Some(const); 
     }
-}
-
-
-main() {
-    // get an expression
-    expr = getUrlParameter("expr");
-
-    // get tree with constants
-    VarsTree : Tree<string, double> = inputVariablesIntoTree();
-
-    usage : string = "Usage: lab5.flow -- \"expr=<expression>\" \"vars=<variables>\" \"<variable1>=<value1>\" ...";
-	
-    if (expr == "") {
-		println("Expressinon expected");
-		println(usage);
-		quit(-1);
-	} else {
-		//e : Expression = parse(expr);
-        e = parsic(lingoGrammar(), expr, defaultPegActions);
-		println(e);
-
-        switch(calculate(e, VarsTree)) {
-            Some(result) : println(ExprToString(e) + " = " + d2s(result));
-            None() : println("Error while calculating");
-        }
-		quit(0);
-	}
 }

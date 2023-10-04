@@ -5,9 +5,9 @@ exp =  mult | add | const;
 
 // we add bindings using ":" and actions in {} to construct the result
 
-add     = "(" ws exp:l ws "+" ws exp:r ws ")"       { Add(:l, :r) };
-mult    = "(" ws exp:l ws "*" ws exp:r ws ")"       { Multiply(:l, :r) };
-const     = (digit)+$d  { Const(s2i($d)) };
+add     = "(" ws exp:l ws "+" ws exp:r ws ")"   { Add(:l, :r) };
+mult    = "(" ws exp:l ws "*" ws exp:r ws ")"   { Multiply(:l, :r) };
+const   = (digit+)$d                            { Const(s2i($d)) };
 
 // digit range 
 digit = '0'-'9';

@@ -12,10 +12,12 @@ import math/math;
 
 Expression ::= Multiply, Add, Const;
 
-Multiply(l : Expression, r : Expression);
-Add(l : Expression, r : Expression);
-Const (const : int);
+Multiply    (l : Expression, r : Expression);
+Add         (l : Expression, r : Expression);
+Const       (const : int);
 
+
+// 1.
 lingoGrammar() {
     compilePegGrammar("#include lab5.lingo");
 }
@@ -23,9 +25,9 @@ lingoGrammar() {
 // 2.
 ExprToString(expr: Expression) -> string {
     switch(expr) {
-        Multiply(l, r) : "(" + ExprToString(l) + "*" + ExprToString(r) + ")";
-        Add(l, r) : "(" + ExprToString(l) + "+" + ExprToString(r) + ")";
-        Const(const) : i2s(const);
+        Multiply(l, r)  : "(" + ExprToString(l) + "*" + ExprToString(r) + ")";
+        Add(l, r)       : "(" + ExprToString(l) + "+" + ExprToString(r) + ")";
+        Const(const)    : i2s(const);
     }
 }
 
@@ -34,18 +36,18 @@ calculate(expr: Expression) -> Maybe<int> {
     //define lamda "getValue
     getValue = \l, r, operator -> {
         switch(calculate(l)) {
-            Some(left) : switch(calculate(r)) {
+            Some(left)  : switch(calculate(r)) {
                 Some(right) : operator(left, right);
-                None() : None();
+                None()      : None();
             };
-            None() : None();
+            None()      : None();
         }
     }
 
     switch(expr) {
-        Multiply(l, r) : getValue(l, r, \left, right -> Some(left * right));
-        Add(l ,r) : getValue(l, r, \left, right -> Some(left + right));
-        Const(const) : Some(const); 
+        Multiply(l, r)  : getValue(l, r, \left, right -> Some(left * right));
+        Add(l ,r)       : getValue(l, r, \left, right -> Some(left + right));
+        Const(const)    : Some(const); 
     }
 }
 
@@ -65,8 +67,8 @@ main() {
         println(e);
 
         switch(calculate(e)) {
-            Some(result) : println(ExprToString(e) + " = " + i2s(result));
-            None() : println("Error while calculating");
+            Some(result)    : println(ExprToString(e) + " = " + i2s(result));
+            None()          : println("Error while calculating");
         }
 		quit(0);
 	}

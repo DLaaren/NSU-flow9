@@ -1,0 +1,10 @@
+exp = mult | add | const;
+
+mult    = ws "(" ws exp:l ws exp:r ws '*' ws ")" ws    { Mult(:l, :r) };
+add     = ws "(" ws exp:l ws exp:r ws '+' ws ")" ws    { Add("l, :r) };
+const   = (digit+)$d                                   { Const(s2i($d)) };
+
+// digit range 
+digit = '0'-'9';
+// zero, one or more spaces are allowed              
+ws = ' '*;

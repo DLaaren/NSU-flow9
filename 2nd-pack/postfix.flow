@@ -1,0 +1,72 @@
+// 1. Реализуйте калькулятор для обратной польской записи (RPN) арифметических выражений. 
+// 2. Напишите функции перевода арифметический выражений в RPN и наоборот.
+
+import lingo/pegcode/driver;
+import string;
+import math/math;
+
+import infix;
+
+export {
+
+    RPNExpression ::= RPNMultiply, RPNAdd, Const;
+
+    RPNExprToString(RPNexpr: RPNExpression) -> string;
+    RPNcalculate(RPNexpr: RPNExpression) -> Maybe<double>;
+
+    translateToInfix(RPNExpr : RPNExpression) -> Expression;
+    translateToPostfix(Expr : Expression) -> RPNExpression;
+}
+
+RPNMultiply    (l : RPNExpression, r : RPNExpression);
+RPNAdd         (l : RPNExpression, r : RPNExpression);
+
+
+RPNExprToString(RPNexpr: RPNExpression) -> string {
+    switch(RPNexpr) {
+        RPNMultiply(l, r)  : "(" + RPNExprToString(l) + RPNExprToString(r) + "*" + ")";
+        RPNAdd(l, r)       : "(" + RPNExprToString(l) + RPNExprToString(r) + "+" + ")";
+        Const(const)       : d2s(const) + " ";
+    }
+}
+
+// 1.
+RPNcalculate(RPNexpr: RPNExpression) -> Maybe<double> {
+    //define lamda "getValue"
+    getValue = \l, r, operator -> {
+        switch(RPNcalculate(l)) {
+            Some(left) : switch(RPNcalculate(r)) {
+                Some(right) : operator(left, right);
+                None()      : None();
+            };
+            None() : None();
+        }
+    }
+
+    switch(RPNexpr) {
+        RPNAdd(l, r)        : getValue(l, r, \left, right -> Some(left + right));
+        RPNMultiply(l, r)   : getValue(l, r, \left, right -> Some(left * right));
+        Const(const)        : Some(const); 
+    }
+}
+
+// 2.
+translateToInfix(RPNExpr : RPNExpression) -> Expression {
+
+    switch(RPNExpr) {
+        RPNMultiply(l, r)  : Multiply( translateToInfix(l), translateToInfix(r) );
+        RPNAdd(l, r)       : Add( translateToInfix(l), translateToInfix(r) );
+        Const(const)       : Const(const);
+    }
+}
+
+// 2.
+translateToPostfix(Expr : Expression) -> RPNExpression {
+    
+    switch(Expr) {
+        Multiply(l, r)  : RPNMultiply( translateToPostfix(l), translateToPostfix(r) );
+        Add(l, r)       : RPNAdd( translateToPostfix(l), translateToPostfix(r) );
+        Const(const)    : Const(const);
+        default         : Const(0.0);
+    }
+}

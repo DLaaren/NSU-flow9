@@ -1,0 +1,10 @@
+RPNexp = mult | add | const;
+
+mult    = ws "(" ws RPNexp:l ws RPNexp:r ws '*' ws ")" ws    { RPNMultiply(:l, :r) };
+add     = ws "(" ws RPNexp:l ws RPNexp:r ws '+' ws ")" ws    { RPNAdd(:l, :r) };
+const   = (digit+)$d                                         { Const(s2d($d)) };
+
+// digit range 
+digit = '0'-'9';
+// zero, one or more spaces are allowed              
+ws = ' '*;
