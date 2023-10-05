@@ -19,7 +19,7 @@ export {
     Null();
 
     InfixToString(expr: Expression) -> string;
-    calculate(expr: Expression, VarsTree: Tree<string, double>) -> double;
+    calculate(expr: Expression, VarsTree: Tree<string, double>) -> Maybe<double>;
     // simplify(expr: Expression) -> Expression;
 }
 
@@ -39,24 +39,40 @@ InfixToString(expr: Expression) -> string {
     }
 }
 
-calculate(expr: Expression, VarsTree: Tree<string, double>) -> double {
-    switch(expr) {
-        Add(l ,r) : calculate(l, VarsTree) + calculate(r, VarsTree);
-        Sub(l, r) : calculate(l, VarsTree) - calculate(r, VarsTree);
-        Mult(l, r) : calculate(l, VarsTree) * calculate(r, VarsTree);
-        Div(l, r) : calculate(l, VarsTree) / calculate(r, VarsTree);
-        Pow(l, r) : dpow(calculate(l, VarsTree), calculate(r, VarsTree));
+calculate(expr: Expression, VarsTree: Tree<string, double>) -> Maybe<double> {
 
+    getValue = \l,r, operator -> {
+        switch(calculate(l, VarsTree)) {
+            Some(left) : switch(calculate(r, VarsTree)) {
+                Some(right) : operator(left, right);
+                None() : None();
+            };
+            None() : None();
+        }
+    }
+
+    switch(expr) {
+        Add(l ,r) : getValue(l,r, \left, right -> Some(left + right));
+        Sub(l, r) : getValue(l,r, \left, right -> Some(left - right));
+        Mult(l, r) : getValue(l,r, \left, right -> Some(left * right));
+        Div(l, r) : getValue(l,r, \left, right -> Some(left / right));
+        Pow(l, r) : getValue(l,r, \left, right -> Some(dpow(left, right)));
         //dif
-        Log(e) : log(calculate(e, VarsTree));
-        Neg(e) : -calculate(e, VarsTree);
+        Log(e) : switch(calculate(e, VarsTree)) {
+            Some(value) : Some(log(value));
+            None() : None();
+        }
+        Neg(e) : switch(calculate(e, VarsTree)) {
+            Some(value) : Some(-value);
+            None() : None();
+        }
 
         Var(var) : switch(lookupTree(VarsTree, var)) {
-            Some(num) : num;
-            None() : 0.0;
-        }
-        Const(const) : const; 
-        Null() : 0.0;
+            Some(num) : Some(num);
+            None() : None();
+         }
+        Const(const) : Some(const); 
+        Null() : Some(0.0);
     }
 }
 
