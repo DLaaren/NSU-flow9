@@ -1,23 +1,33 @@
-// lingo is a technology to make it easy to construct Domain Dpecific Languages or parsers.
-// It is a language for specifying grammas that can be used for parsing
 
-exp = const | sub | mult | add | div | var | pow | neg;
+// add has the lowest priority -- > so parse it at first
+// so expression is 1) ( expression with higher priority ) + ( another addition )
+//                  2) ( expression )
+// in 1) we check another type of expression (not add) to prevent left recursion
+// in 2) we can have not that operation but the operation with higher priority as left operand
+// so the same for other operations
 
-// we add bindings using ":" and actions in {} to construct the result
+add     = ws sub:l ws "+" ws add:r ws               { Add(:l,:r) } | sub;
+sub     = ws mult:l ws "-" ws sub:r ws              { Sub(:l,:r) } | mult;
+mult    = ws div:l ws "*" ws mult:r ws              { Mult(:l,:r) } | div;
+div     = ws pow:l ws "/" ws div:r ws               { Div(:l,:r) } | pow;
+pow     = ws log:l ws "^" ws pow:r ws               { Pow(:l,:r) } | log;  //dif;
+// dif     = ws "d/d" var:v ws "(" ws add:e ws ")" ws  { Dif(:e,:v) } | log;
+log     = ws "log" ws neg:e ws                      { Log(:e) } | neg;
+neg     = ws "-" ws add:e ws                        { Neg(:e) } | atom;
 
-add     = ws "(" ws exp:l ws "+" ws exp:r ws ")" ws      { Add(:l, :r) };
-sub     = ws "(" ws exp:l ws "-" ws exp:r ws ")" ws      { Subtract(:l, :r) };
-mult    = ws "(" ws exp:l ws "*" ws exp:r ws ")" ws      { Multiply(:l, :r) };
-div     = ws "(" ws exp:l ws "/" ws exp:r ws ")" ws      { Divide(:l, :r) };
-pow     = ws "(" ws exp:l ws "^" ws exp:r ws ")" ws      { Power(:l, :r) };
-neg     = ws "(" ws "-" ws exp:e ws ")" ws               { Negative(:e) };
-
-var     = (letter (letter | digit)*) $v             { Variable($v) };
-const     = ("-"? ((digit* "." digit+) | digit+)) $d  { Const(s2d($d)) };
+var     = (letter (letter | digit)*) $v             { Var($v) };
+const   = ("-"? ((digit+ "." digit+) | digit+)) $d  { Const(s2d($d)) };
+atom    = ws const:c ws                             { :c } | 
+          ws var:v ws                               { :v } | 
+          ws "(" ws expr:e ws ")" ws                { :e };      
+expr    = ws add:e ws                               { :e } | 
+          ws "(" ws expr:e ws ")" ws                { :e };
 
 // character range
 letter = 'a'-'z' | 'A'-'Z' | '_';
+
 // digit range 
 digit = '0'-'9';
+
 // zero, one or more spaces are allowed              
-ws = ' '*;
+ws = (' '|'\r'|'\n'|'\t')*;

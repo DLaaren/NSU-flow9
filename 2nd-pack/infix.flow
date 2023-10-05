@@ -2,71 +2,64 @@ import lingo/pegcode/driver;
 import string;
 import math/math;
 
-//custom flow structures
-
 export {
 
-    Expression ::= Add, Subtract, Multiply, Divide, Negative, Power, Variable, Const;
+    Expression ::= Var, Const, Add, Sub, Mult, Div, Pow, /*Dif,*/ Log, Neg, Null;
 
+    Var(var : string);
+    Const(const : double);
     Add(l : Expression, r : Expression);
-    Subtract(l : Expression, r : Expression);
-    Multiply(l : Expression, r : Expression);
-    Divide(l : Expression, r : Expression);
-    Negative(expr : Expression);
-    Power (l : Expression, r : Const);
-    Variable (var : string);
-    Const (const : double);
+    Sub(l : Expression, r : Expression);
+    Mult(l : Expression, r : Expression);
+    Div(l : Expression, r : Expression);
+    Pow(l : Expression, r : Expression);
+    //Dif(l : Expression, r : Expression);
+    Log(e : Expression);
+    Neg(e: Expression);
+    Null();
 
-    ExprToString(expr: Expression) -> string;
-    calculate(expr: Expression, VarsTree: Tree<string, double>) -> Maybe<double>;
+    InfixToString(expr: Expression) -> string;
+    calculate(expr: Expression, VarsTree: Tree<string, double>) -> double;
+    // simplify(expr: Expression) -> Expression;
 }
 
-// 2.
-ExprToString(expr: Expression) -> string {
+InfixToString(expr: Expression) -> string {
     switch(expr) {
-        Add(l, r) : "(" + ExprToString(l) + "+" + ExprToString(r) + ")";
-        Subtract(l, r) : "(" + ExprToString(l) + "-" + ExprToString(r) + ")";
-        Multiply(l, r) : "(" + ExprToString(l) + "*" + ExprToString(r) + ")";
-        Divide(l, r) : "(" + ExprToString(l) + "/" + ExprToString(r) + ")";
-        Negative(e) : "(-" + ExprToString(e) + ")";
-        Power(l, r) : "(" + ExprToString(l) + "^" + ExprToString(r) + ")";
-        Variable(var) : var;
+        Var(var) : var;
         Const(const) : d2s(const);
+        Add(l, r) : "(" + InfixToString(l) + "+" + InfixToString(r) + ")";
+        Sub(l, r) : "(" + InfixToString(l) + "-" + InfixToString(r) + ")";
+        Mult(l, r) : "(" + InfixToString(l) + "*" + InfixToString(r) + ")";
+        Div(l, r) : "(" + InfixToString(l) + "/" + InfixToString(r) + ")";
+        Pow(l, r) : "(" + InfixToString(l) + "^" + InfixToString(r) + ")";
+        // dif
+        Log(e) : "(" + "log" + InfixToString(e) + ")";
+        Neg(e) : "(" + "-" + InfixToString(e) + ")";
+        Null() : "Null";
     }
 }
 
-// 3.
-calculate(expr: Expression, VarsTree: Tree<string, double>) -> Maybe<double> {
-    //define lamda "getValue"
-    getValue = \l, r, operator -> {
-        switch(calculate(l, VarsTree)) {
-            Some(left) : switch(calculate(r, VarsTree)) {
-                Some(right) : operator(left, right);
-                None() : None();
-            };
-            None() : None();
-        }
-    }
-
-    //also define operation "div"
-    div = \left, right -> 
-        if (right == 0.0) {
-            None();
-        } else {
-            Some(left / right);
-        }
-
+calculate(expr: Expression, VarsTree: Tree<string, double>) -> double {
     switch(expr) {
-        Add(l ,r) : getValue(l, r, \left, right -> Some(left + right));
-        Subtract(l, r) : getValue(l, r, \left, right -> Some(left - right));
-        Multiply(l, r) : getValue(l, r, \left, right -> Some(left * right));
-        Divide(l, r) : getValue(l, r, div);
-        Negative(e) : switch(calculate(e, VarsTree)) {
-            Some(value) : Some(-value);
-            None() : None();
-        };
-        Power(l, r) : getValue(l, r, \left, right -> dpow2(left,right));
-        Variable(var) : lookupTree(VarsTree, var);
-        Const(const) : Some(const); 
+        Add(l ,r) : calculate(l, VarsTree) + calculate(r, VarsTree);
+        Sub(l, r) : calculate(l, VarsTree) - calculate(r, VarsTree);
+        Mult(l, r) : calculate(l, VarsTree) * calculate(r, VarsTree);
+        Div(l, r) : calculate(l, VarsTree) / calculate(r, VarsTree);
+        Pow(l, r) : dpow(calculate(l, VarsTree), calculate(r, VarsTree));
+
+        //dif
+        Log(e) : log(calculate(e, VarsTree));
+        Neg(e) : -calculate(e, VarsTree);
+
+        Var(var) : switch(lookupTree(VarsTree, var)) {
+            Some(num) : num;
+            None() : 0.0;
+        }
+        Const(const) : const; 
+        Null() : 0.0;
     }
 }
+
+/* simplify(expr: Expression) -> Expression {
+
+} */

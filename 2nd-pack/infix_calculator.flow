@@ -27,14 +27,10 @@ main() {
 		println(usage);
 		quit(-1);
 	} else {
-		//e : Expression = parse(expr);
         e = parsic(lingoGrammar(), expr, defaultPegActions);
 		println(e);
-
-        switch(calculate(e, VarsTree)) {
-            Some(result) : println(ExprToString(e) + " = " + d2s(result));
-            None() : println("Error while calculating");
-        }
+        println(InfixToString(e) + " = " + d2s(calculate(e, VarsTree)));
+        
 		quit(0);
-	}
+    }
 }
