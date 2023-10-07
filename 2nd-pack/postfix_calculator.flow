@@ -22,7 +22,7 @@ main() {
 		println(usage);
 		quit(-1);
 	} else {
-        RPNe = parsic(lingoRPNGrammar(), RPNexpr, defaultPegActions);
+        RPNe : [RPNExpression] = parsic(lingoRPNGrammar(), RPNexpr, defaultPegActions);
         println(RPNe);
 
         switch(RPNcalculate(RPNe)) {
@@ -30,13 +30,14 @@ main() {
             None()          : println("Error while calculating");
         }
 
-        e = translateToInfix(RPNe);
+/*        e = translateToInfix(RPNe);
         println("translating to infix notation");
         println(e);
         println(ExprToString(e));
-        println("and back");
+        println("and back"); 
         println(translateToPostfix(e));
         println(RPNExprToString(translateToPostfix(e)));
+        */ 
 
 		quit(0);
 	}

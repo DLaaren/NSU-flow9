@@ -1,72 +1,163 @@
-// 1. Реализуйте калькулятор для обратной польской записи (RPN) арифметических выражений. 
-// 2. Напишите функции перевода арифметический выражений в RPN и наоборот.
-
 import lingo/pegcode/driver;
 import string;
 import math/math;
+import maybe;
 
 import infix;
 
 export {
+    RPNExpression ::= Const, OpName;
+    OpName(name : string);
 
-    RPNExpression ::= RPNMultiply, RPNAdd, Const;
-
-    RPNExprToString(RPNexpr: RPNExpression) -> string;
-    RPNcalculate(RPNexpr: RPNExpression) -> Maybe<double>;
-
-    translateToInfix(RPNExpr : RPNExpression) -> Expression;
-    translateToPostfix(Expr : Expression) -> RPNExpression;
+    RPNExprToString(RPNexpr: [RPNExpression]) -> string;
+    RPNcalculate(RPNexpr: [RPNExpression]) -> Maybe<double>;
 }
 
-RPNMultiply    (l : RPNExpression, r : RPNExpression);
-RPNAdd         (l : RPNExpression, r : RPNExpression);
-
-
-RPNExprToString(RPNexpr: RPNExpression) -> string {
-    switch(RPNexpr) {
-        RPNMultiply(l, r)  : "(" + RPNExprToString(l) + RPNExprToString(r) + "*" + ")";
-        RPNAdd(l, r)       : "(" + RPNExprToString(l) + RPNExprToString(r) + "+" + ")";
-        Const(const)       : d2s(const) + " ";
-    }
-}
-
-// 1.
-RPNcalculate(RPNexpr: RPNExpression) -> Maybe<double> {
-    //define lamda "getValue"
-    getValue = \l, r, operator -> {
-        switch(RPNcalculate(l)) {
-            Some(left) : switch(RPNcalculate(r)) {
-                Some(right) : operator(left, right);
-                None()      : None();
-            };
-            None() : None();
+RPNExprToString(RPNexpr: [RPNExpression]) -> string {
+    fold(RPNexpr, "", \str, val -> {
+        switch(val) {
+            Const(c) : str + d2s(c) + " ";
+            OpName(name) : str + name + " ";
         }
-    }
+    });
 
-    switch(RPNexpr) {
-        RPNAdd(l, r)        : getValue(l, r, \left, right -> Some(left + right));
-        RPNMultiply(l, r)   : getValue(l, r, \left, right -> Some(left * right));
-        Const(const)        : Some(const); 
-    }
+
 }
 
-// 2.
+RPNcalculate(RPNexpr: [RPNExpression]) -> Maybe<double> {
+    // map : ([?], (?) -> ??) -> [??];
+    // fold : (xs : [?], init : ??, fn : (??, ?)->??) -> ??
+    // arrayPush : ([?], ?) -> [?];
+    // removeIndex(a : [?], index : int) -> [?];
+    // lastElement(a: [?], def: ?) -> ?;
+    // lastElement(map(stack, \elem -> Some(elem)), None());
+
+    stack : [Maybe<double>] = [];
+
+    result = fold(RPNexpr, stack, \st, e -> {
+        switch(e) {
+            Const(c) : arrayPush(st, Some(c));
+            OpName(name) : {
+                left = lastElement(st, None());
+                a = removeIndex(st, length(st) - 1);
+
+                right = lastElement(a, None());
+                b = removeIndex(a, length(a) - 1);
+
+                switch(left) {
+                    Some(l) : switch(right) {
+                        Some(r) : {
+                            if (name == "+") {
+                                arrayPush(b, Some(l + r));
+                            }
+                            else if (name == "*") {
+                                arrayPush(b, Some(l * r));
+                            } else {
+                                arrayPush(b, None());
+                            }
+                        };
+                        None() : arrayPush(b, None());
+                    }
+                    None() : arrayPush(b, None());
+                }
+            }
+        }
+    });
+    result[0];    
+}
+
+/*
 translateToInfix(RPNExpr : RPNExpression) -> Expression {
 
-    switch(RPNExpr) {
-        RPNMultiply(l, r)  : Multiply( translateToInfix(l), translateToInfix(r) );
-        RPNAdd(l, r)       : Add( translateToInfix(l), translateToInfix(r) );
-        Const(const)       : Const(const);
-    }
 }
 
-// 2.
 translateToPostfix(Expr : Expression) -> RPNExpression {
     
-    switch(Expr) {
-        Multiply(l, r)  : RPNMultiply( translateToPostfix(l), translateToPostfix(r) );
-        Add(l, r)       : RPNAdd( translateToPostfix(l), translateToPostfix(r) );
-        Const(const)    : Const(const);
-        default         : Const(0.0);
-    }
 }
+*/
+
+
+
+
+
+
+
+/* old version
+import lingo/pegcode/driver;
+import string;
+import math/math;
+import maybe;
+
+import infix;
+
+export {
+    RPNExpression ::= Const, OpName;
+    OpName(name : string);
+
+    RPNExprToString(RPNexpr: [RPNExpression]) -> string;
+    RPNcalculate(RPNexpr: [RPNExpression]) -> Maybe<double>;
+}
+
+RPNExprToString(RPNexpr: [RPNExpression]) -> string {
+    fold(RPNexpr, "", \str, val -> {
+        switch(val) {
+            Const(c) : str + d2s(c) + " ";
+            OpName(name) : str + name + " ";
+        }
+    });
+
+
+}
+
+RPNcalculate(RPNexpr: [RPNExpression]) -> Maybe<double> {
+    stack : [double] = [];
+
+    // map : ([?], (?) -> ??) -> [??];
+    // fold : (xs : [?], init : ??, fn : (??, ?)->??) -> ??
+    // arrayPush : ([?], ?) -> [?];
+    // removeIndex(a : [?], index : int) -> [?];
+    // lastElement(a: [?], def: ?) -> ?;
+    // lastElement(map(stack, \elem -> Some(elem)), None());
+
+    result = fold(RPNexpr, stack, \st, e -> {
+        switch(e) {
+            Const(c) : arrayPush(stack, c);
+            OpName(name) : {
+                left = lastElement(map(stack, \elem -> Some(elem)), None());
+                a = removeIndex(stack, length(stack) - 1);
+
+                right = lastElement(map(a, \elem -> Some(elem)), None());
+                b = removeIndex(a, length(a) - 1);
+
+                switch(left) {
+                    Some(l) : switch(right) {
+                        Some(r) : {
+                            if (name == "+") {
+                                arrayPush(b, l + r);
+                            }
+                            else if (name == "*") {
+                                arrayPush(b, l * r);
+                            } else {
+                                arrayPush(b, None());
+                            }
+                        };
+                        None() : arrayPush(b, None());
+                    }
+                    None() : arrayPush(b, None());
+                }
+            }
+        }
+    });
+    result[0];    
+}
+
+/*
+translateToInfix(RPNExpr : RPNExpression) -> Expression {
+
+}
+
+translateToPostfix(Expr : Expression) -> RPNExpression {
+    
+}
+*/
+*/

@@ -4,7 +4,7 @@ import math/math;
 
 export {
 
-    Expression ::= Var, Const, Add, Sub, Mult, Div, Pow, /*Dif,*/ Log, Neg, Null;
+    Expression ::= Var, Const, Add, Sub, Mult, Div, Pow, /*Dif,*/ Log, Neg;
 
     Var(var : string);
     Const(const : double);
@@ -16,7 +16,6 @@ export {
     //Dif(l : Expression, r : Expression);
     Log(e : Expression);
     Neg(e: Expression);
-    Null();
 
     InfixToString(expr: Expression) -> string;
     calculate(expr: Expression, VarsTree: Tree<string, double>) -> Maybe<double>;
@@ -35,7 +34,6 @@ InfixToString(expr: Expression) -> string {
         // dif
         Log(e) : "(" + "log" + InfixToString(e) + ")";
         Neg(e) : "(" + "-" + InfixToString(e) + ")";
-        Null() : "Null";
     }
 }
 
@@ -72,7 +70,6 @@ calculate(expr: Expression, VarsTree: Tree<string, double>) -> Maybe<double> {
             None() : None();
          }
         Const(const) : Some(const); 
-        Null() : Some(0.0);
     }
 }
 
