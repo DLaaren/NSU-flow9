@@ -26,19 +26,30 @@ main() {
         println(RPNe);
 
         switch(RPNcalculate(RPNe)) {
-            Some(result)    : println(RPNExprToString(RPNe) + " = " + d2s(result));
+            Some(result)    : println(PostfixToString(RPNe) + " = " + d2s(result));
             None()          : println("Error while calculating");
         }
 
-/*        e = translateToInfix(RPNe);
+        eInf = translateToInfix(RPNe);
         println("translating to infix notation");
-        println(e);
-        println(ExprToString(e));
-        println("and back"); 
-        println(translateToPostfix(e));
-        println(RPNExprToString(translateToPostfix(e)));
-        */ 
+        switch(eInf) {
+            Some(result) : {
+                println(result);
+                println(InfixToString(result));
 
+                println("and back"); 
+                ePost = translateToPostfix(result);
+                switch(ePost) {
+                    Some(res) : {
+                        println(res);
+                        println(PostfixToString(res));
+                    }
+                    None() : println("Error while translating to postfix");
+                }
+            }
+            None() : println("Error while translating to infix");
+        }
+        
 		quit(0);
 	}
 }

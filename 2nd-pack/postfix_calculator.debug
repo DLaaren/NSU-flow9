@@ -757,22 +757,38 @@
 59018 compilePegGrammar$init
 59045 compilePegGrammar
 59076 compilePegGrammar$init
-59081 RPNExprToString$init
-59106 RPNExprToString
-59127 RPNExprToString$1
-59241 RPNExprToString
-59257 RPNExprToString$init
-59262 RPNcalculate$init
-59284 RPNcalculate
-59318 RPNcalculate$1
-59767 RPNcalculate
-59795 RPNcalculate$init
-59800 lingoRPNGrammar$init
-59825 lingoRPNGrammar
-60209 lingoRPNGrammar$init
-60214 main$init
-60228 main
-60640 main$init
+59081 InfixToString$init
+59104 InfixToString
+59717 InfixToString$init
+59722 PostfixToString$init
+59747 PostfixToString
+59768 PostfixToString$1
+59882 PostfixToString
+59898 PostfixToString$init
+59903 RPNcalculate$init
+59925 RPNcalculate
+59959 RPNcalculate$1
+60408 RPNcalculate
+60469 RPNcalculate$init
+60474 translate$init
+60493 translate
+60823 translate$init
+60828 translateToInfix$init
+60854 translateToInfix
+60888 translateToInfix$1
+61350 translateToInfix
+61411 translateToInfix$init
+61416 translateToPostfix$init
+61444 translateToPostfix
+61525 translateToPostfix$1
+61560 translateToPostfix
+61577 translateToPostfix$init
+61582 lingoRPNGrammar$init
+61607 lingoRPNGrammar
+61991 lingoRPNGrammar$init
+61996 main$init
+62010 main
+62856 main$init
 
 0 /home/dlaaren/flow9/lib/ds/tuples.flow 7 1
 39 /home/dlaaren/flow9/lib/ds/tuples.flow 3 1
@@ -6497,119 +6513,326 @@
 59054 /home/dlaaren/flow9/lib/lingo/pegcode/driver.flow 16 1
 59059 /home/dlaaren/flow9/lib/lingo/pegcode/driver.flow 16 1
 59075 /home/dlaaren/flow9/lib/lingo/pegcode/driver.flow 17 0
-59081 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 16 0
-59106 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 17 4
-59115 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 17 4
-59120 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 17 18
-59122 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 17 22
-59136 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 18 15
-59167 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 19 12
-59182 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 19 23
-59187 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 19 29
-59192 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 19 29
-59199 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 19 38
-59209 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 20 12
-59224 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 20 27
-59229 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 20 33
-59235 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 20 40
-59246 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 17 4
-59256 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 21 0
-59262 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 27 0
-59284 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 28 4
-59293 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 28 30
-59303 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 37 13
-59308 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 37 27
-59313 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 37 34
-59327 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 38 15
-59358 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 39 12
-59373 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 39 23
-59378 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 39 42
-59388 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 39 23
-59399 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 40 12
-59414 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 41 23
-59419 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 41 39
-59424 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 41 23
-59435 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 42 20
-59440 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 42 36
-59445 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 42 36
-59451 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 42 49
-59457 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 42 20
-59468 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 44 24
-59473 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 44 39
-59478 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 44 24
-59489 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 45 20
-59494 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 45 35
-59499 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 45 35
-59505 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 45 47
-59511 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 45 20
-59522 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 47 23
-59553 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 61 29
-59558 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 61 42
-59563 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 61 29
-59574 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 48 20
-59589 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 48 37
-59620 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 59 33
-59625 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 59 46
-59630 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 59 33
-59641 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 49 24
-59656 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 50 32
-59661 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 50 40
-59671 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 51 32
-59676 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 51 50
-59681 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 51 54
-59692 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 51 32
-59703 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 53 37
-59708 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 53 45
-59718 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 54 32
-59723 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 54 50
-59728 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 54 54
-59739 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 54 32
-59750 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 56 32
-59755 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 56 45
-59760 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 56 32
-59772 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 37 13
-59783 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 66 4
-59788 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 66 11
-59794 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 67 0
-59800 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 10 0
-59825 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 11 4
-60198 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 11 4
-60208 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 12 0
-60214 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 14 0
-60228 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 16 4
-60237 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 16 14
-60253 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 16 14
-60264 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 18 21
-60333 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 20 8
-60338 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 20 19
-60346 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 21 2
-60386 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 21 2
-60393 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 22 2
-60398 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 22 2
-60405 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 23 2
-60410 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 23 2
-60425 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 25 33
-60431 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 25 59
-60436 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 25 68
-60441 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 25 33
-60452 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 26 8
-60457 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 26 8
-60464 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 28 15
-60469 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 28 15
-60480 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 28 15
-60511 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 30 30
-60559 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 30 30
-60570 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 29 12
-60585 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 29 30
-60590 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 29 38
-60596 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 29 62
-60605 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 29 70
-60610 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 29 70
-60617 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 29 30
-60624 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 42 2
-60629 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 42 2
-60639 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 43 0
-60664 --end-- 0 -1
+59081 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 25 0
+59104 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 26 4
+59113 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 26 11
+59200 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 29 8
+59215 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 29 8
+59230 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 29 20
+59234 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 29 26
+59239 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 29 26
+59246 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 29 45
+59251 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 29 51
+59256 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 29 51
+59263 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 29 70
+59273 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 28 8
+59288 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 28 23
+59293 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 28 23
+59308 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 32 8
+59323 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 32 8
+59338 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 32 20
+59342 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 32 26
+59347 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 32 26
+59354 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 32 45
+59359 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 32 51
+59364 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 32 51
+59371 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 32 70
+59381 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 35 8
+59396 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 35 17
+59400 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 35 23
+59409 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 35 31
+59414 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 35 31
+59421 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 35 50
+59431 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 31 8
+59446 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 31 8
+59461 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 31 21
+59465 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 31 27
+59470 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 31 27
+59477 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 31 46
+59482 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 31 52
+59487 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 31 52
+59494 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 31 71
+59504 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 36 8
+59519 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 36 17
+59523 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 36 23
+59528 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 36 29
+59533 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 36 29
+59540 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 36 48
+59550 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 33 8
+59565 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 33 8
+59580 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 33 20
+59584 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 33 26
+59589 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 33 26
+59596 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 33 45
+59601 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 33 51
+59606 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 33 51
+59613 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 33 70
+59623 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 30 8
+59638 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 30 8
+59653 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 30 20
+59657 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 30 26
+59662 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 30 26
+59669 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 30 45
+59674 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 30 51
+59679 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 30 51
+59686 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 30 70
+59696 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 27 8
+59711 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 27 19
+59716 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 37 0
+59722 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 19 0
+59747 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 20 4
+59756 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 20 4
+59761 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 20 18
+59763 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 20 22
+59777 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 21 15
+59808 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 22 12
+59823 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 22 23
+59828 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 22 29
+59833 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 22 29
+59840 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 22 38
+59850 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 23 12
+59865 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 23 27
+59870 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 23 33
+59876 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 23 40
+59887 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 20 4
+59897 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 24 0
+59903 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 30 0
+59925 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 38 4
+59934 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 38 30
+59944 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 40 13
+59949 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 40 27
+59954 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 40 34
+59968 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 41 15
+59999 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 42 12
+60014 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 42 23
+60019 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 42 42
+60029 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 42 23
+60040 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 43 12
+60055 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 44 23
+60060 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 44 39
+60065 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 44 23
+60076 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 45 20
+60081 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 45 36
+60086 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 45 36
+60092 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 45 49
+60098 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 45 20
+60109 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 47 24
+60114 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 47 39
+60119 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 47 24
+60130 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 48 20
+60135 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 48 35
+60140 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 48 35
+60146 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 48 47
+60152 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 48 20
+60163 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 50 23
+60194 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 64 29
+60199 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 64 42
+60204 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 64 29
+60215 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 51 20
+60230 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 51 37
+60261 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 62 33
+60266 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 62 46
+60271 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 62 33
+60282 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 52 24
+60297 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 53 32
+60302 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 53 40
+60312 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 54 32
+60317 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 54 50
+60322 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 54 54
+60333 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 54 32
+60344 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 56 37
+60349 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 56 45
+60359 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 57 32
+60364 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 57 50
+60369 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 57 54
+60380 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 57 32
+60391 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 59 32
+60396 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 59 45
+60401 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 59 32
+60413 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 40 13
+60424 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 70 8
+60429 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 70 8
+60435 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 70 25
+60447 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 71 8
+60457 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 74 8
+60462 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 74 15
+60468 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 75 0
+60474 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 117 0
+60493 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 118 4
+60502 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 118 11
+60540 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 130 18
+60545 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 130 35
+60550 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 130 18
+60565 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 120 8
+60580 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 120 8
+60595 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 121 16
+60600 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 121 29
+60605 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 121 16
+60616 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 122 16
+60621 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 122 29
+60626 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 122 16
+60637 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 123 12
+60642 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 123 37
+60656 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 123 12
+60671 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 119 8
+60686 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 119 19
+60691 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 119 47
+60706 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 119 19
+60721 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 125 8
+60736 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 125 8
+60751 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 126 16
+60756 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 126 29
+60761 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 126 16
+60772 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 127 16
+60777 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 127 29
+60782 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 127 16
+60793 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 128 12
+60798 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 128 37
+60812 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 128 12
+60822 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 131 0
+60828 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 78 0
+60854 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 79 4
+60863 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 79 34
+60873 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 80 13
+60878 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 80 27
+60883 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 80 34
+60897 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 81 15
+60928 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 82 12
+60943 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 82 23
+60948 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 82 48
+60963 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 82 23
+60974 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 83 12
+60989 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 84 23
+60994 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 84 39
+60999 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 84 23
+61010 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 85 20
+61015 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 85 36
+61020 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 85 36
+61026 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 85 49
+61032 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 85 20
+61043 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 87 24
+61048 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 87 39
+61053 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 87 24
+61064 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 88 20
+61069 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 88 35
+61074 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 88 35
+61080 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 88 47
+61086 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 88 20
+61097 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 90 23
+61128 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 104 29
+61133 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 104 42
+61138 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 104 29
+61149 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 91 20
+61164 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 91 37
+61195 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 102 33
+61200 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 102 46
+61205 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 102 33
+61216 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 92 24
+61231 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 93 32
+61236 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 93 40
+61246 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 94 32
+61251 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 94 54
+61256 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 94 57
+61271 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 94 32
+61282 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 96 37
+61287 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 96 45
+61297 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 97 32
+61302 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 97 55
+61307 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 97 58
+61322 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 97 32
+61333 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 99 32
+61338 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 99 45
+61343 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 99 32
+61355 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 80 13
+61366 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 109 8
+61371 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 109 8
+61377 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 109 25
+61389 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 110 8
+61399 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 113 8
+61404 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 113 15
+61410 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 114 0
+61416 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 134 0
+61444 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 135 4
+61453 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 135 39
+61463 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 136 13
+61468 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 136 29
+61473 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 136 13
+61484 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 145 8
+61489 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 145 25
+61494 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 145 8
+61505 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 146 8
+61515 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 148 13
+61520 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 148 25
+61534 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 148 31
+61539 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 148 47
+61553 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 148 31
+61565 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 148 13
+61576 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix.flow 149 0
+61582 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 10 0
+61607 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 11 4
+61980 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 11 4
+61990 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 12 0
+61996 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 14 0
+62010 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 16 4
+62019 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 16 14
+62035 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 16 14
+62046 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 18 21
+62115 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 20 8
+62120 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 20 19
+62128 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 21 2
+62168 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 21 2
+62175 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 22 2
+62180 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 22 2
+62187 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 23 2
+62192 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 23 2
+62207 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 25 33
+62213 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 25 59
+62218 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 25 68
+62223 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 25 33
+62234 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 26 8
+62239 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 26 8
+62246 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 28 15
+62251 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 28 15
+62262 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 28 15
+62293 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 30 30
+62341 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 30 30
+62352 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 29 12
+62367 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 29 30
+62372 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 29 38
+62378 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 29 62
+62387 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 29 70
+62392 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 29 70
+62399 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 29 30
+62406 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 33 15
+62411 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 33 15
+62422 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 34 8
+62482 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 34 8
+62489 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 35 15
+62520 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 50 21
+62586 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 50 21
+62597 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 36 12
+62612 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 37 16
+62617 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 37 16
+62624 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 38 16
+62629 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 38 24
+62635 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 38 16
+62642 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 40 16
+62660 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 40 16
+62667 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 41 24
+62672 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 41 24
+62683 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 42 23
+62714 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 47 29
+62784 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 47 29
+62795 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 43 20
+62810 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 44 24
+62815 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 44 24
+62822 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 45 24
+62827 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 45 32
+62833 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 45 24
+62840 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 53 2
+62845 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 53 2
+62855 /home/dlaaren/Desktop/flow9-labs/2nd-pack/postfix_calculator.flow 54 0
+62880 --end-- 0 -1
 
 L 3914 1 0 x
 L 3914 1 1 y
@@ -7613,26 +7836,59 @@ L 58912 0 3 renamed
 L 58912 0 4 code
 L 58912 1 0 gr
 L 59045 1 0 gr
-L 59106 1 0 RPNexpr
-L 59127 0 2 c
-L 59127 0 3 name
-L 59127 1 0 str
-L 59127 1 1 val
-L 59284 0 1 stack
-L 59284 0 2 result
-L 59284 1 0 RPNexpr
-L 59318 0 2 c
-L 59318 0 3 name
-L 59318 0 4 left
-L 59318 0 5 a
-L 59318 0 6 right
-L 59318 0 7 b
-L 59318 0 8 l
-L 59318 0 9 r
-L 59318 1 0 st
-L 59318 1 1 e
-L 60228 0 0 RPNexpr
-L 60228 0 1 usage
-L 60228 0 2 RPNe
-L 60228 0 3 gsymswitch0
-L 60228 0 4 result
+L 59104 0 1 l
+L 59104 0 2 r
+L 59104 0 3 const
+L 59104 0 4 e
+L 59104 0 5 var
+L 59104 1 0 expr
+L 59747 1 0 RPNexpr
+L 59768 0 2 c
+L 59768 0 3 name
+L 59768 1 0 str
+L 59768 1 1 val
+L 59925 0 1 stack
+L 59925 0 2 result
+L 59925 1 0 RPNexpr
+L 59959 0 2 c
+L 59959 0 3 name
+L 59959 0 4 left
+L 59959 0 5 a
+L 59959 0 6 right
+L 59959 0 7 b
+L 59959 0 8 l
+L 59959 0 9 r
+L 59959 1 0 st
+L 59959 1 1 e
+L 60493 0 2 l
+L 60493 0 3 r
+L 60493 0 4 a
+L 60493 0 5 b
+L 60493 0 6 c
+L 60493 1 0 expr
+L 60493 1 1 stack
+L 60854 0 1 stack
+L 60854 0 2 result
+L 60854 1 0 RPNexpr
+L 60888 0 2 c
+L 60888 0 3 name
+L 60888 0 4 left
+L 60888 0 5 a
+L 60888 0 6 right
+L 60888 0 7 b
+L 60888 0 8 l
+L 60888 0 9 r
+L 60888 1 0 st
+L 60888 1 1 e
+L 61444 0 1 RPNexpr
+L 61444 0 2 result
+L 61444 1 0 expr
+L 61525 1 0 r
+L 62010 0 0 RPNexpr
+L 62010 0 1 usage
+L 62010 0 2 RPNe
+L 62010 0 3 gsymswitch0
+L 62010 0 4 result
+L 62010 0 5 eInf
+L 62010 0 6 ePost
+L 62010 0 7 res

@@ -9,11 +9,14 @@ export {
     RPNExpression ::= Const, OpName;
     OpName(name : string);
 
-    RPNExprToString(RPNexpr: [RPNExpression]) -> string;
+    PostfixToString(RPNexpr: [RPNExpression]) -> string;
     RPNcalculate(RPNexpr: [RPNExpression]) -> Maybe<double>;
+
+    translateToInfix(RPNexpr : [RPNExpression]) -> Maybe<Expression>;
+    translateToPostfix(expr : Expression) -> Maybe<[RPNExpression]>;
 }
 
-RPNExprToString(RPNexpr: [RPNExpression]) -> string {
+PostfixToString(RPNexpr: [RPNExpression]) -> string {
     fold(RPNexpr, "", \str, val -> {
         switch(val) {
             Const(c) : str + d2s(c) + " ";
@@ -63,80 +66,35 @@ RPNcalculate(RPNexpr: [RPNExpression]) -> Maybe<double> {
             }
         }
     });
-    result[0];    
+
+    if (length(result) > 1) { 
+        None();
+    }
+    else {
+        result[0];
+    } 
 }
 
-/*
-translateToInfix(RPNExpr : RPNExpression) -> Expression {
-
-}
-
-translateToPostfix(Expr : Expression) -> RPNExpression {
-    
-}
-*/
-
-
-
-
-
-
-
-/* old version
-import lingo/pegcode/driver;
-import string;
-import math/math;
-import maybe;
-
-import infix;
-
-export {
-    RPNExpression ::= Const, OpName;
-    OpName(name : string);
-
-    RPNExprToString(RPNexpr: [RPNExpression]) -> string;
-    RPNcalculate(RPNexpr: [RPNExpression]) -> Maybe<double>;
-}
-
-RPNExprToString(RPNexpr: [RPNExpression]) -> string {
-    fold(RPNexpr, "", \str, val -> {
-        switch(val) {
-            Const(c) : str + d2s(c) + " ";
-            OpName(name) : str + name + " ";
-        }
-    });
-
-
-}
-
-RPNcalculate(RPNexpr: [RPNExpression]) -> Maybe<double> {
-    stack : [double] = [];
-
-    // map : ([?], (?) -> ??) -> [??];
-    // fold : (xs : [?], init : ??, fn : (??, ?)->??) -> ??
-    // arrayPush : ([?], ?) -> [?];
-    // removeIndex(a : [?], index : int) -> [?];
-    // lastElement(a: [?], def: ?) -> ?;
-    // lastElement(map(stack, \elem -> Some(elem)), None());
-
+translateToInfix(RPNexpr : [RPNExpression]) -> Maybe<Expression> {
+    stack : [Maybe<Expression>] = [];
     result = fold(RPNexpr, stack, \st, e -> {
         switch(e) {
-            Const(c) : arrayPush(stack, c);
+            Const(c) : arrayPush(st, Some(Const(c)));
             OpName(name) : {
-                left = lastElement(map(stack, \elem -> Some(elem)), None());
-                a = removeIndex(stack, length(stack) - 1);
+                left = lastElement(st, None());
+                a = removeIndex(st, length(st) - 1);
 
-                right = lastElement(map(a, \elem -> Some(elem)), None());
+                right = lastElement(a, None());
                 b = removeIndex(a, length(a) - 1);
 
                 switch(left) {
                     Some(l) : switch(right) {
                         Some(r) : {
                             if (name == "+") {
-                                arrayPush(b, l + r);
+                                arrayPush(b, Some(Add(l, r)));
                             }
                             else if (name == "*") {
-                                arrayPush(b, l * r);
+                                arrayPush(b, Some(Mult(l, r)));
                             } else {
                                 arrayPush(b, None());
                             }
@@ -148,16 +106,45 @@ RPNcalculate(RPNexpr: [RPNExpression]) -> Maybe<double> {
             }
         }
     });
-    result[0];    
+    if (length(result) > 1) { 
+        None();
+    }
+    else {
+        result[0];
+    } 
 }
 
-/*
-translateToInfix(RPNExpr : RPNExpression) -> Expression {
-
+translate(expr : Expression, stack : [Maybe<RPNExpression>]) -> [Maybe<RPNExpression>] {
+    switch(expr) {
+        Const(c) : arrayPush(stack, Some(Const(c)));
+        Add(l,r) : {
+            a = translate(l, stack);
+            b = translate(r, a);
+            arrayPush(b, Some(OpName("+")));
+        }
+        Mult(l,r) : {
+            a = translate(l, stack);
+            b = translate(r, a);
+            arrayPush(b, Some(OpName("*")));
+        }
+        default : arrayPush(stack, None());
+    } 
 }
 
-translateToPostfix(Expr : Expression) -> RPNExpression {
-    
+translateToPostfix(expr : Expression) -> Maybe<[RPNExpression]> {
+    RPNexpr : [Maybe<RPNExpression>] = [];
+    result = translate(expr, RPNexpr);
+
+    // Determine if all elements of the array satisfy the predicate. O(n)
+	// forall : (a : [?], fn : (?) -> bool) -> bool;
+    // map : ([?], (?) -> ??) -> [??];
+    // Does this array contain the given element?  O(n)
+	//contains : (a : [?], v : ?) -> bool;
+    // either    : (m : Maybe<?>, alternative: ?) -> ?;
+
+    if (contains(result, None())) {
+        None();
+    } else {
+        Some(map(result, \r -> either(r, Const(0.0)))); // кринж
+    }
 }
-*/
-*/
