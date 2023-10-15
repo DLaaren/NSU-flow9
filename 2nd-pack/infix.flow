@@ -4,17 +4,11 @@ import math/math;
 
 export {
 
-    Expression ::= Var, Const, Add, Sub, Mult, Div, Pow, /*Dif,*/ Log, Neg;
+    Expression ::= Var, Const, BinOp, Neg;
 
     Var(var : string);
     Const(const : double);
-    Add(l : Expression, r : Expression);
-    Sub(l : Expression, r : Expression);
-    Mult(l : Expression, r : Expression);
-    Div(l : Expression, r : Expression);
-    Pow(l : Expression, r : Expression);
-    //Dif(l : Expression, r : Expression);
-    Log(e : Expression);
+    BinOp(OpName : string, l : Expression, r : Expression);
     Neg(e: Expression);
 
     InfixToString(expr: Expression) -> string;
@@ -26,13 +20,7 @@ InfixToString(expr: Expression) -> string {
     switch(expr) {
         Var(var) : var;
         Const(const) : d2s(const);
-        Add(l, r) : "(" + InfixToString(l) + "+" + InfixToString(r) + ")";
-        Sub(l, r) : "(" + InfixToString(l) + "-" + InfixToString(r) + ")";
-        Mult(l, r) : "(" + InfixToString(l) + "*" + InfixToString(r) + ")";
-        Div(l, r) : "(" + InfixToString(l) + "/" + InfixToString(r) + ")";
-        Pow(l, r) : "(" + InfixToString(l) + "^" + InfixToString(r) + ")";
-        // dif
-        Log(e) : "(" + "log" + InfixToString(e) + ")";
+        BinOp(OpName, l, r) : "(" + InfixToString(l) + OpName + InfixToString(r) +")"
         Neg(e) : "(" + "-" + InfixToString(e) + ")";
     }
 }
@@ -50,21 +38,26 @@ calculate(expr: Expression, VarsTree: Tree<string, double>) -> Maybe<double> {
     }
 
     switch(expr) {
-        Add(l ,r) : getValue(l,r, \left, right -> Some(left + right));
-        Sub(l, r) : getValue(l,r, \left, right -> Some(left - right));
-        Mult(l, r) : getValue(l,r, \left, right -> Some(left * right));
-        Div(l, r) : getValue(l,r, \left, right -> Some(left / right));
-        Pow(l, r) : getValue(l,r, \left, right -> Some(dpow(left, right)));
-        //dif
-        Log(e) : switch(calculate(e, VarsTree)) {
-            Some(value) : Some(log(value));
-            None() : None();
+        BinOp(OpName, l, r) : {
+            if (OpName == "+") {
+                getValue(l,r, \left, right -> Some(left + right));
+            }
+            else if (OpName == "-") {
+                getValue(l,r, \left, right -> Some(left - right));
+            }
+            else if (OpName == "*") {
+                getValue(l,r, \left, right -> Some(left * right));
+            }
+            else if (OpName == "/") {
+                getValue(l,r, \left, right -> Some(left / right));
+            } else {
+                None();
+            }
         }
         Neg(e) : switch(calculate(e, VarsTree)) {
             Some(value) : Some(-value);
             None() : None();
         }
-
         Var(var) : switch(lookupTree(VarsTree, var)) {
             Some(num) : Some(num);
             None() : None();

@@ -6,13 +6,10 @@
 // in 2) we can have not that operation but the operation with higher priority as left operand
 // so the same for other operations
 
-add     = ws sub:l ws "+" ws add:r ws               { Add(:l,:r) } | sub;
-sub     = ws mult:l ws "-" ws sub:r ws              { Sub(:l,:r) } | mult;
-mult    = ws div:l ws "*" ws mult:r ws              { Mult(:l,:r) } | div;
-div     = ws pow:l ws "/" ws div:r ws               { Div(:l,:r) } | pow;
-pow     = ws log:l ws "^" ws pow:r ws               { Pow(:l,:r) } | log;  //dif;
-// dif     = ws "d/d" var:v ws "(" ws add:e ws ")" ws  { Dif(:e,:v) } | log;
-log     = ws "log" ws neg:e ws                      { Log(:e) } | neg;
+add     = ws sub:l ws "+" ws add:r ws               { BinOp("+",:l,:r) } | sub;
+sub     = ws mult:l ws "-" ws sub:r ws              { BinOp("-",:l,:r) } | mult;
+mult    = ws div:l ws "*" ws mult:r ws              { BinOp("*",:l,:r) } | div;
+div     = ws neg:l ws "/" ws div:r ws               { BinOp("/",:l,:r) } | neg;
 neg     = ws "-" ws add:e ws                        { Neg(:e) } | atom;
 
 var     = (letter (letter | digit)*) $v             { Var($v) };
