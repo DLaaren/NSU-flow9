@@ -12,11 +12,11 @@ lingoGrammar() {
 //	setTree : (tree : Tree<?, ??>, key : ?, value : ??) -> Tree<?, ??>;
 //  lookupTree : (tree : Tree<?, ??>, key : ?) -> Maybe<??>;
 
-inputVariablesIntoTree() -> Tree<string, Pair<int, int> > {
+inputVariablesIntoTree() -> Tree<string, Rational> {
     variables = strSplit(getUrlParameter("vars"), ",");
     fold(variables, makeTree(),\ tree, variable -> {
         tmp = strSplit(getUrlParameter(variable), "/");
-        setTree(tree, variable, Pair(s2i(tmp[0]), s2i(tmp[1])));
+        setTree(tree, variable, Rational(Pair(s2i(tmp[0]), s2i(tmp[1]))));
     });
 }
 

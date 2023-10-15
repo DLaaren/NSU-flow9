@@ -13,9 +13,8 @@ div     = ws neg:l ws "/" ws div:r ws               { BinOp("/",:l,:r) } | neg;
 neg     = ws "-" ws add:e ws                        { Neg(:e) } | atom;
 
 var     = (letter (letter | digit)*) $v             { Var($v) };
-const   = (digit+) $c                               { Const(s2i($c)) };
-rational = const:l "/" const:r                      { Rational(:l, :r) } |
-           const:l                                  { Rational(:l, Const(1)) };     
+rational =  (digit+) $l "/"  (digit+) $r            { Rational(Pair(s2i($l), s2i($r))) } |
+            (digit+) $l                             { Rational(Pair(s2i($l), 1)) };     
 atom    = ws rational:c ws                          { :c } | 
           ws var:v ws                               { :v } | 
           ws "(" ws expr:e ws ")" ws                { :e };      

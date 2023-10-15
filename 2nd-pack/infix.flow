@@ -4,35 +4,32 @@ import math/math;
 
 export {
 
-    Expression ::= Var, Const, Rational, BinOp, Neg;
+    Expression ::= Var, Rational, BinOp, Neg;
 
     Var(var : string);
-    Const(const : int);
-    Rational(l : Expression, r : Expression);
+    Rational(rational : Pair<int, int>);
     BinOp(OpName : string, l : Expression, r : Expression);
     Neg(e: Expression);
 
     InfixToString(expr: Expression) -> string;
-    // calculate(expr: Expression, VarsTree: Tree<string, Pair<int, int> >) -> Maybe<int>;
+    //calculate(expr: Expression, VarsTree: Tree<string, Rational>) -> Maybe<Rational>;
     // simplify(expr: Expression) -> Expression;
 }
 
 InfixToString(expr: Expression) -> string {
     switch(expr) {
         Var(var) : var;
-        Const(const) : i2s(const);
-        Rational(l, r) : {
-            if (r == Const(1)) {
-                InfixToString(l);
+        Rational(r) : {
+            if (secondOfPair(r) == 1) {
+                i2s(firstOfPair(r));
             } else {
-                InfixToString(l) + "/" + InfixToString(r);
+                i2s(firstOfPair(r)) + "/" + i2s(secondOfPair(r));
             }
         }
         BinOp(OpName, l, r) : "(" + InfixToString(l) + " " + OpName + " " + InfixToString(r) +")"
         Neg(e) : "(" + "-" + InfixToString(e) + ")";
     }
 }
-
 /*
 calculate(expr: Expression, VarsTree: Tree<string, Rational>) -> Maybe<Rational> {
 
@@ -46,19 +43,34 @@ calculate(expr: Expression, VarsTree: Tree<string, Rational>) -> Maybe<Rational>
         }
     }
 
+    add = \l,r -> {
+        Some(Rational(0,0));
+    }
+    sub = \l,r -> {
+        Some(Rational(0,0));
+    }
+    mult = \l,r -> {
+        Some(Rational(0,0));
+        //Some(Pair(firstOfPair(l) * firstOfPair(r), secondOfPair(l) * secondOfPair(r)));
+    }
+    div = \l,r -> {
+        Some(Rational(0,0));
+        //Some(Pair(firstOfPair(l) * secondOfPair(r), firstOfPair(r) * secondOfPair(l)));
+    }
+
     switch(expr) {
         BinOp(OpName, l, r) : {
             if (OpName == "+") {
-                getValue(l,r, \left, right -> Some(left + right));
+                getValue(l,r, \left, right -> add(left, right));
             }
             else if (OpName == "-") {
-                getValue(l,r, \left, right -> Some(left - right));
+                getValue(l,r, \left, right -> sub(left, right));
             }
             else if (OpName == "*") {
-                getValue(l,r, \left, right -> Some(left * right));
+                getValue(l,r, \left, right -> mult(left, right));
             }
             else if (OpName == "/") {
-                getValue(l,r, \left, right -> Some(left / right));
+                getValue(l,r, \left, right -> div(left, right));
             } else {
                 None();
             }
@@ -67,15 +79,17 @@ calculate(expr: Expression, VarsTree: Tree<string, Rational>) -> Maybe<Rational>
             Some(value) : Some(-value);
             None() : None();
         }
+        
         Var(var) : switch(lookupTree(VarsTree, var)) {
             Some(num) : Some(num);
             None() : None();
-         }
-        Const(const) : Some(const); 
-        Rational(rational) : 
+        }
+
+        Rational(l,r) : Rational(l,r);
+
     }
-}
-*/
+}*/
+
 /* simplify(expr: Expression) -> Expression {
 
 } */
