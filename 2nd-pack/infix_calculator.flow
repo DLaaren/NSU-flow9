@@ -16,9 +16,11 @@ inputVariablesIntoTree() -> Tree<string, Rational> {
             a = s2i(nums[0]);
             b = s2i(nums[1]);
             setTree(tree, variable, Rational(a,b));
-        } else {
+        } else if (getUrlParameter(variable) != "") {
             a = s2i(getUrlParameter(variable));
             setTree(tree, variable, Rational(a,1));
+        } else {
+            setTree(tree, variable, Rational(0,0));
         }
     });
 }
@@ -39,12 +41,14 @@ main() {
 	} else {
         e = parsic(lingoGrammar(), expr, defaultPegActions);
 		println(e);
-        switch(calculate(e, VarsTree)) {
-            Some(result) : println(InfixToString(e) + " = " + InfixToString(result));
+
+        result : Pair<string, Maybe<Rational>> = calculateWrapper(e, VarsTree);
+        println("simplified expression :: " + firstOfPair(result));
+
+        switch(secondOfPair(result)) {
+            Some(res) : println(firstOfPair(result) + " = " + InfixToString(res));
             None() : println("error while calculating");
         }
-
-        println("simplified expression :: " + InfixToString(simplify(e)));
 
 		quit(0);
     }
