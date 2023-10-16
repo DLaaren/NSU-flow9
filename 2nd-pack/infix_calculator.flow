@@ -39,10 +39,10 @@ main() {
 	} else {
         e = parsic(lingoGrammar(), expr, defaultPegActions);
 		println(e);
-        //switch(calculate(e, VarsTree)) {
-        //    Some(result) : println(InfixToString(e) + " = " + i2s(result));
-        //    None() : println("error while calculating");
-        //}
+        switch(calculate(e, VarsTree)) {
+            Some(result) : println(InfixToString(e) + " = " + InfixToString(result));
+            None() : println("error while calculating");
+        }
         
 		quit(0);
     }

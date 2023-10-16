@@ -12,7 +12,7 @@ export {
     Neg(e: Expression);
 
     InfixToString(expr: Expression) -> string;
-    //calculate(expr: Expression, VarsTree: Tree<string, double>) -> Maybe<double>;
+    calculate(expr: Expression, VarsTree: Tree<string, Rational>) -> Maybe<Rational>;
     // simplify(expr: Expression) -> Expression;
 }
 
@@ -31,9 +31,7 @@ InfixToString(expr: Expression) -> string {
     }
 }
 
-/*
-calculate(expr: Expression, VarsTree: Tree<string, double>) -> Maybe<double> {
-
+calculate(expr: Expression, VarsTree: Tree<string, Rational>) -> Maybe<Rational> {
     getValue = \l,r, operator -> {
         switch(calculate(l, VarsTree)) {
             Some(left) : switch(calculate(r, VarsTree)) {
@@ -44,22 +42,35 @@ calculate(expr: Expression, VarsTree: Tree<string, double>) -> Maybe<double> {
         }
     }
 
-    add = \l,r -> {
-        Some(Rational(0,0));
+    add = \left, right -> {
+        if (left.r == right.r) {
+            Some(Rational(left.l + right.l, left.r));
+        } else {
+            Some(Rational(left.l * right.r + right.l * left.r, left.r * right.r));
+        }
     }
-    sub = \l,r -> {
-        Some(Rational(0,0));
+    sub = \left, right -> {
+        if (left.r == right.r) {
+            Some(Rational(left.l - right.l, left.r));
+        } else {
+            Some(Rational(left.l * right.r - right.l * left.r, left.r * right.r));
+        }
     }
-    mult = \l,r -> {
-        Some(Rational(0,0));
-        //Some(Pair(firstOfPair(l) * firstOfPair(r), secondOfPair(l) * secondOfPair(r)));
+    mult = \left, right -> {
+        Some(Rational(left.l * right.l, left.r * right.r));
     }
-    div = \l,r -> {
-        Some(Rational(0,0));
-        //Some(Pair(firstOfPair(l) * secondOfPair(r), firstOfPair(r) * secondOfPair(l)));
+    div = \left, right -> {
+        Some(Rational(left.l * right.r, left.r * right.l));
     }
 
     switch(expr) {
+        Var(var) : switch(lookupTree(VarsTree, var)) {
+            Some(num) : Some(num);
+            None() : None();
+        }
+
+        Rational(l,r) : Some(Rational(l,r));
+
         BinOp(OpName, l, r) : {
             if (OpName == "+") {
                 getValue(l,r, \left, right -> add(left, right));
@@ -76,20 +87,17 @@ calculate(expr: Expression, VarsTree: Tree<string, double>) -> Maybe<double> {
                 None();
             }
         }
+
         Neg(e) : switch(calculate(e, VarsTree)) {
-            Some(value) : Some(-value);
+            Some(value) : {
+                left = value.l;
+                right = value.r;
+                Some(Rational(-left, right));
+            }
             None() : None();
         }
-        
-        Var(var) : switch(lookupTree(VarsTree, var)) {
-            Some(num) : Some(num);
-            None() : None();
-        }
-
-        Rational(l,r) : Rational(l,r);
-
     }
-}*/
+}
 
 /* simplify(expr: Expression) -> Expression {
 
