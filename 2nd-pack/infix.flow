@@ -13,7 +13,7 @@ export {
 
     InfixToString(expr: Expression) -> string;
     calculate(expr: Expression, VarsTree: Tree<string, Rational>) -> Maybe<Rational>;
-    // simplify(expr: Expression) -> Expression;
+    simplify(expr: Expression) -> Expression;
 }
 
 InfixToString(expr: Expression) -> string {
@@ -22,6 +22,9 @@ InfixToString(expr: Expression) -> string {
         Rational(l,r) : {
             if (r == 1) {
                 i2s(l);
+            } 
+            else if (l == 0) {
+                i2s(0);
             } else {
                 i2s(l) + "/" + i2s(r);
             }
@@ -70,7 +73,10 @@ calculate(expr: Expression, VarsTree: Tree<string, Rational>) -> Maybe<Rational>
         }
 
         Rational(l, r) : {
-            if (l == r) {
+            if (l == 0) {
+                Some(Rational(0,1));
+            }
+            else if (l == r) {
                 Some(Rational(1,1));
             } else {
                 Some(Rational(l,r));
@@ -105,6 +111,59 @@ calculate(expr: Expression, VarsTree: Tree<string, Rational>) -> Maybe<Rational>
     }
 }
 
-/* simplify(expr: Expression) -> Expression {
-
-} */
+simplify(expr: Expression) -> Expression {
+    simplifiedExpression = switch(expr) {
+        BinOp(name, l, r) : {
+            if (name == "+") {
+                simplifiedLeft = simplify(l);
+                simplifiedRight = simplify(r);
+                if (simplifiedLeft == Rational(0,1)) {
+                    simplifiedLeft;
+                }
+                else if (simplifiedRight == Rational(0,1)) {
+                    simplifiedRight;
+                } else {
+                    expr;
+                }
+            }
+            else if (name == "*") {
+                simplifiedLeft = simplify(l);
+                simplifiedRight = simplify(r);
+                if (simplifiedLeft == Rational(0,1)) {
+                    Rational(0,1);
+                }
+                else if (simplifiedRight == Rational(0,1)) {
+                    Rational(0,1);
+                }
+                else if (simplifiedLeft == Rational(1,1)) {
+                    simplifiedRight;
+                }
+                else if (simplifiedRight == Rational(1,1)) {
+                    simplifiedLeft;
+                } else {
+                    expr;
+                }
+            } 
+            else if (name == "/") {
+                simplifiedLeft = simplify(l);
+                simplifiedRight = simplify(r);
+                if (simplifiedLeft == Rational(0,1)) {
+                    Rational(0,1);
+                }
+                else if (simplifiedRight == Rational(0,1)) {
+                    Rational(0,1);
+                } else {
+                    expr;
+                }
+            } else {
+                expr;
+            }
+        }
+        default : expr;
+    }
+    if (simplifiedExpression == expr) {
+        simplifiedExpression;
+    } else {
+        simplify(simplifiedExpression);
+    }
+}
