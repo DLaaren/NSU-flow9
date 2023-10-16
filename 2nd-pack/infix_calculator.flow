@@ -8,9 +8,19 @@ lingoGrammar() {
     compilePegGrammar("#include infix.lingo");
 }
 
-inputVariablesIntoTree() -> Tree<string, int> {
+inputVariablesIntoTree() -> Tree<string, Rational> {
     variables = strSplit(getUrlParameter("vars"), ",");
-    fold(variables, makeTree(),\ tree, variable -> {setTree(tree, variable, s2i(getUrlParameter(variable)))});
+    fold(variables, makeTree(),\ tree, variable -> {
+        if (strContains(getUrlParameter(variable), "/")) {
+            nums = strSplit(getUrlParameter(variable), "/");
+            a = s2i(nums[0]);
+            b = s2i(nums[1]);
+            setTree(tree, variable, Rational(a,b));
+        } else {
+            a = s2i(getUrlParameter(variable));
+            setTree(tree, variable, Rational(a,1));
+        }
+    });
 }
 
 main() {
@@ -18,7 +28,7 @@ main() {
     expr = getUrlParameter("expr");
 
     // get tree with constants
-    // VarsTree : Tree<string, int> = inputVariablesIntoTree();
+    VarsTree : Tree<string, Rational> = inputVariablesIntoTree();
 
     usage : string = "Usage: infix_calculator.flow -- \"expr=<expression>\" \"vars=<variables>\" \"<variable1>=<value1>\" ...";
 	
