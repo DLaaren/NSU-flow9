@@ -43,7 +43,9 @@ main() {
             Some(result) : println(InfixToString(e) + " = " + InfixToString(result));
             None() : println("error while calculating");
         }
-        
+
+        println("simplified expression :: " + InfixToString(simplify(e)));
+
 		quit(0);
     }
 }

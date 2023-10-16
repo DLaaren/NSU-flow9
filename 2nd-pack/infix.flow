@@ -4,12 +4,13 @@ import math/math;
 
 export {
 
-    Expression ::= Var, Rational, BinOp, Neg;
+    Expression ::= Var, Rational, BinOp, Neg, Diff;
 
     Var(var : string);
     Rational(l: int, r : int);
     BinOp(OpName : string, l : Expression, r : Expression);
     Neg(e: Expression);
+    Diff(e : Expression, x : Var);
 
     InfixToString(expr: Expression) -> string;
     calculate(expr: Expression, VarsTree: Tree<string, Rational>) -> Maybe<Rational>;
@@ -31,6 +32,7 @@ InfixToString(expr: Expression) -> string {
         }
         BinOp(OpName, l, r) : "(" + InfixToString(l) + " " + OpName + " " + InfixToString(r) +")"
         Neg(e) : "(" + "-" + InfixToString(e) + ")";
+        Diff(e, x) : "(" + "d/d" + InfixToString(x) + " " + InfixToString(e) + ")";
     }
 }
 
@@ -108,6 +110,12 @@ calculate(expr: Expression, VarsTree: Tree<string, Rational>) -> Maybe<Rational>
             }
             None() : None();
         }
+
+        Diff(e,x) : if (!isNone(lookupTree(VarsTree, x.var))) {
+            calculate(derivation(e,x), VarsTree);
+        } else {
+            None();
+        }
     }
 }
 
@@ -118,10 +126,10 @@ simplify(expr: Expression) -> Expression {
                 simplifiedLeft = simplify(l);
                 simplifiedRight = simplify(r);
                 if (simplifiedLeft == Rational(0,1)) {
-                    simplifiedLeft;
+                    simplifiedRight;
                 }
                 else if (simplifiedRight == Rational(0,1)) {
-                    simplifiedRight;
+                    simplifiedLeft;
                 } else {
                     expr;
                 }
@@ -165,5 +173,34 @@ simplify(expr: Expression) -> Expression {
         simplifiedExpression;
     } else {
         simplify(simplifiedExpression);
+    }
+}
+
+derivation(expr : Expression, x : Var) -> Expression {
+    switch(expr) {
+        BinOp(name, l, r) : {
+            if (name == "+") {
+                BinOp("+", derivation(l,x), derivation(r,x));
+            }
+            else if (name == "-") {
+                BinOp("-", derivation(l,x), derivation(r,x));
+            }
+            else if (name == "*") {
+                BinOp("+", BinOp("*", derivation(l,x), r), BinOp("*", derivation(r,x), l));
+            }
+            else if (name == "/") {
+                BinOp("/", BinOp("-", BinOp("*", derivation(l,x), r), BinOp("*", derivation(r,x), l)), BinOp("*", r, r));
+            } else {
+                
+                Rational(0,1);
+            }
+        }   
+        default : {
+            if (expr == x) {
+				Rational(1,1);
+			} else {
+				Rational(0,1);
+			}
+        }
     }
 }

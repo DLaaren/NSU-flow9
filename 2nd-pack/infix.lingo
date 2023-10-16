@@ -9,10 +9,13 @@
 add     = ws sub:l ws "+" ws add:r ws               { BinOp("+",:l,:r) } | sub;
 sub     = ws mult:l ws "-" ws sub:r ws              { BinOp("-",:l,:r) } | mult;
 mult    = ws div:l ws "*" ws mult:r ws              { BinOp("*",:l,:r) } | div;
-div     = ws neg:l ws "/" ws div:r ws               { BinOp("/",:l,:r) } | neg;
-neg     = ws "-" ws add:e ws                        { Neg(:e) } | atom;
+div     = !"d/d" ws diff:l ws "/" ws div:r ws       { BinOp("/",:l,:r) } | diff;
+diff    = ws "d/d" var:x ws "(" ws add:e ws ")" ws  { Diff(:e,:x) } | neg;
+neg     = ws "-" ws "(" ws add:e ws ")" ws          { Neg(:e) } | 
+          ws "-" ws (rational|var):e ws             { Neg(:e) } | atom;
 
-var     = (letter (letter | digit)*) $v             { Var($v) };
+
+var     = (letter+) $v                               { Var($v) };
 const   = (digit+);
 rational = const $l "/" const $r                    { Rational(s2i($l), s2i($r)) } |
            const $l                                 { Rational(s2i($l), 1) };
