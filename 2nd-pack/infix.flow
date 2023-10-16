@@ -44,23 +44,23 @@ calculate(expr: Expression, VarsTree: Tree<string, Rational>) -> Maybe<Rational>
 
     add = \left, right -> {
         if (left.r == right.r) {
-            Some(Rational(left.l + right.l, left.r));
+            calculate(Rational(left.l + right.l, left.r), VarsTree);
         } else {
-            Some(Rational(left.l * right.r + right.l * left.r, left.r * right.r));
+            calculate(Rational(left.l * right.r + right.l * left.r, left.r * right.r), VarsTree);
         }
     }
     sub = \left, right -> {
         if (left.r == right.r) {
-            Some(Rational(left.l - right.l, left.r));
+            calculate(Rational(left.l - right.l, left.r), VarsTree);
         } else {
-            Some(Rational(left.l * right.r - right.l * left.r, left.r * right.r));
+            calculate(Rational(left.l * right.r - right.l * left.r, left.r * right.r), VarsTree);
         }
     }
     mult = \left, right -> {
-        Some(Rational(left.l * right.l, left.r * right.r));
+        calculate(Rational(left.l * right.l, left.r * right.r), VarsTree);
     }
     div = \left, right -> {
-        Some(Rational(left.l * right.r, left.r * right.l));
+        calculate(Rational(left.l * right.r, left.r * right.l), VarsTree);
     }
 
     switch(expr) {
@@ -69,7 +69,13 @@ calculate(expr: Expression, VarsTree: Tree<string, Rational>) -> Maybe<Rational>
             None() : None();
         }
 
-        Rational(l,r) : Some(Rational(l,r));
+        Rational(l, r) : {
+            if (l == r) {
+                Some(Rational(1,1));
+            } else {
+                Some(Rational(l,r));
+            }
+        }
 
         BinOp(OpName, l, r) : {
             if (OpName == "+") {
