@@ -7,10 +7,11 @@ import infix;
 
 export {
     RPNExpression ::= Const, OpName;
+    Const(const : int);
     OpName(name : string);
 
     PostfixToString(RPNexpr: [RPNExpression]) -> string;
-    RPNcalculate(RPNexpr: [RPNExpression]) -> Maybe<double>;
+    RPNcalculate(RPNexpr: [RPNExpression]) -> Maybe<int>;
 
     translateToInfix(RPNexpr : [RPNExpression]) -> Maybe<Expression>;
     translateToPostfix(expr : Expression) -> Maybe<[RPNExpression]>;
@@ -19,7 +20,7 @@ export {
 PostfixToString(RPNexpr: [RPNExpression]) -> string {
     fold(RPNexpr, "", \str, val -> {
         switch(val) {
-            Const(c) : str + d2s(c) + " ";
+            Const(c) : str + i2s(c) + " ";
             OpName(name) : str + name + " ";
         }
     });
@@ -27,7 +28,7 @@ PostfixToString(RPNexpr: [RPNExpression]) -> string {
 
 }
 
-RPNcalculate(RPNexpr: [RPNExpression]) -> Maybe<double> {
+RPNcalculate(RPNexpr: [RPNExpression]) -> Maybe<int> {
     // map : ([?], (?) -> ??) -> [??];
     // fold : (xs : [?], init : ??, fn : (??, ?)->??) -> ??
     // arrayPush : ([?], ?) -> [?];
@@ -35,7 +36,7 @@ RPNcalculate(RPNexpr: [RPNExpression]) -> Maybe<double> {
     // lastElement(a: [?], def: ?) -> ?;
     // lastElement(map(stack, \elem -> Some(elem)), None());
 
-    stack : [Maybe<double>] = [];
+    stack : [Maybe<int>] = [];
 
     result = fold(RPNexpr, stack, \st, e -> {
         switch(e) {
@@ -79,7 +80,7 @@ translateToInfix(RPNexpr : [RPNExpression]) -> Maybe<Expression> {
     stack : [Maybe<Expression>] = [];
     result = fold(RPNexpr, stack, \st, e -> {
         switch(e) {
-            Const(c) : arrayPush(st, Some(Const(c)));
+            Const(c) : arrayPush(st, Some(Rational(c, 1)));
             OpName(name) : {
                 left = lastElement(st, None());
                 a = removeIndex(st, length(st) - 1);
@@ -91,10 +92,10 @@ translateToInfix(RPNexpr : [RPNExpression]) -> Maybe<Expression> {
                     Some(l) : switch(right) {
                         Some(r) : {
                             if (name == "+") {
-                                arrayPush(b, Some(Add(l, r)));
+                                arrayPush(b, Some(BinOp(name, l, r)));
                             }
                             else if (name == "*") {
-                                arrayPush(b, Some(Mult(l, r)));
+                                arrayPush(b, Some(BinOp(name, l, r)));
                             } else {
                                 arrayPush(b, None());
                             }
@@ -116,18 +117,29 @@ translateToInfix(RPNexpr : [RPNExpression]) -> Maybe<Expression> {
 
 translate(expr : Expression, stack : [Maybe<RPNExpression>]) -> [Maybe<RPNExpression>] {
     switch(expr) {
-        Const(c) : arrayPush(stack, Some(Const(c)));
-        Add(l,r) : {
-            a = translate(l, stack);
-            b = translate(r, a);
-            arrayPush(b, Some(OpName("+")));
+        Rational(l, r) : {
+            if (r == 1) {
+                arrayPush(stack, Some(Const(l)));
+            } else {
+                arrayPush(stack, None());
+            }
         }
-        Mult(l,r) : {
-            a = translate(l, stack);
-            b = translate(r, a);
-            arrayPush(b, Some(OpName("*")));
+        BinOp(name, l, r) : {
+            if (name == "+") {
+                a = translate(l, stack);
+                b = translate(r, a);
+                arrayPush(b, Some(OpName("+")));
+            }
+            else if (name == "*") {
+                a = translate(l, stack);
+                b = translate(r, a);
+                arrayPush(b, Some(OpName("*")));
+            } else {
+                arrayPush(stack, None());
+            }  
         }
-        default : arrayPush(stack, None());
+        Neg(e) : arrayPush(stack, None());
+        Var(v) : arrayPush(stack, None());
     } 
 }
 
@@ -145,6 +157,6 @@ translateToPostfix(expr : Expression) -> Maybe<[RPNExpression]> {
     if (contains(result, None())) {
         None();
     } else {
-        Some(map(result, \r -> either(r, Const(0.0)))); // кринж
+        Some(map(result, \r -> either(r, Const(0)))); // кринж
     }
 }

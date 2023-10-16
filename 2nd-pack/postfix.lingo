@@ -3,7 +3,7 @@ unary       = ws const:c ws         { :c } |
               ws operation:op       { :op }; 
 
 operation   = ws ('+'|'*')$name ws  { OpName($name) };
-const       = (digit)+$d            { Const(s2d($d)) };      
+const       = (digit)+$d            { Const(s2i($d)) };      
 
 // digit range 
 digit = '0'-'9';

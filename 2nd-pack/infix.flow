@@ -7,31 +7,32 @@ export {
     Expression ::= Var, Rational, BinOp, Neg;
 
     Var(var : string);
-    Rational(rational : Pair<int, int>);
+    Rational(l: int, r : int);
     BinOp(OpName : string, l : Expression, r : Expression);
     Neg(e: Expression);
 
     InfixToString(expr: Expression) -> string;
-    //calculate(expr: Expression, VarsTree: Tree<string, Rational>) -> Maybe<Rational>;
+    //calculate(expr: Expression, VarsTree: Tree<string, double>) -> Maybe<double>;
     // simplify(expr: Expression) -> Expression;
 }
 
 InfixToString(expr: Expression) -> string {
     switch(expr) {
         Var(var) : var;
-        Rational(r) : {
-            if (secondOfPair(r) == 1) {
-                i2s(firstOfPair(r));
+        Rational(l,r) : {
+            if (r == 1) {
+                i2s(l);
             } else {
-                i2s(firstOfPair(r)) + "/" + i2s(secondOfPair(r));
+                i2s(l) + "/" + i2s(r);
             }
         }
         BinOp(OpName, l, r) : "(" + InfixToString(l) + " " + OpName + " " + InfixToString(r) +")"
         Neg(e) : "(" + "-" + InfixToString(e) + ")";
     }
 }
+
 /*
-calculate(expr: Expression, VarsTree: Tree<string, Rational>) -> Maybe<Rational> {
+calculate(expr: Expression, VarsTree: Tree<string, double>) -> Maybe<double> {
 
     getValue = \l,r, operator -> {
         switch(calculate(l, VarsTree)) {

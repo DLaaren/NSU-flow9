@@ -8,16 +8,9 @@ lingoGrammar() {
     compilePegGrammar("#include infix.lingo");
 }
 
-//	makeTree : () -> Tree<?, ??>; // empty tree
-//	setTree : (tree : Tree<?, ??>, key : ?, value : ??) -> Tree<?, ??>;
-//  lookupTree : (tree : Tree<?, ??>, key : ?) -> Maybe<??>;
-
-inputVariablesIntoTree() -> Tree<string, Rational> {
+inputVariablesIntoTree() -> Tree<string, int> {
     variables = strSplit(getUrlParameter("vars"), ",");
-    fold(variables, makeTree(),\ tree, variable -> {
-        tmp = strSplit(getUrlParameter(variable), "/");
-        setTree(tree, variable, Rational(Pair(s2i(tmp[0]), s2i(tmp[1]))));
-    });
+    fold(variables, makeTree(),\ tree, variable -> {setTree(tree, variable, s2i(getUrlParameter(variable)))});
 }
 
 main() {
@@ -25,7 +18,7 @@ main() {
     expr = getUrlParameter("expr");
 
     // get tree with constants
-    // VarsTree : Tree<string, Rational> = inputVariablesIntoTree();
+    // VarsTree : Tree<string, int> = inputVariablesIntoTree();
 
     usage : string = "Usage: infix_calculator.flow -- \"expr=<expression>\" \"vars=<variables>\" \"<variable1>=<value1>\" ...";
 	
@@ -36,7 +29,6 @@ main() {
 	} else {
         e = parsic(lingoGrammar(), expr, defaultPegActions);
 		println(e);
-        println(InfixToString(e));
         //switch(calculate(e, VarsTree)) {
         //    Some(result) : println(InfixToString(e) + " = " + i2s(result));
         //    None() : println("error while calculating");
