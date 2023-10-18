@@ -133,108 +133,22 @@ calculate(expr: Expression, VarsTree: Tree<string, Rational>) -> Maybe<Rational>
 
 streamline(expr: Expression) -> Expression {
     switch(expr) {
-        Var(var) : expr;
-
-        Rational(l, r) : {
-            if (l == 0) {
-                Rational(0,1);
-            }
-            else if (l == r) {
-                Rational(1,1);
-            } else {
-                expr;
-            }
-        }
-
+        /*
         BinOp(OpName, l, r) : {
             if (OpName == "+") {
                 switch(l) {
-                    Var(vl) : switch(r) {
-                        Var(v) : BinOp("+", l, r);
-                        Rational(left,right) : BinOp("+", l, r);
-                        default : BinOp("+", l, streamline(r));
-                    }
                     
-                    Rational(leftL,rightL) : switch(r) {
-                        Var(v1) : BinOp("+", l, r);
-                        Rational(leftR,rightR) : {
-                            if (rightL == rightR) {
-                                Rational(leftL + rightL, rightL);
-                            } else {
-                                Rational(leftL * rightR + rightL * leftR, rightL * rightR);
-                            }
-                        }
-                        default : BinOp("+", l, streamline(r));
-                    }
-
-                    default : switch(r) {
-                        Var(v) : BinOp("+", streamline(l), r);
-                        Rational(left, right) : BinOp("+", streamline(l), r);
-                        default : BinOp("+", streamline(l), streamline(r));
-                    }
                 }
             }
-
-            else if (OpName == "-") {
-                switch(l) {
-                    Var(vl) : switch(r) {
-                        Var(v) : BinOp("-", l, r);
-                        Rational(left,right) : BinOp("-", l, r);
-                        default : BinOp("-", l, streamline(r));
-                    }
-                    
-                    Rational(leftL,rightL) : switch(r) {
-                        Var(v1) : BinOp("-", l, r);
-                        Rational(leftR,rightR) : {
-                            if (rightL == rightR) {
-                                Rational(leftL - rightL, rightL);
-                            } else {
-                                Rational(leftL * rightR - rightL * leftR, rightL * rightR);
-                            }
-                        }
-                        default : BinOp("-", l, streamline(r));
-                    }
-
-                    default : switch(r) {
-                        Var(v) : BinOp("-", streamline(l), r);
-                        Rational(left, right) : BinOp("-", streamline(l), r);
-                        default : BinOp("-", streamline(l), streamline(r));
-                    }
-                }
-            }
-
-            else if (OpName == "*") {
-                switch(l) {
-                    Var(vl) : switch(r) {
-                        Var(v) : BinOp("*", l, r);
-                        Rational(left,right) : BinOp("*", l, r);
-                        default : BinOp("*", l, streamline(r));
-                    }
-                    
-                    Rational(leftL,rightL) : switch(r) {
-                        Var(v1) : BinOp("*", l, r);
-                        Rational(leftR,rightR) : Rational(leftL * leftR, rightL * rightR);
-                        default : BinOp("*", l, streamline(r));
-                    }
-
-                    default : switch(r) {
-                        Var(v) : BinOp("*", streamline(l), r);
-                        Rational(left, right) : BinOp("*", streamline(l), r);
-                        default : BinOp("*", streamline(l), streamline(r));
-                    }
-                }
-            }
-
-            //else if (OpName == "/") {
-            //    getValue(l,r, \left, right -> div(left, right));
-            //}
 
             else {
-                Rational(0,0);
+                expr;
             }
         }
-
-        default : Rational(0,0);
+        */
+        Diff(e,x) : streamline(simplify(derivation(e,x)));
+        Neg(e) : Neg(streamline(e));
+        default : expr;
     }
 }
 
@@ -260,7 +174,7 @@ simplify(expr: Expression) -> Expression {
                 else if (simplifiedRight == Rational(0,1)) {
                     simplifiedLeft;
                 } else {
-                    expr;
+                    BinOp("+", simplifiedLeft, simplifiedRight);
                 }
             }
             else if (name == "*") {
@@ -278,7 +192,7 @@ simplify(expr: Expression) -> Expression {
                 else if (simplifiedRight == Rational(1,1)) {
                     simplifiedLeft;
                 } else {
-                    expr;
+                    BinOp("*", simplifiedLeft, simplifiedRight);
                 }
             } 
             else if (name == "/") {
@@ -286,14 +200,11 @@ simplify(expr: Expression) -> Expression {
                 simplifiedRight = simplify(r);
                 if (simplifiedLeft == Rational(0,1)) {
                     Rational(0,1);
-                }
-                else if (simplifiedRight == Rational(0,1)) {
-                    Rational(0,1);
                 } else {
-                    expr;
+                    BinOp("/", simplifiedLeft, simplifiedRight);
                 }
             } else {
-                expr;
+                BinOp(name, simplify(l), simplify(r));
             }
         }
         default : expr;
@@ -318,9 +229,17 @@ derivation(expr : Expression, x : Var) -> Expression {
                 BinOp("+", BinOp("*", derivation(l,x), r), BinOp("*", derivation(r,x), l));
             }
             else if (name == "/") {
-                BinOp("/", BinOp("-", BinOp("*", derivation(l,x), r), BinOp("*", derivation(r,x), l)), BinOp("*", r, r));
+                switch(l) {
+                    Rational(left, right) : {
+                        if (r == x) {
+                            BinOp("*", l, Var("ln " + x.var));
+                        } else {
+                            BinOp("/", BinOp("-", BinOp("*", derivation(l,x), r), BinOp("*", derivation(r,x), l)), BinOp("*", r, r));
+                        }
+                    }
+                    default : BinOp("/", BinOp("-", BinOp("*", derivation(l,x), r), BinOp("*", derivation(r,x), l)), BinOp("*", r, r));
+                }
             } else {
-                
                 Rational(0,1);
             }
         }   

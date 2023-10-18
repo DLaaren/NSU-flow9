@@ -768,48 +768,48 @@
 59598 InfixToString$init
 59603 derivation$init
 59623 derivation
-60099 derivation$init
-60104 simplify$init
-60122 simplify
-60759 simplify$init
-60764 streamline$init
-60784 streamline
-62882 streamline$init
-62887 calculate$init
-62906 calculate
-62925 calculate$1
-63105 calculate
-63129 calculate$2
-63297 calculate
-63321 calculate$3
-63489 calculate
-63513 calculate$4
-63581 calculate
-63605 calculate$5
-63673 calculate
-63822 calculate$6
-63848 calculate
-63907 calculate$7
-63933 calculate
-63992 calculate$8
-64018 calculate
-64077 calculate$9
-64103 calculate
-64747 calculate$init
-64752 calculateWrapper$init
-64778 calculateWrapper
-64929 calculateWrapper$init
-64934 inputVariablesIntoTree$init
-64966 inputVariablesIntoTree
-65022 inputVariablesIntoTree$1
-65273 inputVariablesIntoTree
-65289 inputVariablesIntoTree$init
-65294 lingoGrammar$init
-65316 lingoGrammar
-66992 lingoGrammar$init
-66997 main$init
-67011 main
-67560 main$init
+60312 derivation$init
+60317 simplify$init
+60335 simplify
+60995 simplify$init
+61000 calculate$init
+61019 calculate
+61038 calculate$1
+61218 calculate
+61242 calculate$2
+61410 calculate
+61434 calculate$3
+61602 calculate
+61626 calculate$4
+61694 calculate
+61718 calculate$5
+61786 calculate
+61935 calculate$6
+61961 calculate
+62020 calculate$7
+62046 calculate
+62105 calculate$8
+62131 calculate
+62190 calculate$9
+62216 calculate
+62860 calculate$init
+62865 streamline$init
+62885 streamline
+63033 streamline$init
+63038 calculateWrapper$init
+63064 calculateWrapper
+63215 calculateWrapper$init
+63220 inputVariablesIntoTree$init
+63252 inputVariablesIntoTree
+63308 inputVariablesIntoTree$1
+63559 inputVariablesIntoTree
+63575 inputVariablesIntoTree$init
+63580 lingoGrammar$init
+63602 lingoGrammar
+65278 lingoGrammar$init
+65283 main$init
+65297 main
+65846 main$init
 
 0 /home/dlaaren/flow9/lib/ds/tuples.flow 7 1
 39 /home/dlaaren/flow9/lib/ds/tuples.flow 3 1
@@ -6596,602 +6596,452 @@
 59577 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 22 8
 59592 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 22 19
 59597 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 36 0
-59603 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 308 0
-59623 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 309 4
-59632 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 309 11
-59654 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 328 16
-59659 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 328 24
-59670 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 329 13
-59675 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 329 15
-59690 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 331 13
-59695 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 331 15
-59710 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 310 8
-59725 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 310 8
-59740 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 310 8
-59755 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 311 16
-59760 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 311 24
-59770 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 312 22
-59774 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 312 27
-59779 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 312 40
-59784 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 312 27
-59790 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 312 44
-59795 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 312 57
-59800 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 312 44
-59816 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 314 21
-59821 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 314 29
-59831 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 315 22
-59835 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 315 27
-59840 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 315 40
-59845 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 315 27
-59851 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 315 44
-59856 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 315 57
-59861 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 315 44
-59877 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 317 21
-59882 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 317 29
-59892 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 318 22
-59896 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 318 33
-59900 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 318 38
-59905 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 318 51
-59910 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 318 38
-59916 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 318 55
-59926 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 318 65
-59930 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 318 70
-59935 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 318 83
-59940 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 318 70
-59946 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 318 87
-59966 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 320 21
-59971 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 320 29
-59981 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 321 22
-59985 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 321 33
-59989 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 321 44
-59993 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 321 49
-59998 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 321 62
-60003 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 321 49
-60009 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 321 66
-60019 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 321 76
-60023 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 321 81
-60028 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 321 94
-60033 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 321 81
-60039 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 321 98
-60054 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 321 109
-60058 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 321 114
-60063 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 321 117
-60083 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 324 25
-60088 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 324 27
-60098 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 332 0
-60104 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 251 0
-60122 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 252 4
-60131 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 252 34
-60153 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 299 18
-60163 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 253 8
-60178 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 253 8
-60193 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 253 8
-60208 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 254 16
-60213 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 254 24
-60223 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 255 33
-60228 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 255 33
-60239 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 256 34
-60244 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 256 34
-60255 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 257 20
-60260 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 257 47
-60265 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 257 49
-60281 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 258 20
-60291 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 260 25
-60296 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 260 53
-60301 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 260 55
-60317 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 261 20
-60327 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 263 20
-60337 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 266 21
-60342 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 266 29
-60352 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 267 33
-60357 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 267 33
-60368 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 268 34
-60373 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 268 34
-60384 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 269 20
-60389 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 269 47
-60394 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 269 49
-60410 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 270 29
-60415 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 270 31
-60430 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 272 25
-60435 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 272 53
-60440 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 272 55
-60456 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 273 29
-60461 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 273 31
-60476 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 275 25
-60481 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 275 52
-60486 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 275 54
-60502 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 276 20
-60512 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 278 25
-60517 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 278 53
-60522 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 278 55
-60538 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 279 20
-60548 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 281 20
-60558 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 284 21
-60563 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 284 29
-60573 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 285 33
-60578 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 285 33
-60589 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 286 34
-60594 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 286 34
-60605 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 287 20
-60610 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 287 47
-60615 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 287 49
-60631 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 288 29
-60636 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 288 31
-60651 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 290 25
-60656 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 290 53
-60661 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 290 55
-60677 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 291 29
-60682 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 291 31
-60697 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 293 20
-60707 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 296 16
-60717 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 301 8
-60722 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 301 32
-60733 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 302 8
-60743 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 304 8
-60748 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 304 8
-60758 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 305 0
-60764 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 134 0
-60784 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 135 4
-60793 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 135 11
-60831 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 237 27
-60836 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 237 29
-60851 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 149 8
-60866 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 149 8
-60881 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 149 8
-60896 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 150 16
-60901 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 150 26
-60911 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 151 23
-60941 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 170 37
-60971 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 173 40
-60975 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 173 45
-60980 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 173 45
-60986 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 173 60
-60991 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 173 60
-61007 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 172 24
-61022 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 172 24
-61037 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 172 54
-61041 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 172 59
-61046 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 172 59
-61052 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 172 74
-61067 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 171 24
-61082 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 171 39
-61086 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 171 44
-61091 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 171 44
-61097 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 171 59
-61112 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 158 20
-61127 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 158 20
-61142 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 158 52
-61172 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 167 40
-61176 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 167 45
-61181 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 167 48
-61186 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 167 48
-61202 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 160 24
-61217 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 160 24
-61232 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 161 32
-61237 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 161 42
-61248 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 162 41
-61253 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 162 49
-61259 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 162 57
-61274 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 164 41
-61279 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 164 49
-61285 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 164 58
-61290 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 164 67
-61297 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 164 74
-61302 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 164 83
-61318 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 159 24
-61333 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 159 40
-61337 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 159 45
-61342 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 159 48
-61357 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 152 20
-61372 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 152 37
-61402 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 155 40
-61406 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 155 45
-61411 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 155 48
-61416 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 155 48
-61432 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 154 24
-61447 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 154 24
-61462 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 154 53
-61466 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 154 58
-61471 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 154 61
-61486 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 153 24
-61501 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 153 39
-61505 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 153 44
-61510 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 153 47
-61525 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 178 21
-61530 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 178 31
-61540 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 179 23
-61570 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 198 37
-61600 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 201 40
-61604 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 201 45
-61609 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 201 45
-61615 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 201 60
-61620 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 201 60
-61636 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 200 24
-61651 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 200 24
-61666 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 200 54
-61670 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 200 59
-61675 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 200 59
-61681 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 200 74
-61696 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 199 24
-61711 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 199 39
-61715 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 199 44
-61720 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 199 44
-61726 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 199 59
-61741 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 186 20
-61756 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 186 20
-61771 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 186 52
-61801 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 195 40
-61805 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 195 45
-61810 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 195 48
-61815 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 195 48
-61831 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 188 24
-61846 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 188 24
-61861 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 189 32
-61866 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 189 42
-61877 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 190 41
-61882 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 190 49
-61888 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 190 57
-61903 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 192 41
-61908 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 192 49
-61914 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 192 58
-61919 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 192 67
-61926 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 192 74
-61931 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 192 83
-61947 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 187 24
-61962 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 187 40
-61966 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 187 45
-61971 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 187 48
-61986 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 180 20
-62001 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 180 37
-62031 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 183 40
-62035 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 183 45
-62040 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 183 48
-62045 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 183 48
-62061 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 182 24
-62076 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 182 24
-62091 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 182 53
-62095 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 182 58
-62100 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 182 61
-62115 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 181 24
-62130 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 181 39
-62134 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 181 44
-62139 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 181 47
-62154 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 206 21
-62159 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 206 31
-62169 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 207 23
-62199 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 220 37
-62229 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 223 40
-62233 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 223 45
-62238 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 223 45
-62244 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 223 60
-62249 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 223 60
-62265 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 222 24
-62280 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 222 24
-62295 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 222 54
-62299 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 222 59
-62304 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 222 59
-62310 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 222 74
-62325 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 221 24
-62340 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 221 39
-62344 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 221 44
-62349 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 221 44
-62355 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 221 59
-62370 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 214 20
-62385 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 214 20
-62400 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 214 52
-62430 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 217 40
-62434 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 217 45
-62439 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 217 48
-62444 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 217 48
-62460 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 216 24
-62475 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 216 24
-62490 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 216 58
-62495 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 216 66
-62501 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 216 73
-62506 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 216 82
-62522 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 215 24
-62537 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 215 40
-62541 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 215 45
-62546 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 215 48
-62561 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 208 20
-62576 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 208 37
-62606 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 211 40
-62610 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 211 45
-62615 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 211 48
-62620 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 211 48
-62636 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 210 24
-62651 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 210 24
-62666 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 210 53
-62670 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 210 58
-62675 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 210 61
-62690 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 209 24
-62705 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 209 39
-62709 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 209 44
-62714 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 209 47
-62729 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 233 25
-62734 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 233 27
-62749 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 138 8
-62764 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 138 8
-62779 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 139 16
-62784 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 139 21
-62795 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 140 25
-62800 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 140 27
-62815 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 142 21
-62820 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 142 26
-62831 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 143 25
-62836 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 143 27
-62851 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 145 16
-62861 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 136 8
-62876 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 136 19
-62881 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 238 0
-62887 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 39 0
-62906 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 40 4
-62915 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 40 15
-62934 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 41 15
-62939 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 41 28
-62944 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 41 15
-62955 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 41 15
-62986 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 46 21
-62996 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 42 12
-63011 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 42 32
-63016 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 42 45
-63021 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 42 32
-63032 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 42 32
-63063 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 44 25
-63073 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 43 16
-63088 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 43 30
-63093 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 43 45
-63098 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 43 30
-63119 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 50 10
-63138 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 51 12
-63148 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 51 22
-63164 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 52 12
-63174 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 52 40
-63185 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 52 49
-63200 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 52 58
-63205 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 52 12
-63216 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 54 12
-63226 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 54 40
-63237 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 54 50
-63247 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 54 60
-63259 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 54 68
-63269 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 54 77
-63285 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 54 87
-63290 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 54 12
-63311 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 57 10
-63330 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 58 12
-63340 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 58 22
-63356 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 59 12
-63366 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 59 40
-63377 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 59 49
-63392 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 59 58
-63397 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 59 12
-63408 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 61 12
-63418 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 61 40
-63429 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 61 50
-63439 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 61 60
-63451 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 61 68
-63461 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 61 77
-63477 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 61 87
-63482 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 61 12
-63503 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 64 11
-63522 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 65 8
-63532 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 65 36
-63543 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 65 45
-63553 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 65 54
-63569 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 65 64
-63574 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 65 8
-63595 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 67 10
-63614 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 68 8
-63624 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 68 36
-63635 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 68 45
-63645 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 68 54
-63661 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 68 64
-63666 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 68 8
-63687 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 71 11
-63742 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 94 8
-63757 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 94 8
-63772 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 94 8
-63787 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 95 16
-63792 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 95 26
-63802 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 96 16
-63807 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 96 27
-63812 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 96 30
-63831 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 96 46
-63836 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 96 56
-63841 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 96 46
-63857 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 96 16
-63872 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 98 21
-63877 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 98 31
-63887 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 99 16
-63892 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 99 27
-63897 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 99 30
-63916 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 99 46
-63921 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 99 56
-63926 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 99 46
-63942 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 99 16
-63957 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 101 21
-63962 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 101 31
-63972 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 102 16
-63977 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 102 27
-63982 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 102 30
-64001 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 102 46
-64006 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 102 57
-64011 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 102 46
-64027 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 102 16
-64042 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 104 21
-64047 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 104 31
-64057 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 105 16
-64062 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 105 27
-64067 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 105 30
-64086 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 105 46
-64091 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 105 56
-64096 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 105 46
-64112 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 105 16
-64127 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 107 16
-64137 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 120 8
-64152 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 120 8
-64167 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 120 27
-64172 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 120 48
-64182 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 120 27
-64193 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 120 27
-64224 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 129 21
-64234 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 121 12
-64249 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 122 20
-64254 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 122 38
-64259 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 122 40
-64276 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 123 20
-64281 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 123 43
-64286 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 123 30
-64292 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 123 47
-64297 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 123 20
-64312 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 126 20
-64322 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 111 8
-64337 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 111 24
-64342 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 111 37
-64347 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 111 24
-64358 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 111 24
-64389 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 117 21
-64399 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 112 12
-64414 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 113 23
-64429 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 114 24
-64444 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 115 31
-64450 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 115 37
-64470 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 83 8
-64485 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 83 8
-64500 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 84 16
-64505 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 84 21
-64516 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 85 30
-64521 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 85 32
-64541 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 87 21
-64546 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 87 26
-64557 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 88 30
-64562 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 88 32
-64582 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 90 30
-64587 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 90 32
-64607 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 72 8
-64622 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 72 26
-64627 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 72 47
-64632 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 72 26
-64643 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 72 26
-64674 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 80 21
-64684 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 73 12
-64699 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 74 20
-64704 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 74 36
-64709 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 74 38
-64726 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 75 25
-64741 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 77 20
-64746 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 130 0
-64752 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 242 0
-64778 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 243 4
-64787 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 243 13
-64792 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 243 24
-64798 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 243 13
-64809 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 245 11
-64814 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 245 29
-64819 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 245 11
-64830 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 245 11
-64861 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 247 22
-64866 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 247 22
-64872 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 247 45
-64887 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 246 8
-64902 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 246 25
-64907 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 246 25
-64913 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 246 53
-64928 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 248 0
-64934 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 11 0
-64966 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 12 4
-64975 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 12 16
-64985 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 12 25
-64991 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 12 50
-64995 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 12 16
-65006 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 13 4
-65011 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 13 20
-65017 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 13 31
-65031 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 14 12
-65036 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 14 24
-65042 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 14 51
-65046 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 14 12
-65057 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 15 19
-65062 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 15 28
-65068 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 15 55
-65072 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 15 19
-65083 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 16 16
-65088 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 16 25
-65094 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 16 16
-65105 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 17 16
-65110 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 17 25
-65116 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 17 16
-65127 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 18 12
-65132 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 18 26
-65137 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 18 45
-65142 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 18 47
-65152 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 18 12
-65163 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 19 19
-65168 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 19 19
-65174 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 19 48
-65183 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 20 16
-65188 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 20 20
-65194 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 20 16
-65205 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 21 12
-65210 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 21 26
-65215 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 21 45
-65220 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 21 47
-65230 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 21 12
-65241 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 23 12
-65246 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 23 26
-65251 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 23 45
-65256 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 23 47
-65266 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 23 12
-65278 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 13 4
-65288 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 24 0
-65294 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 7 0
-65316 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 8 4
-66981 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 8 4
-66991 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 9 0
-66997 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 28 0
-67011 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 30 4
-67020 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 30 11
-67030 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 30 11
-67041 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 33 40
-67052 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 35 21
-67159 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 37 8
-67164 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 37 16
-67172 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 38 2
-67214 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 38 2
-67221 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 39 2
-67226 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 39 2
-67233 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 40 2
-67238 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 40 2
-67253 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 42 12
-67259 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 42 35
-67264 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 42 41
-67269 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 42 12
-67280 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 43 2
-67285 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 43 2
-67292 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 45 49
-67297 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 45 69
-67302 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 45 49
-67313 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 46 8
-67365 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 46 46
-67370 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 46 46
-67377 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 46 8
-67384 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 48 15
-67389 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 48 15
-67400 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 48 15
-67431 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 50 21
-67479 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 50 21
-67490 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 49 12
-67505 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 49 24
-67510 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 49 32
-67516 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 49 54
-67525 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 49 62
-67530 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 49 62
-67537 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 49 24
-67544 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 53 2
-67549 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 53 2
-67559 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 54 0
-67584 --end-- 0 -1
+59603 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 219 0
+59623 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 220 4
+59632 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 220 11
+59654 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 247 16
+59659 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 247 24
+59670 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 248 13
+59675 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 248 15
+59690 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 250 13
+59695 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 250 15
+59710 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 221 8
+59725 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 221 8
+59740 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 221 8
+59755 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 222 16
+59760 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 222 24
+59770 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 223 22
+59774 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 223 27
+59779 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 223 40
+59784 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 223 27
+59790 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 223 44
+59795 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 223 57
+59800 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 223 44
+59816 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 225 21
+59821 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 225 29
+59831 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 226 22
+59835 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 226 27
+59840 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 226 40
+59845 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 226 27
+59851 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 226 44
+59856 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 226 57
+59861 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 226 44
+59877 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 228 21
+59882 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 228 29
+59892 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 229 22
+59896 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 229 33
+59900 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 229 38
+59905 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 229 51
+59910 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 229 38
+59916 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 229 55
+59926 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 229 65
+59930 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 229 70
+59935 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 229 83
+59940 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 229 70
+59946 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 229 87
+59966 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 231 21
+59971 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 231 29
+59981 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 232 23
+60003 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 240 36
+60007 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 240 47
+60011 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 240 58
+60015 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 240 63
+60020 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 240 76
+60025 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 240 63
+60031 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 240 80
+60041 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 240 90
+60045 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 240 95
+60050 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 240 108
+60055 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 240 95
+60061 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 240 112
+60076 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 240 123
+60080 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 240 128
+60085 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 240 131
+60105 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 233 20
+60120 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 233 20
+60135 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 234 28
+60140 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 234 33
+60151 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 235 34
+60155 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 235 39
+60160 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 235 46
+60168 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 235 54
+60194 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 237 34
+60198 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 237 45
+60202 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 237 56
+60206 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 237 61
+60211 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 237 74
+60216 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 237 61
+60222 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 237 78
+60232 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 237 88
+60236 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 237 93
+60241 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 237 106
+60246 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 237 93
+60252 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 237 110
+60267 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 237 121
+60271 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 237 126
+60276 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 237 129
+60296 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 243 25
+60301 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 243 27
+60311 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 251 0
+60317 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 165 0
+60335 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 166 4
+60344 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 166 34
+60366 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 210 18
+60376 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 167 8
+60391 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 167 8
+60406 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 167 8
+60421 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 168 16
+60426 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 168 24
+60436 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 169 33
+60441 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 169 33
+60452 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 170 34
+60457 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 170 34
+60468 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 171 20
+60473 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 171 47
+60478 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 171 49
+60494 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 172 20
+60504 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 174 25
+60509 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 174 53
+60514 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 174 55
+60530 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 175 20
+60540 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 177 26
+60544 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 177 31
+60549 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 177 47
+60564 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 180 21
+60569 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 180 29
+60579 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 181 33
+60584 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 181 33
+60595 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 182 34
+60600 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 182 34
+60611 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 183 20
+60616 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 183 47
+60621 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 183 49
+60637 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 184 29
+60642 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 184 31
+60657 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 186 25
+60662 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 186 53
+60667 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 186 55
+60683 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 187 29
+60688 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 187 31
+60703 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 189 25
+60708 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 189 52
+60713 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 189 54
+60729 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 190 20
+60739 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 192 25
+60744 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 192 53
+60749 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 192 55
+60765 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 193 20
+60775 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 195 26
+60779 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 195 31
+60784 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 195 47
+60799 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 198 21
+60804 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 198 29
+60814 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 199 33
+60819 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 199 33
+60830 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 200 34
+60835 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 200 34
+60846 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 201 20
+60851 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 201 47
+60856 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 201 49
+60872 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 202 29
+60877 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 202 31
+60892 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 204 26
+60896 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 204 31
+60901 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 204 47
+60916 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 207 22
+60921 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 207 28
+60926 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 207 28
+60932 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 207 41
+60937 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 207 41
+60953 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 212 8
+60958 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 212 32
+60969 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 213 8
+60979 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 215 8
+60984 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 215 8
+60994 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 216 0
+61000 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 39 0
+61019 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 40 4
+61028 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 40 15
+61047 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 41 15
+61052 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 41 28
+61057 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 41 15
+61068 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 41 15
+61099 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 46 21
+61109 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 42 12
+61124 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 42 32
+61129 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 42 45
+61134 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 42 32
+61145 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 42 32
+61176 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 44 25
+61186 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 43 16
+61201 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 43 30
+61206 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 43 45
+61211 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 43 30
+61232 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 50 10
+61251 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 51 12
+61261 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 51 22
+61277 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 52 12
+61287 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 52 40
+61298 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 52 49
+61313 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 52 58
+61318 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 52 12
+61329 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 54 12
+61339 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 54 40
+61350 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 54 50
+61360 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 54 60
+61372 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 54 68
+61382 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 54 77
+61398 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 54 87
+61403 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 54 12
+61424 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 57 10
+61443 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 58 12
+61453 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 58 22
+61469 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 59 12
+61479 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 59 40
+61490 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 59 49
+61505 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 59 58
+61510 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 59 12
+61521 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 61 12
+61531 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 61 40
+61542 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 61 50
+61552 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 61 60
+61564 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 61 68
+61574 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 61 77
+61590 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 61 87
+61595 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 61 12
+61616 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 64 11
+61635 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 65 8
+61645 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 65 36
+61656 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 65 45
+61666 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 65 54
+61682 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 65 64
+61687 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 65 8
+61708 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 67 10
+61727 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 68 8
+61737 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 68 36
+61748 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 68 45
+61758 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 68 54
+61774 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 68 64
+61779 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 68 8
+61800 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 71 11
+61855 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 94 8
+61870 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 94 8
+61885 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 94 8
+61900 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 95 16
+61905 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 95 26
+61915 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 96 16
+61920 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 96 27
+61925 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 96 30
+61944 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 96 46
+61949 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 96 56
+61954 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 96 46
+61970 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 96 16
+61985 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 98 21
+61990 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 98 31
+62000 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 99 16
+62005 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 99 27
+62010 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 99 30
+62029 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 99 46
+62034 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 99 56
+62039 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 99 46
+62055 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 99 16
+62070 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 101 21
+62075 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 101 31
+62085 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 102 16
+62090 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 102 27
+62095 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 102 30
+62114 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 102 46
+62119 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 102 57
+62124 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 102 46
+62140 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 102 16
+62155 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 104 21
+62160 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 104 31
+62170 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 105 16
+62175 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 105 27
+62180 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 105 30
+62199 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 105 46
+62204 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 105 56
+62209 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 105 46
+62225 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 105 16
+62240 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 107 16
+62250 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 120 8
+62265 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 120 8
+62280 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 120 27
+62285 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 120 48
+62295 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 120 27
+62306 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 120 27
+62337 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 129 21
+62347 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 121 12
+62362 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 122 20
+62367 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 122 38
+62372 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 122 40
+62389 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 123 20
+62394 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 123 43
+62399 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 123 30
+62405 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 123 47
+62410 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 123 20
+62425 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 126 20
+62435 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 111 8
+62450 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 111 24
+62455 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 111 37
+62460 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 111 24
+62471 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 111 24
+62502 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 117 21
+62512 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 112 12
+62527 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 113 23
+62542 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 114 24
+62557 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 115 31
+62563 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 115 37
+62583 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 83 8
+62598 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 83 8
+62613 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 84 16
+62618 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 84 21
+62629 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 85 30
+62634 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 85 32
+62654 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 87 21
+62659 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 87 26
+62670 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 88 30
+62675 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 88 32
+62695 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 90 30
+62700 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 90 32
+62720 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 72 8
+62735 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 72 26
+62740 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 72 47
+62745 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 72 26
+62756 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 72 26
+62787 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 80 21
+62797 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 73 12
+62812 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 74 20
+62817 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 74 36
+62822 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 74 38
+62839 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 75 25
+62854 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 77 20
+62859 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 130 0
+62865 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 134 0
+62885 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 135 4
+62894 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 135 11
+62924 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 151 18
+62934 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 149 8
+62949 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 149 8
+62964 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 149 20
+62969 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 149 53
+62974 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 149 40
+62980 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 149 31
+62986 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 149 20
+63001 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 150 8
+63016 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 150 21
+63021 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 150 21
+63032 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 152 0
+63038 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 156 0
+63064 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 157 4
+63073 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 157 13
+63078 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 157 24
+63084 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 157 13
+63095 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 159 11
+63100 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 159 29
+63105 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 159 11
+63116 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 159 11
+63147 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 161 22
+63152 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 161 22
+63158 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 161 45
+63173 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 160 8
+63188 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 160 25
+63193 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 160 25
+63199 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 160 53
+63214 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix.flow 162 0
+63220 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 11 0
+63252 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 12 4
+63261 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 12 16
+63271 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 12 25
+63277 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 12 50
+63281 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 12 16
+63292 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 13 4
+63297 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 13 20
+63303 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 13 31
+63317 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 14 12
+63322 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 14 24
+63328 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 14 51
+63332 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 14 12
+63343 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 15 19
+63348 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 15 28
+63354 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 15 55
+63358 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 15 19
+63369 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 16 16
+63374 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 16 25
+63380 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 16 16
+63391 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 17 16
+63396 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 17 25
+63402 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 17 16
+63413 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 18 12
+63418 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 18 26
+63423 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 18 45
+63428 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 18 47
+63438 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 18 12
+63449 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 19 19
+63454 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 19 19
+63460 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 19 48
+63469 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 20 16
+63474 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 20 20
+63480 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 20 16
+63491 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 21 12
+63496 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 21 26
+63501 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 21 45
+63506 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 21 47
+63516 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 21 12
+63527 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 23 12
+63532 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 23 26
+63537 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 23 45
+63542 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 23 47
+63552 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 23 12
+63564 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 13 4
+63574 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 24 0
+63580 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 7 0
+63602 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 8 4
+65267 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 8 4
+65277 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 9 0
+65283 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 28 0
+65297 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 30 4
+65306 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 30 11
+65316 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 30 11
+65327 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 33 40
+65338 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 35 21
+65445 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 37 8
+65450 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 37 16
+65458 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 38 2
+65500 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 38 2
+65507 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 39 2
+65512 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 39 2
+65519 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 40 2
+65524 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 40 2
+65539 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 42 12
+65545 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 42 35
+65550 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 42 41
+65555 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 42 12
+65566 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 43 2
+65571 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 43 2
+65578 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 45 49
+65583 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 45 69
+65588 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 45 49
+65599 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 46 8
+65651 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 46 46
+65656 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 46 46
+65663 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 46 8
+65670 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 48 15
+65675 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 48 15
+65686 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 48 15
+65717 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 50 21
+65765 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 50 21
+65776 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 49 12
+65791 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 49 24
+65796 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 49 32
+65802 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 49 54
+65811 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 49 62
+65816 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 49 62
+65823 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 49 24
+65830 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 53 2
+65835 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 53 2
+65845 /home/dlaaren/Desktop/flow9-labs/2nd-pack/infix_calculator.flow 54 0
+65870 --end-- 0 -1
 
 L 3798 1 0 x
 L 3798 1 1 y
@@ -8212,96 +8062,87 @@ L 59151 1 0 expr
 L 59623 0 2 name
 L 59623 0 3 l
 L 59623 0 4 r
+L 59623 0 5 left
+L 59623 0 6 right
 L 59623 1 0 expr
 L 59623 1 1 x
-L 60122 0 1 name
-L 60122 0 2 l
-L 60122 0 3 r
-L 60122 0 4 simplifiedLeft
-L 60122 0 5 simplifiedRight
-L 60122 0 6 simplifiedExpression
-L 60122 1 0 expr
-L 60784 0 1 OpName
-L 60784 0 2 l
-L 60784 0 3 r
-L 60784 0 4 left
-L 60784 0 5 right
-L 60784 0 6 v
-L 60784 0 7 leftL
-L 60784 0 8 rightL
-L 60784 0 9 leftR
-L 60784 0 10 rightR
-L 60784 0 11 v1
-L 60784 0 12 vl
-L 60784 0 13 var
-L 60784 1 0 expr
-L 62906 0 2 getValue
-L 62906 0 3 add
-L 62906 0 4 sub
-L 62906 0 5 mult
-L 62906 0 6 div
-L 62906 0 7 OpName
-L 62906 0 8 l
-L 62906 0 9 r
-L 62906 0 10 e
-L 62906 0 11 x
-L 62906 0 12 gsymswitch4
-L 62906 0 13 value
-L 62906 0 14 gsymswitch3
-L 62906 0 15 left
-L 62906 0 16 right
-L 62906 0 17 var
-L 62906 0 18 gsymswitch2
-L 62906 0 19 num
-L 62906 1 0 expr
-L 62906 1 1 VarsTree
-L 62925 0 3 gsymswitch0
-L 62925 0 4 left
-L 62925 0 5 gsymswitch1
-L 62925 0 6 right
-L 62925 1 0 l
-L 62925 1 1 r
-L 62925 1 2 operator
-L 62925 2 0 VarsTree
-L 63129 1 0 left
-L 63129 1 1 right
-L 63129 2 0 VarsTree
-L 63321 1 0 left
-L 63321 1 1 right
-L 63321 2 0 VarsTree
-L 63513 1 0 left
-L 63513 1 1 right
-L 63513 2 0 VarsTree
-L 63605 1 0 left
-L 63605 1 1 right
-L 63605 2 0 VarsTree
-L 63822 1 0 left
-L 63822 1 1 right
-L 63822 2 0 add
-L 63907 1 0 left
-L 63907 1 1 right
-L 63907 2 0 sub
-L 63992 1 0 left
-L 63992 1 1 right
-L 63992 2 0 mult
-L 64077 1 0 left
-L 64077 1 1 right
-L 64077 2 0 div
-L 64778 0 2 result
-L 64778 0 3 gsymswitch5
-L 64778 0 4 res
-L 64778 1 0 expr
-L 64778 1 1 VarsTree
-L 64966 0 0 variables
-L 65022 0 2 nums
-L 65022 0 3 a
-L 65022 0 4 b
-L 65022 1 0 tree
-L 65022 1 1 variable
-L 67011 0 0 expr
-L 67011 0 1 VarsTree
-L 67011 0 2 usage
-L 67011 0 3 e
-L 67011 0 4 result
-L 67011 0 5 gsymswitch0
-L 67011 0 6 res
+L 60335 0 1 name
+L 60335 0 2 l
+L 60335 0 3 r
+L 60335 0 4 simplifiedLeft
+L 60335 0 5 simplifiedRight
+L 60335 0 6 simplifiedExpression
+L 60335 1 0 expr
+L 61019 0 2 getValue
+L 61019 0 3 add
+L 61019 0 4 sub
+L 61019 0 5 mult
+L 61019 0 6 div
+L 61019 0 7 OpName
+L 61019 0 8 l
+L 61019 0 9 r
+L 61019 0 10 e
+L 61019 0 11 x
+L 61019 0 12 gsymswitch4
+L 61019 0 13 value
+L 61019 0 14 gsymswitch3
+L 61019 0 15 left
+L 61019 0 16 right
+L 61019 0 17 var
+L 61019 0 18 gsymswitch2
+L 61019 0 19 num
+L 61019 1 0 expr
+L 61019 1 1 VarsTree
+L 61038 0 3 gsymswitch0
+L 61038 0 4 left
+L 61038 0 5 gsymswitch1
+L 61038 0 6 right
+L 61038 1 0 l
+L 61038 1 1 r
+L 61038 1 2 operator
+L 61038 2 0 VarsTree
+L 61242 1 0 left
+L 61242 1 1 right
+L 61242 2 0 VarsTree
+L 61434 1 0 left
+L 61434 1 1 right
+L 61434 2 0 VarsTree
+L 61626 1 0 left
+L 61626 1 1 right
+L 61626 2 0 VarsTree
+L 61718 1 0 left
+L 61718 1 1 right
+L 61718 2 0 VarsTree
+L 61935 1 0 left
+L 61935 1 1 right
+L 61935 2 0 add
+L 62020 1 0 left
+L 62020 1 1 right
+L 62020 2 0 sub
+L 62105 1 0 left
+L 62105 1 1 right
+L 62105 2 0 mult
+L 62190 1 0 left
+L 62190 1 1 right
+L 62190 2 0 div
+L 62885 0 1 e
+L 62885 0 2 x
+L 62885 1 0 expr
+L 63064 0 2 result
+L 63064 0 3 gsymswitch5
+L 63064 0 4 res
+L 63064 1 0 expr
+L 63064 1 1 VarsTree
+L 63252 0 0 variables
+L 63308 0 2 nums
+L 63308 0 3 a
+L 63308 0 4 b
+L 63308 1 0 tree
+L 63308 1 1 variable
+L 65297 0 0 expr
+L 65297 0 1 VarsTree
+L 65297 0 2 usage
+L 65297 0 3 e
+L 65297 0 4 result
+L 65297 0 5 gsymswitch0
+L 65297 0 6 res
