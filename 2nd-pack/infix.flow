@@ -140,7 +140,21 @@ streamline(expr: Expression) -> Expression {
                     
                 }
             }
-
+            else if (OpName == "-") {
+                switch(l) {
+                    
+                }
+            }
+            else if (OpName == "*") {
+                switch(l) {
+                    
+                }
+            }
+            else if (OpName == "/") {
+                switch(l) {
+                    
+                }
+            }
             else {
                 expr;
             }

@@ -7,9 +7,9 @@
 // so the same for other operations
 
 add     = ws sub:l ws "+" ws add:r ws               { BinOp("+",:l,:r) } | sub;
-sub     = ws mult:l ws "-" ws sub:r ws              { BinOp("-",:l,:r) } | mult;
-mult    = ws div:l ws "*" ws mult:r ws              { BinOp("*",:l,:r) } | div;
-div     = !"d/d" ws diff:l ws "/" ws div:r ws       { BinOp("/",:l,:r) } | diff;
+sub     = ws div:l ws "-" ws sub:r ws               { BinOp("-",:l,:r) } | div;
+div     = !"d/d" ws mult:l ws "/" ws div:r ws       { BinOp("/",:l,:r) } | mult;
+mult    = ws diff:l ws "*" ws mult:r ws             { BinOp("*",:l,:r) } | diff;
 diff    = ws "d/d" var:x ws "(" ws add:e ws ")" ws  { Diff(:e,:x) } | neg;
 neg     = ws "-" ws "(" ws add:e ws ")" ws          { Neg(:e) } | 
           ws "-" ws (rational|var):e ws             { Neg(:e) } | atom;
