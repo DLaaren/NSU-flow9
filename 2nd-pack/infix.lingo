@@ -7,9 +7,12 @@
 // so the same for other operations
 
 add     = ws sub:l ws "+" ws add:r ws               { BinOp("+",:l,:r) } | sub;
-sub     = ws div:l ws "-" ws sub:r ws               { BinOp("-",:l,:r) } | div;
-div     = !"d/d" ws mult:l ws "/" ws div:r ws       { BinOp("/",:l,:r) } | mult;
-mult    = ws diff:l ws "*" ws mult:r ws             { BinOp("*",:l,:r) } | diff;
+sub     = ws div:l ws rsub+:r ws                    { buildOp("-",:l,:r) } | mult;
+rsub    = ws "-" ws mult:val ws                     { :val };
+mult    = ws div:l ws rmult+:r                       { buildOp("*",:l,:r) } | div;
+rmult   = ws "*" ws div:val ws                      { :val };
+div     = ws diff:l ws rdiv+:r                      { buildOp("/",:l,:r) } | diff;
+rdiv    = ws "/" ws diff:val ws { :val };
 diff    = ws "d/d" var:x ws "(" ws add:e ws ")" ws  { Diff(:e,:x) } | neg;
 neg     = ws "-" ws "(" ws add:e ws ")" ws          { Neg(:e) } | 
           ws "-" ws (rational|var):e ws             { Neg(:e) } | atom;
@@ -33,11 +36,3 @@ digit = '0'-'9';
 
 // zero, one or more spaces are allowed              
 ws = (' '|'\r'|'\n'|'\t')*;
-
-
-// реализовать левую ассоциативность 
-//sub = mult:l ("-" mult:r {:r})*:tail  {} 
-
-//10 - 8 + 2 - 6 - 4  == test
-
-// normalization function

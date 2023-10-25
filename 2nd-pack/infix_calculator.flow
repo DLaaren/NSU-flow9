@@ -4,8 +4,20 @@ import math/math;
 
 import infix;
 
+buildOp(xs : [flow]) {
+	fold(xs[2], xs[1], \acc, x -> BinOp(xs[0], acc, x));
+}
+
 lingoGrammar() {
     compilePegGrammar("#include infix.lingo");
+}
+
+parse(source: string) {
+	specialPegActions = {
+		t1 = setTree(defaultPegActions.t, "buildOp", buildOp);
+		SemanticActions(t1);
+	}
+	parsic(lingoGrammar(), source, specialPegActions);
 }
 
 inputVariablesIntoTree() -> Tree<string, Rational> {
@@ -39,7 +51,7 @@ main() {
 		println(usage);
 		quit(-1);
 	} else {
-        e = parsic(lingoGrammar(), expr, defaultPegActions);
+        e = parse(expr);
 		println(e);
 
         result : Pair<string, Maybe<Rational>> = calculateWrapper(e, VarsTree);
