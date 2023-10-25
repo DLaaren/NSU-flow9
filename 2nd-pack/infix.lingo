@@ -33,3 +33,11 @@ digit = '0'-'9';
 
 // zero, one or more spaces are allowed              
 ws = (' '|'\r'|'\n'|'\t')*;
+
+
+// реализовать левую ассоциативность 
+//sub = mult:l ("-" mult:r {:r})*:tail  {} 
+
+//10 - 8 + 2 - 6 - 4  == test
+
+// normalization function

@@ -8,6 +8,9 @@ export {
 
     Var(var : string);
     Rational(l: int, r : int);
+    Error = Rational(0,0);
+    RationalOne = Rational(1,1);
+    RationalZero = Rational(0,1);
     BinOp(OpName : string, l : Expression, r : Expression);
     Neg(e: Expression);
     Diff(e : Expression, x : Var);
@@ -71,7 +74,7 @@ calculate(expr: Expression, VarsTree: Tree<string, Rational>) -> Maybe<Rational>
     switch(expr) {
         Var(var) : switch(lookupTree(VarsTree, var)) {
             Some(num) : {
-                if (num != Rational(0,0)) {
+                if (num != Error) {
                     Some(num);
                 } else {
                     None();
@@ -81,14 +84,7 @@ calculate(expr: Expression, VarsTree: Tree<string, Rational>) -> Maybe<Rational>
         }
 
         Rational(l, r) : {
-            if (l == 0) {
-                Some(Rational(0,1));
-            }
-            else if (l == r) {
-                Some(Rational(1,1));
-            } else {
-                Some(Rational(l,r));
-            }
+            Some(Rational(l,r));
         }
 
         BinOp(OpName, l, r) : {
@@ -119,7 +115,7 @@ calculate(expr: Expression, VarsTree: Tree<string, Rational>) -> Maybe<Rational>
  
         Diff(e,x) : switch(lookupTree(VarsTree, x.var)) {
             Some(value) : {
-                if (value != Rational(0,0)) {
+                if (value != Error) {
                     calculate(derivation(e,x), VarsTree);
                 }
                 else {
@@ -131,35 +127,31 @@ calculate(expr: Expression, VarsTree: Tree<string, Rational>) -> Maybe<Rational>
     }
 }
 
-streamline(expr: Expression) -> Expression {
-    switch(expr) {
-        /*
-        BinOp(OpName, l, r) : {
-            if (OpName == "+") {
-                switch(l) {
-                    
-                }
+normalization(result : Maybe<Rational>) -> Maybe<Rational> {
+    switch(result) {
+        Some(res) : {
+            if (res.r == 0) {
+                None();
             }
-            else if (OpName == "-") {
-                switch(l) {
-                    
-                }
+            else if (res.l == 0 && res.r == 1) {
+                Some(RationalZero);
             }
-            else if (OpName == "*") {
-                switch(l) {
-                    
-                }
-            }
-            else if (OpName == "/") {
-                switch(l) {
-                    
-                }
+            else if (res.l == res.r) {
+                Some(RationalOne);
             }
             else {
-                expr;
+                gcd = gcd(res.l, res.r);
+                Some(Rational(res.l / gcd, res.r / gcd));
             }
         }
-        */
+        None() : None();
+    }
+}
+
+streamline(expr: Expression) -> Expression {
+    switch(expr) {
+        // either    : (m : Maybe<?>, alternative: ?) -> ?;
+        Rational(l,r) : either(normalization(Some(expr)), Error);
         Diff(e,x) : streamline(simplify(derivation(e,x)));
         Neg(e) : Neg(streamline(e));
         default : expr;
@@ -170,52 +162,61 @@ streamline(expr: Expression) -> Expression {
 calculateWrapper(expr: Expression, VarsTree: Tree<string, Rational>) -> Pair<string, Maybe<Rational>> {
     result = streamline(simplify(expr));
 
-    switch(calculate(result, VarsTree)) {
+    switch(normalization(calculate(result, VarsTree))) {
         Some(res) : Pair(InfixToString(result), Some(res));
         None() : Pair(InfixToString(result), None());
     }
 }
 
 simplify(expr: Expression) -> Expression {
+    // normalization
+    // -0 = 0
+    // - - 1 = 1
     simplifiedExpression = switch(expr) {
         BinOp(name, l, r) : {
+            simplifiedLeft = simplify(l);
+            simplifiedRight = simplify(r);
             if (name == "+") {
-                simplifiedLeft = simplify(l);
-                simplifiedRight = simplify(r);
-                if (simplifiedLeft == Rational(0,1)) {
+                if (simplifiedLeft == RationalZero) {
                     simplifiedRight;
                 }
-                else if (simplifiedRight == Rational(0,1)) {
+                else if (simplifiedRight == RationalZero) {
                     simplifiedLeft;
                 } else {
                     BinOp("+", simplifiedLeft, simplifiedRight);
                 }
             }
+            else if (name == "-") {
+                if (simplifiedLeft == RationalZero) {
+                    Neg(simplifiedRight);
+                }
+                else if (simplifiedRight == RationalZero) {
+                    simplifiedLeft;
+                } else {
+                    BinOp("-", simplifiedLeft, simplifiedRight);
+                }
+            }
             else if (name == "*") {
-                simplifiedLeft = simplify(l);
-                simplifiedRight = simplify(r);
-                if (simplifiedLeft == Rational(0,1)) {
-                    Rational(0,1);
+                if (simplifiedLeft == RationalZero) {
+                    RationalZero;
                 }
-                else if (simplifiedRight == Rational(0,1)) {
-                    Rational(0,1);
+                else if (simplifiedRight == RationalZero) {
+                    RationalZero;
                 }
-                else if (simplifiedLeft == Rational(1,1)) {
+                else if (simplifiedLeft == RationalOne) {
                     simplifiedRight;
                 }
-                else if (simplifiedRight == Rational(1,1)) {
+                else if (simplifiedRight == RationalOne) {
                     simplifiedLeft;
                 } else {
                     BinOp("*", simplifiedLeft, simplifiedRight);
                 }
             } 
             else if (name == "/") {
-                simplifiedLeft = simplify(l);
-                simplifiedRight = simplify(r);
-                if (simplifiedLeft == Rational(0,1)) {
-                    Rational(0,1);
+                if (simplifiedLeft == RationalZero) {
+                    RationalZero;
                 }
-                else if (simplifiedRight == Rational(1,1)) {
+                else if (simplifiedRight == RationalOne) {
                     simplifiedLeft;
                 } else {
                     BinOp("/", simplifiedLeft, simplifiedRight);
@@ -235,6 +236,7 @@ simplify(expr: Expression) -> Expression {
 
 derivation(expr : Expression, x : Var) -> Expression {
     switch(expr) {
+        // der l, x    der r,x   
         BinOp(name, l, r) : {
             if (name == "+") {
                 BinOp("+", derivation(l,x), derivation(r,x));
@@ -257,14 +259,14 @@ derivation(expr : Expression, x : Var) -> Expression {
                     default : BinOp("/", BinOp("-", BinOp("*", derivation(l,x), r), BinOp("*", derivation(r,x), l)), BinOp("*", r, r));
                 }
             } else {
-                Rational(0,1);
+                RationalZero;
             }
         }   
         default : {
             if (expr == x) {
-				Rational(1,1);
+				RationalOne;
 			} else {
-				Rational(0,1);
+				RationalZero;
 			}
         }
     }
