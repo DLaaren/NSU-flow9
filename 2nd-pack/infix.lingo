@@ -7,9 +7,9 @@
 // so the same for other operations
 
 add     = ws sub:l ws "+" ws add:r ws               { BinOp("+",:l,:r) } | sub;
-sub     = ws div:l ws rsub+:r ws                    { buildOp("-",:l,:r) } | mult;
+sub     = ws mult:l ws rsub+:r ws                   { buildOp("-",:l,:r) } | mult;
 rsub    = ws "-" ws mult:val ws                     { :val };
-mult    = ws div:l ws rmult+:r                       { buildOp("*",:l,:r) } | div;
+mult    = ws div:l ws rmult+:r                      { buildOp("*",:l,:r) } | div;
 rmult   = ws "*" ws div:val ws                      { :val };
 div     = ws diff:l ws rdiv+:r                      { buildOp("/",:l,:r) } | diff;
 rdiv    = ws "/" ws diff:val ws { :val };

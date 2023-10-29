@@ -169,7 +169,7 @@ calculateWrapper(expr: Expression, VarsTree: Tree<string, Rational>) -> Pair<str
 }
 
 simplify(expr: Expression) -> Expression {
-    // normalization
+    // todo :: remove rebundant negs
     // -0 = 0
     // - - 1 = 1
     simplifiedExpression = switch(expr) {

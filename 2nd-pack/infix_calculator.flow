@@ -32,7 +32,7 @@ inputVariablesIntoTree() -> Tree<string, Rational> {
             a = s2i(getUrlParameter(variable));
             setTree(tree, variable, Rational(a,1));
         } else {
-            setTree(tree, variable, Rational(0,0));
+            setTree(tree, variable, Error);
         }
     });
 }
