@@ -20,6 +20,7 @@ export {
     calculateWrapper(expr: Expression, VarsTree: Tree<string, Rational>) -> Pair<string, Maybe<Rational>>;
 }
 
+
 InfixToString(expr: Expression) -> string {
     switch(expr) {
         Var(var) : var;
@@ -148,19 +149,8 @@ normalization(result : Maybe<Rational>) -> Maybe<Rational> {
     }
 }
 
-streamline(expr: Expression) -> Expression {
-    switch(expr) {
-        // either    : (m : Maybe<?>, alternative: ?) -> ?;
-        Rational(l,r) : either(normalization(Some(expr)), Error);
-        Diff(e,x) : streamline(simplify(derivation(e,x)));
-        Neg(e) : Neg(streamline(e));
-        default : expr;
-    }
-}
-
-
 calculateWrapper(expr: Expression, VarsTree: Tree<string, Rational>) -> Pair<string, Maybe<Rational>> {
-    result = streamline(simplify(expr));
+    result = simplify(expr);
 
     switch(normalization(calculate(result, VarsTree))) {
         Some(res) : Pair(InfixToString(result), Some(res));
@@ -236,7 +226,6 @@ simplify(expr: Expression) -> Expression {
 
 derivation(expr : Expression, x : Var) -> Expression {
     switch(expr) {
-        // der l, x    der r,x   
         BinOp(name, l, r) : {
             if (name == "+") {
                 BinOp("+", derivation(l,x), derivation(r,x));
@@ -252,7 +241,8 @@ derivation(expr : Expression, x : Var) -> Expression {
                     Rational(left, right) : {
                         if (r == x) {
                             BinOp("*", l, Var("ln " + x.var));
-                        } else {
+                        } 
+                        else {
                             BinOp("/", BinOp("-", BinOp("*", derivation(l,x), r), BinOp("*", derivation(r,x), l)), BinOp("*", r, r));
                         }
                     }
