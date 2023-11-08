@@ -14,6 +14,8 @@ export {
     BinOp(OpName : string, l : Expression, r : Expression);
     Neg(e: Expression);
     Diff(e : Expression, x : Var);
+    Polynom(num : Expression, denom : Expression);
+    PolynomError = Polynom(Error, Error);
 
     InfixToString(expr: Expression) -> string;
     calculate(expr: Expression, VarsTree: Tree<string, Rational>) -> Maybe<Rational>;
@@ -142,7 +144,12 @@ normalization(result : Maybe<Rational>) -> Maybe<Rational> {
             }
             else {
                 gcd = gcd(res.l, res.r);
-                Some(Rational(res.l / gcd, res.r / gcd));
+                if (gcd < 0) {
+                    Some(Rational(res.l / (-gcd), res.r / (-gcd)));
+                }
+                else {
+                    Some(Rational(res.l / gcd, res.r / gcd));
+                }
             }
         }
         None() : None();
@@ -150,22 +157,474 @@ normalization(result : Maybe<Rational>) -> Maybe<Rational> {
 }
 
 calculateWrapper(expr: Expression, VarsTree: Tree<string, Rational>) -> Pair<string, Maybe<Rational>> {
-    result = simplify(expr);
+    result = deleteRedundant(simplify(deleteRedundant(convertExpressionToPolynom(expr))));
+    
+    calcRes = switch(result) {
+        BinOp(OpName, l, r) : {
+            if (OpName == "/") {
+                calcL = calculate(l, VarsTree);
+                calcR = calculate(r, VarsTree);
+                if (!isNone(calcL) && !isNone(calcR)) {
+                    BinOp("/", either(calcL,Error), either(calcR, Error));
+                }
+                else if (!isNone(calcL)) {
+                    BinOp("/", either(calcL,Error), r);
+                }
+                else if (!isNone(calcR)) {
+                    BinOp("/", l, either(calcR, Error));
+                }
+                else {
+                    result;
+                }
+            } else {
+                result;
+            }
+        }
+        default : result;
+    }
 
-    switch(normalization(calculate(result, VarsTree))) {
-        Some(res) : Pair(InfixToString(result), Some(res));
-        None() : Pair(InfixToString(result), None());
+    switch(normalization(calculate(calcRes, VarsTree))) {
+        Some(res) : Pair(InfixToString(calcRes), Some(res));
+        None() : Pair(InfixToString(calcRes), None());
     }
 }
 
+
 simplify(expr: Expression) -> Expression {
+
+    isRational = \e -> {
+        switch(e) {
+            Rational(l,r) : true;
+            default : false;
+        }
+    }
+
+    getRational = \e -> {
+        if (isRational(e)) {
+            switch(e) {
+                Rational(l,r) : Rational(l,r);
+                default : Error;
+            }
+        }
+        else {
+            Error;
+        }
+    }
+
+    isBinOp = \e -> {
+        switch(e) {
+            BinOp(name,l,r) : true;
+            default : false;
+        }
+    }
+
+    calculateRationals = \op, l, r -> {
+        if (op == "+") {
+            Rational(l.l*r.r + r.l*l.r, l.r*r.r);
+        }
+        else if (op == "-") {
+            Rational(l.l*r.r - r.l*l.r, l.r*r.r);
+        }
+        else if (op == "*") {
+            Rational(l.l*r.l, l.r*r.r);
+        }
+        else if (op == "/") {
+            Rational(l.l*r.r, l.r*r.l);
+        }
+        else {
+            Error;
+        }
+    }
+
+    openBracesWithAdd = \simplL, simplR -> {
+        if (simplL == simplR) {
+            simplify(BinOp("*", Rational(2,1), simplL));
+        }
+        else if (isRational(simplL) && isRational(simplR)) {
+            calculateRationals("+", getRational(simplL), getRational(simplR));
+        }
+        else {
+            switch(simplL) {
+                Rational(l1,r1) : {
+                    switch(simplR) {
+                        BinOp(name, l2, r2) : {
+                            // num1 + (num2 +- x) ==> (num1+num2) +- x
+                            if (isRational(l2) && (name == "+" || name == "-")) {
+
+                                BinOp(name, calculateRationals("+", simplL, getRational(l2)), r2);
+                            }
+                            // num1 + (x +- num2) ==> (num1+-num2) + x
+                            else if (isRational(r2) && (name == "+" || name == "-")) {
+                                BinOp("+", calculateRationals(name, simplL, getRational(r2)), l2);
+                            }
+                            else {
+                                BinOp("+", simplL, simplR);
+                            }
+                        }
+                        default : BinOp("+", simplL, simplR);
+                    }
+                }
+                Var(x) : {
+                    switch(simplR) {
+                        BinOp(name, l1, r1) : {
+                            // x + (x +- b) ==> 2x +- b
+                            if (simplL == l1 && (name == "+" || name == "-")) {
+                                BinOp(name, BinOp("*", Rational(2,1), simplL), r1);
+                            }
+                            // x + (a + x) ==> 2x + a
+                            else if (simplL == r1 && (name == "+")) {
+                                BinOp("+", BinOp("*", Rational(2,1), simplL), l1);
+                            }
+                            // x + (a - x) ==> a
+                            else if (simplL == r1 && (name == "-")) {
+                                l1;
+                            }
+                            // x + (2*x) ==> 3*x
+                            else if (simplL == r1 && name == "*" && isRational(l1)) {
+                                BinOp("*", calculateRationals("+", getRational(l1), RationalOne), r1);
+                            }
+                            // x + (x*2) == > 3*x
+                            else if (simplL == l1 && name == "*" && isRational(r1)) {
+                                BinOp("*", calculateRationals("+", getRational(r1), RationalOne), l1);
+                            }
+                            else {
+                                BinOp("+", simplL, simplR);
+                            }
+                        }
+                        default : BinOp("+", simplL, simplR);
+                    }
+                }
+                BinOp(name1, l1, r1) : {
+                    switch(simplR) {
+                        Rational(l2, r2) : {
+                            // num1 + (num2 +- x) ==> (num1+num2) +- x
+                            if (isRational(l1) && (name1 == "+" || name1 == "-")) {
+
+                                BinOp(name1, calculateRationals("+", simplR, getRational(l1)), r1);
+                            }
+                            // num1 + (x +- num2) ==> (num1+-num2) + x
+                            else if (isRational(r1) && (name1 == "+" || name1 == "-")) {
+                                BinOp("+", calculateRationals(name1, simplR, getRational(r1)), l1);
+                            }
+                            else {
+                                BinOp("+", simplL, simplR);
+                            }
+                        }
+                        Var(x) : {
+                            // (x +- b) + x ==> 2x +- b
+                            if (simplR == l1 && (name1 == "+" || name1 == "-")) {
+                                BinOp(name1, BinOp("*", Rational(2,1), simplR), r1);
+                            }
+                            // (a + x) + x ==> 2x + a
+                            else if (simplR == r1 && (name1 == "+")) {
+                                BinOp("+", BinOp("*", Rational(2,1), simplR), l1);
+                            }
+                            // (a - x) + x ==> a
+                            else if (simplR == r1 && (name1 == "-")) {
+                                l1;
+                            }
+                            // (2*x) + x ==> 3*x
+                            else if (simplR == r1 && name1 == "*" && isRational(l1)) {
+                                BinOp("*", calculateRationals("+", getRational(l1), RationalOne), r1);
+                            }
+                            // (x*2) + x == > 3*x
+                            else if (simplR == l1 && name1 == "*" && isRational(r1)) {
+                                BinOp("*", calculateRationals("+", getRational(r1), RationalOne), l1);
+                            }
+                            else {
+                                BinOp("+", simplL, simplR);
+                            }
+                        }
+                        BinOp(name2, l2, r2) : {
+                            if (name1 == "*" && name2 == "*") {
+                                if (l1 == l2 && isRational(r1) && isRational(r2)) {
+                                    BinOp("*", calculateRationals("+", getRational(r1), getRational(r2)), l1);
+                                }
+                                else if (r1 == l2 && isRational(l1) && isRational(r2)) {
+                                    BinOp("*", calculateRationals("+", getRational(l1), getRational(r2)), r1);
+                                }
+                                else if (l1 == r2 && isRational(r1) && isRational(l2)) {
+                                    BinOp("*", calculateRationals("+", getRational(r1), getRational(l2)), l1);
+                                }
+                                else if (r1 == r2 && isRational(l1) && isRational(l2)) {
+                                    BinOp("*", calculateRationals("+", getRational(l1), getRational(l2)), r1);
+                                }
+                                else {
+                                    BinOp("+", simplL, simplR);
+                                }
+                            }
+                            else {
+                                BinOp("+", simplL, simplR);
+                            }
+                        }
+                        default : BinOp("+", simplL, simplR);
+
+                    }
+                }
+                default : BinOp("+", simplL, simplR);
+            }
+        }
+    }
+
+    openBracesWithSub = \simplL, simplR -> {
+        if (simplL == simplR) {
+            RationalZero;
+        }
+        else if (isRational(simplL) && isRational(simplR)) {
+            calculateRationals("-", getRational(simplL), getRational(simplR));
+        }
+        else {
+            switch(simplL) {
+                Rational(l1,r1) : {
+                    switch(simplR) {
+                        BinOp(name, l2, r2) : {
+                            // num1 - (num2 +- x) ==> (num1-num2) +- x
+                            if (isRational(l2) && (name == "+" || name == "-")) {
+                                BinOp(name, calculateRationals("-", simplL, getRational(l2)), r2);
+                            }
+                            // num1 - (x +- num2) ==> (num1+-num2) - x
+                            else if (isRational(r2) && (name == "+" || name == "-")) {
+                                BinOp("-", calculateRationals(name, simplL, getRational(r2)), l2);
+                            }
+                            else {
+                                BinOp("-", simplL, simplR);
+                            }
+                        }
+                        default : BinOp("-", simplL, simplR);
+                    }
+                }
+                Var(x) : {
+                    switch(simplR) {
+                        BinOp(name, l1, r1) : {
+                            // x - (x +- b) ==> +- b
+                            if (simplL == l1 && (name == "+" || name == "-")) {
+                                BinOp(name, RationalZero, r1);
+                            }
+                            // x - (a + x) ==> - a
+                            else if (simplL == r1 && (name == "+")) {
+                                Neg(l1);
+                            }
+                            // x - (a - x) ==> 2x - a
+                            else if (simplL == r1 && (name == "-")) {
+                                BinOp("-", BinOp("*", Rational(2,1), simplL), l1);
+                            }
+                            // x - (2*x) ==> -1*x
+                            else if (simplL == r1 && name == "*" && isRational(l1)) {
+                                BinOp("*", calculateRationals("-", getRational(l1), RationalOne), r1);
+                            }
+                            // x - (x*2) == > -1*x
+                            else if (simplL == l1 && name == "*" && isRational(r1)) {
+                                BinOp("*", calculateRationals("-", getRational(r1), RationalOne), l1);
+                            }
+                            else {
+                                BinOp("-", simplL, simplR);
+                            }
+                        }
+                        default : BinOp("-", simplL, simplR);
+                    }
+                }
+                BinOp(name1, l1, r1) : {
+                    switch(simplR) {
+                        Rational(l2, r2) : {
+                            // num1 - (num2 +- x) ==> (num1-num2) +- x
+                            if (isRational(l1) && (name1 == "+" || name1 == "-")) {
+
+                                BinOp(name1, calculateRationals("-", simplR, getRational(l1)), r1);
+                            }
+                            // num1 - (x +- num2) ==> (num1+-num2) - x
+                            else if (isRational(r1) && (name1 == "+" || name1 == "-")) {
+                                BinOp("-", calculateRationals(name1, simplR, getRational(r1)), l1);
+                            }
+                            else {
+                                BinOp("-", simplL, simplR);
+                            }
+                        }
+                        Var(x) : {
+                            // (x +- b) - x ==> +- b
+                            if (simplR == l1 && (name1 == "+" || name1 == "-")) {
+                                BinOp(name1, RationalZero, r1);
+                            }
+                            // (a + x) - x ==> a
+                            else if (simplR == r1 && (name1 == "+")) {
+                                l1;
+                            }
+                            // (a - x) - x ==> a - 2x
+                            else if (simplR == r1 && (name1 == "-")) {
+                                BinOp("-", l1, BinOp("*", Rational(2,1), r1));
+                            }
+                            // (3*x) - x ==> 2*x
+                            else if (simplR == r1 && name1 == "*" && isRational(l1)) {
+                                BinOp("*", calculateRationals("-", getRational(l1), RationalOne), r1);
+                            }
+                            // (x*3) - x == > 2*x
+                            else if (simplR == l1 && name1 == "*" && isRational(r1)) {
+                                BinOp("*", calculateRationals("-", getRational(r1), RationalOne), l1);
+                            }
+                            else {
+                                BinOp("-", simplL, simplR);
+                            }
+                        }
+                        BinOp(name2, l2, r2) : {
+                            if (name1 == "*" && name2 == "*") {
+                                if (l1 == l2 && isRational(r1) && isRational(r2)) {
+                                    BinOp("*", calculateRationals("-", getRational(r1), getRational(r2)), l1);
+                                }
+                                else if (r1 == l2 && isRational(l1) && isRational(r2)) {
+                                    BinOp("*", calculateRationals("-", getRational(l1), getRational(r2)), r1);
+                                }
+                                else if (l1 == r2 && isRational(r1) && isRational(l2)) {
+                                    BinOp("*", calculateRationals("-", getRational(r1), getRational(l2)), l1);
+                                }
+                                else if (r1 == r2 && isRational(l1) && isRational(l2)) {
+                                    BinOp("*", calculateRationals("-", getRational(l1), getRational(l2)), r1);
+                                }
+                                else {
+                                    BinOp("-", simplL, simplR);
+                                }
+                            }
+                            else {
+                                BinOp("-", simplL, simplR);
+                            }
+                        }
+                        default : BinOp("-", simplL, simplR);
+
+                    }
+                }
+                default : BinOp("-", simplL, simplR);
+            }
+        }
+    }
+
+    openBracesWithMult = \simplL, simplR -> { 
+        if (isRational(simplL) && isRational(simplR)) {
+            calculateRationals("*", getRational(simplL), getRational(simplR));
+        }
+        else {
+            switch(simplL) {
+                Rational(l1, r1) : {
+                    switch(simplR) {
+                        // num1 * (num2 * x) ==> (num1*num2) * x
+                        BinOp(name2, l2, r2) : {
+                            if (isRational(l2)) {
+                                BinOp("*", calculateRationals("*", simplL, getRational(l2)), r2);
+                            }
+                            else if (isRational(r2)) {
+                                BinOp("*", calculateRationals("*", simplL, getRational(r2)), l2);
+                            }
+                            else {
+                                BinOp("*", simplL, simplR);
+                            }
+                        }
+                        default : BinOp("*", simplL, simplR);
+                    }
+                }
+                BinOp(name1, l1, r1) : {
+                    switch(simplR) {
+                        // (num1 * x) * num2 ==> (num1*num2) * x
+                        Rational(l2, r2) : {
+                            if (isRational(l1)) {
+                                BinOp("*", calculateRationals("*", simplR, getRational(l1)), r1);
+                            }
+                            else if (isRational(r1)) {
+                                BinOp("*", calculateRationals("*", simplR, getRational(r1)), l1);
+                            }
+                            else {
+                                BinOp("*", simplL, simplR);
+                            }
+                        }      
+                        BinOp(name2, l2, r2) : {
+                            if (name1 == "*" && name2 == "*") {
+                                if (isRational(r1) && isRational(r2)) {
+                                    BinOp("*", calculateRationals("*", getRational(r1), getRational(r2)), BinOp("*", l1, l2));
+                                }
+                                else if (isRational(l1) && isRational(r2)) {
+                                    BinOp("*", calculateRationals("*", getRational(l1), getRational(r2)), BinOp("*", r1, l2));
+                                }
+                                else if (isRational(r1) && isRational(l2)) {
+                                    BinOp("*", calculateRationals("*", getRational(r1), getRational(l2)), BinOp("*", l1, r2));
+                                }
+                                else if (isRational(l1) && isRational(l2)) {
+                                    BinOp("*", calculateRationals("*", getRational(l1), getRational(l2)), BinOp("*", r1, r2));
+                                }
+                                else {
+                                    BinOp("*", simplL, simplR);
+                                }
+                            }
+                            else if ((name1 == "+" && name2 == "-") && (l1 == l2 && r1 == r2)) {
+                                BinOp("-", BinOp("*", l1,l2), BinOp("*", r1,r2));
+                            }
+                            else {
+                                BinOp("*", simplL, simplR);
+                            }
+                        }
+                        default : {
+                            if (name1 == "+" ||name1 == "-") {
+                                BinOp(name1, simplify(BinOp("*", l1, simplR)), simplify(BinOp("*", r1, simplR)));
+                            }
+                            else {
+                                BinOp("*", simplL, simplR);
+                            }
+                        }
+
+                    }
+                }
+                default : switch(simplR) {
+                    BinOp(name2, l2, r2) : {
+                        if (name2 == "+" || name2 == "-") {
+                            BinOp(name2, simplify(BinOp("*", simplL, l2)), simplify(BinOp("*", simplL, r2)));
+                        }
+                        else {
+                            BinOp("*", simplL, simplR);
+                        }
+                    }
+                    default : BinOp("*", simplL, simplR);
+                }
+            }
+        }
+    }
+
+
+
+    switch(expr) {
+        BinOp(OpName, left, right) : {
+            simplifiedLeft = simplify(left);
+            simplifiedRight = simplify(right);
+
+            if (OpName == "+") {
+                openBracesWithAdd(simplifiedLeft, simplifiedRight);
+            }
+            else if (OpName == "-") {
+                openBracesWithSub(simplifiedLeft, simplifiedRight);
+            }
+            else if (OpName == "*") {
+                openBracesWithMult(simplifiedLeft, simplifiedRight);
+            }
+            else if (OpName == "/") {
+                if (simplifiedLeft == simplifiedRight) {
+                    RationalOne;
+                }
+                else {
+                    BinOp("/", simplifiedLeft, simplifiedRight);
+                }
+            }
+            else {
+                Error;
+            }
+        }
+        Neg(e) : Neg(simplify(e));
+        Diff(e,x) : Diff(simplify(e), x);
+        default : expr;
+    }
+}
+
+deleteRedundant(expr: Expression) -> Expression {
     // todo :: remove rebundant negs
     // -0 = 0
     // - - 1 = 1
     simplifiedExpression = switch(expr) {
         BinOp(name, l, r) : {
-            simplifiedLeft = simplify(l);
-            simplifiedRight = simplify(r);
+            simplifiedLeft = deleteRedundant(l);
+            simplifiedRight = deleteRedundant(r);
             if (name == "+") {
                 if (simplifiedLeft == RationalZero) {
                     simplifiedRight;
@@ -212,15 +671,17 @@ simplify(expr: Expression) -> Expression {
                     BinOp("/", simplifiedLeft, simplifiedRight);
                 }
             } else {
-                BinOp(name, simplify(l), simplify(r));
+                BinOp(name, deleteRedundant(l), deleteRedundant(r));
             }
         }
+        Neg(e) : Neg(deleteRedundant(e));
+        Diff(e,x) : Diff(deleteRedundant(e), x);
         default : expr;
     }
     if (simplifiedExpression == expr) {
         simplifiedExpression;
     } else {
-        simplify(simplifiedExpression);
+        deleteRedundant(simplifiedExpression);
     }
 }
 
@@ -261,3 +722,121 @@ derivation(expr : Expression, x : Var) -> Expression {
         }
     }
 }
+
+
+convertExpressionToPolynom(expr : Expression) -> Expression {
+    switch(expr) {
+        BinOp(OpName, left, right) : {
+            if (OpName == "/") {
+                convertPolynomToExpression(calculatePolynom(Polynom(left, right)));
+            }
+            else {
+                convertPolynomToExpression(calculatePolynom(Polynom(expr, RationalOne)));
+            }
+        }
+        default : convertPolynomToExpression(calculatePolynom(Polynom(expr, RationalOne)));
+    }
+}
+
+convertPolynomToExpression(polynom : Polynom) -> Expression {
+    num = polynom.num;
+    denom = polynom.denom;
+    switch (denom) {
+        Rational(left, right) : {
+            if (left == 1 && right == 1) {
+                num;
+            }
+            else {
+                BinOp("/", num, denom);
+            }
+        }
+        default : BinOp("/", num, denom);
+    }
+}
+
+calculatePolynom(polynom : Polynom) -> Polynom {
+
+    addPolynoms = \l,r -> {
+        Polynom(BinOp("+", BinOp("*", l.num, r.denom), BinOp("*", r.num, l.denom)), BinOp("*", l.denom, r.denom));
+    }
+
+    subPolynoms = \l,r -> {
+        Polynom(BinOp("-", BinOp("*", l.num, r.denom), BinOp("*", r.num, l.denom)), BinOp("*", l.denom, r.denom));
+    }
+
+    multPolynoms = \l,r -> {
+        Polynom(BinOp("*", l.num, r.num), BinOp("*", l.denom, r.denom));
+    }
+
+    divPolynoms = \l,r -> {
+        Polynom(BinOp("*", l.num, r.denom), BinOp("*", l.denom, r.num));
+    }
+
+    num = polynom.num;
+    denom = polynom.denom;
+
+    resultNum = switch(num) {
+
+        Rational(left, right) : Polynom(Rational(left, 1), Rational(right, 1));
+        Var(v) : Polynom(Var(v), RationalOne);
+
+        BinOp(OpName, left, right) : {
+            if (OpName == "+") {
+                addPolynoms(calculatePolynom(Polynom(left, RationalOne)), calculatePolynom(Polynom(right, RationalOne)));
+            }
+            else if (OpName == "-") {
+                subPolynoms(calculatePolynom(Polynom(left, RationalOne)), calculatePolynom(Polynom(right, RationalOne)));
+            }
+            else if (OpName == "*") {
+                multPolynoms(calculatePolynom(Polynom(left, RationalOne)), calculatePolynom(Polynom(right, RationalOne)));
+            }
+            else if (OpName == "/") {
+                divPolynoms(calculatePolynom(Polynom(left, RationalOne)), calculatePolynom(Polynom(right, RationalOne)));
+            }
+            else {
+                PolynomError;
+            }
+
+        }
+
+        Neg(e) : Polynom(Neg(convertPolynomToExpression(calculatePolynom(Polynom(e,RationalOne)))), RationalOne);
+        Diff(e,x) : Polynom(Diff(convertPolynomToExpression(calculatePolynom(Polynom(e, RationalOne))),x), RationalOne);
+
+    }
+
+    resultDenom = switch(denom) {
+
+        Rational(left, right) : Polynom(Rational(left, 1), Rational(right, 1));
+        Var(v) : Polynom(Var(v), RationalOne);
+
+        BinOp(OpName, left, right) : {
+            if (OpName == "+") {
+                addPolynoms(calculatePolynom(Polynom(left, RationalOne)), calculatePolynom(Polynom(right, RationalOne)));
+            }
+            else if (OpName == "-") {
+                subPolynoms(calculatePolynom(Polynom(left, RationalOne)), calculatePolynom(Polynom(right, RationalOne)));
+            }
+            else if (OpName == "*") {
+                multPolynoms(calculatePolynom(Polynom(left, RationalOne)), calculatePolynom(Polynom(right, RationalOne)));
+            }
+            else if (OpName == "/") {
+                divPolynoms(calculatePolynom(Polynom(left, RationalOne)), calculatePolynom(Polynom(right, RationalOne)));
+            }
+            else {
+                PolynomError;
+            }
+
+        }
+
+        Neg(e) : Polynom(Neg(convertPolynomToExpression(calculatePolynom(Polynom(e,RationalOne)))), RationalOne);
+        Diff(e,x) : Polynom(Diff(convertPolynomToExpression(calculatePolynom(Polynom(e, RationalOne))),x), RationalOne);
+
+    }
+
+    //println("denom " + InfixToString(deleteRedundant(convertPolynomToExpression(resultDenom))));
+
+    //println(InfixToString(deleteRedundant(convertPolynomToExpression((divPolynoms(resultNum, resultDenom))))));
+
+    divPolynoms(resultNum, resultDenom);
+}
+
