@@ -4,39 +4,6 @@ import math/math;
 
 import infix;
 
-buildOp(xs : [flow]) {
-	fold(xs[2], xs[1], \acc, x -> BinOp(xs[0], acc, x));
-}
-
-lingoGrammar() {
-    compilePegGrammar("#include infix.lingo");
-}
-
-parse(source: string) {
-	specialPegActions = {
-		t1 = setTree(defaultPegActions.t, "buildOp", buildOp);
-		SemanticActions(t1);
-	}
-	parsic(lingoGrammar(), source, specialPegActions);
-}
-
-inputVariablesIntoTree() -> Tree<string, Rational> {
-    variables = strSplit(getUrlParameter("vars"), ",");
-    fold(variables, makeTree(),\ tree, variable -> {
-        if (strContains(getUrlParameter(variable), "/")) {
-            nums = strSplit(getUrlParameter(variable), "/");
-            a = s2i(nums[0]);
-            b = s2i(nums[1]);
-            setTree(tree, variable, Rational(a,b));
-        } else if (getUrlParameter(variable) != "") {
-            a = s2i(getUrlParameter(variable));
-            setTree(tree, variable, Rational(a,1));
-        } else {
-            setTree(tree, variable, Error);
-        }
-    });
-}
-
 main() {
     // get an expression
     expr = getUrlParameter("expr");
