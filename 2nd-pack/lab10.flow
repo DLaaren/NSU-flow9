@@ -1,0 +1,283 @@
+import string;
+import lingo/peg;
+import lingo/pegcode/driver;
+
+Expr ::= Div, Mult, Sub, Add, Neg, Var, Num;
+Div(left : Expr, right : Expr);
+Mult(left : Expr, right : Expr);
+Sub(left : Expr, right : Expr);
+Add(left : Expr, right : Expr);
+Neg(negExpr : Expr);
+Var(varName : string);
+Num(value : int);
+
+
+Rational(numenator : int, denominator : int);
+
+
+i2r(i : int) -> Maybe<Rational>{
+    Some(Rational(i, 1));
+}
+r2s(r : Maybe<Rational>){
+    r ?? {
+        i2s(r.numenator) + "/" + i2s(r.denominator)
+    }
+    : "None"
+}
+divR(l : Maybe<Rational>, r : Maybe<Rational>) -> Maybe<Rational>{
+    maybeBind2(\ll, lr -> simplify(Rational(ll.numenator * lr.denominator, ll.denominator * lr.numenator)))(l, r)
+}
+multR(l : Maybe<Rational>, r : Maybe<Rational>) -> Maybe<Rational>{
+    maybeBind2(\lr, rr -> simplify(Rational(lr.numenator * rr.numenator, lr.denominator * rr.denominator)))(l, r)
+    
+}
+subR(l : Maybe<Rational>, r : Maybe<Rational>) -> Maybe<Rational>{
+    maybeBind2(\ll, lr -> simplify(Rational(ll.numenator * lr.denominator - lr.numenator * ll.denominator, ll.denominator * lr.denominator)))(l, r)
+}
+addR(l : Maybe<Rational>, r : Maybe<Rational>) -> Maybe<Rational>{
+    maybeBind2(\ll, lr -> simplify(Rational(ll.numenator * lr.denominator + lr.numenator * ll.denominator, ll.denominator * lr.denominator)))(l, r)
+}
+negR(r : Maybe<Rational>) -> Maybe<Rational>{
+    r ?? Some(Rational(-r.numenator, r.denominator))
+    : None();
+    
+}
+
+
+simplify(val : Rational) -> Maybe<Rational> {
+    divisor = gcd(val.numenator, val.denominator);
+    Some(Rational(val.numenator / divisor, val.denominator / divisor))
+}
+
+
+calc(ast : Expr, variables : Tree<string, int>) -> Maybe<Rational>{
+    switch(ast){
+        Div(l, r) : {divR(calc(l, variables), calc(r, variables))}
+        Mult(l, r) : {multR(calc(l, variables), calc(r, variables))}
+        Sub(l, r) : {subR(calc(l, variables), calc(r, variables))}
+        Add(l, r) : {addR(calc(l, variables), calc(r, variables))}
+        Neg(negExp) : {negR(calc(negExp, variables))}
+        Num(val) : {i2r(val)}
+        Var(name) : {
+            variableValue : Maybe<int> = lookupTree(variables, name);
+            switch(variableValue){
+                None(): None();
+                Some(v): Some(Rational(v, 1));
+            }
+        }
+    }
+}
+
+lingoGrammarOp : ref Maybe<[PegOp]> = ref None();
+lingoGrammar(){
+    onlyOnce(lingoGrammarOp, \ -> {
+        compilePegGrammar("#include grammar.lingo");
+    });
+}
+
+eatSubs(subs : [flow]){
+    fold(subs[1], subs[0], \acc, nextsub -> Sub(acc, nextsub));
+}
+eatDivs(divs : [flow]){
+    fold(divs[1], divs[0], \acc, nextdiv -> Div(acc, nextdiv));
+}
+
+
+actions = SemanticActions(setTree(setTree(defaultPegActions.t, "eatSubs", eatSubs), "eatDivs", eatDivs));
+
+s2Expr(s : string) -> Expr{
+    parsic(lingoGrammar(), s, actions)
+}
+//
+Pattern(identity : Expr, equal : Expr);
+
+patterns = [
+    Pattern(s2Expr("x-x"), s2Expr("0")),
+    Pattern(s2Expr("x + 0"), s2Expr("x")),
+    Pattern(s2Expr("0 + x"), s2Expr("x")),
+    Pattern(s2Expr("((a+b)*b)"), s2Expr("a*b+b*b")),
+    Pattern(s2Expr("b*(a+b)"), s2Expr("a*b+b*b")),
+    Pattern(s2Expr("(x-1)*(x+1)"), s2Expr("x*x - 1")),
+    Pattern(s2Expr("(x+1)*(x-1)"), s2Expr("x*x - 1")),
+    Pattern(s2Expr("(y-y)+x"), s2Expr("x")),
+    //Pattern(s2Expr("x + (y-y)"), s2Expr("x")),
+    Pattern(s2Expr("(y-y)*x"), s2Expr("0")),
+    Pattern(s2Expr("x*(y-y)"), s2Expr("0")),
+    Pattern(s2Expr("(x*(x*x))+(x*x)*y"), s2Expr("x*x * (x + y)"))
+];
+
+MatchingResult(expVars : Tree<string, Expr>, result:bool);
+
+//сравнение ast деревьев. Паттерна и выражения
+isMatch(exp : Expr, pattern : Expr, variables : Tree<string, Expr>){
+    switch(exp){
+        Div(le, re) : {
+            switch(pattern){
+                Div(lp, rp) : {
+                    res = isMatch(le, lp, variables);
+                    if(res.result){
+                         isMatch(re, rp, res.expVars)
+                    }
+                    else{
+                        res
+                    }
+                }
+                default : MatchingResult(variables, false)
+            }
+        }
+        Mult(le, re): {
+            switch(pattern){
+                Mult(lp, rp) : {
+                    res = isMatch(le, lp, variables);
+                    if(res.result){
+                         isMatch(re, rp, res.expVars)
+                    }
+                    else{
+                        res
+                    }
+                }
+                default : MatchingResult(variables, false)
+            }
+        }
+        Sub(le, re): {
+            switch(pattern){
+                Sub(lp, rp) : {
+                    res = isMatch(le, lp, variables);
+                    if(res.result){
+                         isMatch(re, rp, res.expVars)
+                    }
+                    else{
+                        res
+                    }
+                }
+                default : MatchingResult(variables, false)
+            }
+        }
+        Add(le, re): {
+            switch(pattern){
+                Add(lp, rp) : {
+                    res = isMatch(le, lp, variables);
+                    if(res.result){
+                         isMatch(re, rp, res.expVars)
+                    }
+                    else{
+                        res
+                    }
+                }
+                default : MatchingResult(variables, false)
+            }
+        }
+        Neg(ee): {
+            switch(pattern){
+                Neg(ep) : {
+                    isMatch(ee, ep, variables);
+                }
+                default : MatchingResult(variables, false)
+            }
+        }
+        Num(de): {
+            switch(pattern){
+                Num(dp) : {
+                    MatchingResult(variables, de == dp)
+                }
+                Var(namep) : {
+                    alias = setTree(variables, namep, Num(de));
+                    MatchingResult(alias, true)
+                }
+                default : MatchingResult(variables, false)
+            }
+        }
+        Var(name): {
+            switch(pattern){
+                Var(namep) : {
+                    switch(lookupTree(variables, namep)){
+                        None() : {
+                            alias = setTree(variables, namep, Var(name));
+                            MatchingResult(alias, true)
+                        }
+                        Some(val) : {
+                            switch(val){
+                                Var(n) : MatchingResult(variables, n == name)
+                                default : MatchingResult(variables, false);
+                            }
+                            
+                        }
+                    }
+                }
+                default : MatchingResult(variables, false)
+            }
+        }
+    }
+}
+
+//переименование переменных паттерна
+pattern2context(variables : Tree<string, Expr>, exp : Expr){
+    switch(exp){
+        Div(l, r): Div(pattern2context(variables, l), pattern2context(variables, r));
+        Mult(l, r): Mult(pattern2context(variables, l), pattern2context(variables, r));
+        Sub(l, r): Sub(pattern2context(variables, l), pattern2context(variables, r));
+        Add(l, r): Add(pattern2context(variables, l), pattern2context(variables, r));
+        Neg(e): Neg(pattern2context(variables, e));
+        Num(d) : exp;
+        Var(name) : {
+            switch(lookupTree(variables, name)){
+                Some(val) : {
+                    val
+                }
+                None() : exp
+            }
+        }
+    }
+}
+checkPattern(exp : Expr, pattern : Pattern){
+    res = isMatch(exp, pattern.identity, makeTree());
+    if(res.result){
+        pattern2context(res.expVars, pattern.equal)
+    }
+    else{
+        exp
+    }
+}
+
+//обход ast дерева
+look4patterns(exp : Expr){
+    switch(exp){
+        Var(name) : exp
+        Num(d) : exp
+        default : {
+            simplifiedExp = 
+            switch(exp){
+                Div(l, r) : Div(look4patterns(l), look4patterns(r))
+                Mult(l, r) : Mult(look4patterns(l), look4patterns(r))
+                Sub(l, r) : Sub(look4patterns(l), look4patterns(r))
+                Add(l, r) : Add(look4patterns(l), look4patterns(r))
+                Neg(e) : Neg(look4patterns(e))
+                default : exp
+            }
+
+            fold(patterns, simplifiedExp, \e, pattern -> checkPattern(e, pattern))
+        }
+    }
+    
+}
+main(){
+    variables = [Pair("x", 2), Pair("y", 5)];
+    variablesTree = setTreeValues(TreeEmpty(), variables);
+
+
+    expStr = "((x+1)*(x-1))*((4-4)+x)";
+    arr0 : [flow] = [];
+    
+    //arr : [flow] = [flow(Num(1)), arr0];
+    //println(eatDivs(arr));
+    ast = parsic(lingoGrammar(), expStr, actions);
+    println(ast);
+    sast = look4patterns(ast);
+    println(sast);
+    println("without simplifying: " + r2s(calc(ast, variablesTree)));
+    result = calc(sast, variablesTree);
+
+    println("simplified: " + r2s(result));
+
+    quit(0);
+}

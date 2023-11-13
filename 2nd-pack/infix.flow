@@ -3,6 +3,8 @@ import string;
 import math/math;
 import ds/egraph;
 import ds/egraph_matching;
+import ds/egraph_dot;
+import ds/egraph_extract;
 
 export {
 
@@ -194,8 +196,7 @@ normalization(result : Maybe<Rational>) -> Maybe<Rational> {
 }
 
 calculateWrapper(expr: Expression, VarsTree: Tree<string, Rational>) -> Pair<string, Maybe<Rational>> {
-    //result = simplify(convertExpressionToPolynom(expr));
-    result = simplify((expr));
+    result = removeRedundant(simplify(removeRedundant(convertExpressionToPolynom(expr))));
     
     calcRes = switch(result) {
         BinOp(OpName, l, r) : {
@@ -262,6 +263,81 @@ derivation(expr : Expression, x : Var) -> Expression {
 				RationalZero;
 			}
         }
+    }
+}
+
+removeRedundant(expr : Expression) -> Expression {
+    simplifiedExpression = switch(expr) {
+        Neg(n1) : {
+            switch(n1) {
+                Neg(n2) : removeRedundant(n2);
+                default : Neg(removeRedundant(n1));
+            }
+        }
+        BinOp(name, l, r) : {
+            simplifiedLeft = removeRedundant(l);
+            simplifiedRight = removeRedundant(r);
+            if (name == "+") {
+                if (simplifiedLeft == RationalZero) {
+                    simplifiedRight;
+                }
+                else if (simplifiedRight == RationalZero) {
+                    simplifiedLeft;
+                } else {
+                    BinOp("+", simplifiedLeft, simplifiedRight);
+                }
+            }
+            else if (name == "-") {
+                if (simplifiedLeft == RationalZero) {
+                    Neg(simplifiedRight);
+                }
+                else if (simplifiedRight == RationalZero) {
+                    simplifiedLeft;
+                } else {
+                    BinOp("-", simplifiedLeft, simplifiedRight);
+                }
+            }
+            else if (name == "*") {
+                if (simplifiedLeft == RationalZero) {
+                    RationalZero;
+                }
+                else if (simplifiedRight == RationalZero) {
+                    RationalZero;
+                }
+                else if (simplifiedLeft == RationalOne) {
+                    simplifiedRight;
+                }
+                else if (simplifiedRight == RationalOne) {
+                    simplifiedLeft;
+                }
+                else if (simplifiedLeft == Neg(RationalOne)) {
+                    Neg(simplifiedRight);
+                }
+                else if (simplifiedRight == Neg(RationalOne)) {
+                    Neg(simplifiedLeft);
+                } else {
+                    BinOp("*", simplifiedLeft, simplifiedRight);
+                }
+            } 
+            else if (name == "/") {
+                if (simplifiedLeft == RationalZero) {
+                    RationalZero;
+                }
+                else if (simplifiedRight == RationalOne) {
+                    simplifiedLeft;
+                } else {
+                    BinOp("/", simplifiedLeft, simplifiedRight);
+                }
+            } else {
+                BinOp(name, removeRedundant(l), removeRedundant(r));
+            }
+        }
+        default : expr;
+    }
+    if (simplifiedExpression == expr) {
+        simplifiedExpression;
+    } else {
+        removeRedundant(simplifiedExpression);
     }
 }
 
@@ -384,6 +460,15 @@ calculatePolynom(polynom : Polynom) -> Polynom {
 }
 
 
+
+tryCalculate(e) -> Maybe<Rational> {
+    switch(normalization(calculate(e, makeTree()))) {
+        Some(res) : Some(res);
+        None() : None();
+    }
+}
+
+
 simplify(exp: Expression) -> Expression {
 
     splitChildren = \e -> {
@@ -420,16 +505,11 @@ simplify(exp: Expression) -> Expression {
 	// The clearing of the parent children is required for canonicality.
 	// makeEGraph(splitChildren : (?) -> Pair<?, [?]>) -> EGraph<?>;
 
-    myEGraph : EGraph<Expression> = makeEGraph(splitChildren);    
-    rootClass = addEExp(myEGraph, exp);
-
-    // Prepare a matching engine to be used with a given EGraph
-	//  makeEMatchEngine(e : EGraph<?>, def : ?, 
-	//	  // How to construct a value, from a head and recursive arguments
-	//	  combine : (head : ?, args : [?]) -> ?,
-	//  ) -> EMatchEngine<?>;
+    graph : EGraph<Expression> = makeEGraph(splitChildren);    
+    rootClass = addEExp(graph, exp);
 
     mycombine = \head, args -> {
+
         switch(head) {
             Rational(l,r) : Rational(l,r);
             Var(v) : {
@@ -455,11 +535,19 @@ simplify(exp: Expression) -> Expression {
                     Var(v);
                 }
             }
-            default : head;
+            default : Error;
         }
     }
 
-    myEMatchEngine : EMatchEngine<Expression> = makeEMatchEngine(myEGraph, exp, mycombine);
+
+    // Prepare a matching engine to be used with a given EGraph
+	//  makeEMatchEngine(e : EGraph<?>, def : ?, 
+	//	  // How to construct a value, from a head and recursive arguments
+	//	  combine : (head : ?, args : [?]) -> ?,
+	//  ) -> EMatchEngine<?>;
+
+
+    myEMatchEngine : EMatchEngine<Expression> = makeEMatchEngine(graph, exp, mycombine);
 
     // Performs all replacements possible, repeatedly up to the given number of iterations
 	// performEReplacements(e : EMatchEngine<?>, iterations : int, class : int, 
@@ -481,51 +569,307 @@ simplify(exp: Expression) -> Expression {
 	// ) -> Set<int>;
 
 
-   // firstPattern : EPattern<Expression> = EPatternTerm(Var("+"), [EPatternVar])
+    // x + y -> y + x 
+    pattern1 : EPattern<Expression> = EPatternTerm(Var("+"), [EPatternVar("x"), EPatternVar("y")]);
+    replacement1 = EReplacement(pattern1, \treeIdExpr -> {
+        x = lookupTreeDef(treeIdExpr, "x", Error);
+        y = lookupTreeDef(treeIdExpr, "y", Error);
+        res = tryCalculate(BinOp("+", y, x));
+        switch(res) {
+            Some(r) : r;
+            None() : {
+                if (x == y) {
+                    BinOp("*", Rational(2,1), x);
+                }
+                else {
+                    BinOp("+", y, x); 
+                }
+            }
+        }
+    });
 
-    //println(set2String(findAllEClassMatches(myEMatchEngine, 0, firstPattern, makeSet(), \e -> println())));
+    // x - x -> 0
+    pattern2 : EPattern<Expression> = EPatternTerm(Var("-"), [EPatternVar("x"), EPatternVar("x")]);
+    replacement2 = EReplacement(pattern2, \treeIdExpr -> {
+        RationalZero;
+    });
 
-    //replacements : [EReplacement] = [firstR];
-        //EReplacement(EPattern("((x - z) + (y + z))"), parse("(x + y)")),
-        //EReplacement(EPattern("((x + z) + (y - z))"), parse("(x + y)")),
-        //EReplacement(EPattern("(x + x)"), parse("(2 * x)")),
-        //EReplacement(EPattern("(-(-x))"), parse("x")),
-        //EReplacement(EPattern("(x + y)"), parse("(y + x)")),
-        //EReplacement(EPattern("(x * y)"), parse("(y * x)")),
-        //EReplacement(EPattern("(x + 0)"), parse("x")),
-        //EReplacement(EPatternTerm()),    // x - 0 -> x
-        //EReplacement(EPattern("(x - x)"), parse("0")),
-        //EReplacement(EPattern("(x + -x)"), parse("0")),
-        //EReplacement(EPattern("(-x + x)"), parse("0")),
-        //EReplacement(EPattern("(x * 0)"), parse("0")),
-      //  EReplacement(EPattern("(x * 1)"), parse("x")),
-     ////   EReplacement(EPattern("(0 + x)"), parse("x"))0
-     //   EReplacement(EPattern("(0 - x)"), parse("-x")),
-     //   EReplacement(EPattern("(0 * x)"), parse("0")),
-      ////  EReplacement(EPattern("(1 * x)"), parse("x")),
-      //  EReplacement(EPattern("(x * -1)"), parse("-x")),
-     //   EReplacement(EPattern("(-1 * x)"), parse("-x")),
-     //   EReplacement(EPattern("(x / x)"), parse("1")),
-     //   EReplacement(EPattern("(x * y)"), parse("y*x")),
-    //    EReplacement(EPattern("(0 / x)"), parse("0")),
-  //      EReplacement(EPattern("((x * z) + (y * z))"), parse("((x + y) * z)")),
-    //    EReplacement(EPattern("((x + y) * z)"), parse("((x * z) + (y * z))")),
- //       EReplacement(EPattern("((x + y) + z)"), parse("(x + (y + z))")),
-//        EReplacement(EPattern("((x + y) - y)"), parse("x")),
- //       EReplacement(EPattern("((x * y) * z)"), parse("(x * (y * z))")),
- //       EReplacement(EPattern("((x * x) - (y * y))"), parse("((x - y) * (x + y))")),
- //       EReplacement(EPattern("((x - y) * (x + y))"), parse("((x * x) - (y * y))")),
-  //      EReplacement(EPattern("((x - y) * (x - y))"), parse("(((x * x) + (y * y)) - (2 * (x * y)))")),
- //       EReplacement(EPattern("(((x * x) + (y * y)) - (2 * (x * y)))"), parse("((x - y) * (x - y))")),
- //       EReplacement(EPattern("((x + y) * (x + y))"), parse("(((x * x) + (y * y)) + (2 * (x * y)))")),
-//        EReplacement(EPattern("(((x * x) + (y * y)) + (2 * (x * y)))"), parse("((x + y) * (x + y))")),
-//    ];
+    // x / x -> 1
+    pattern3 : EPattern<Expression> = EPatternTerm(Var("/"), [EPatternVar("x"), EPatternVar("x")]);
+    replacement3 = EReplacement(pattern3, \treeIdExpr -> {
+        RationalOne;
+    });
 
-    //performEReplacements(myEMatchEngine, 1, rootClass, []);
-    convertEGraphToExpression(myEGraph, rootClass,exp);
-}
+    // (x - z) + (y + z) -> (x + y)
+    pattern4 : EPattern<Expression> = EPatternTerm(Var("+"), 
+                                                [EPatternTerm(Var("-"), [EPatternVar("x"), EPatternVar("z")]), 
+                                                EPatternTerm(Var("+"), [EPatternVar("y"), EPatternVar("z")])]);
+    replacement4 = EReplacement(pattern4, \treeIdExpr -> {
+        BinOp("+", lookupTreeDef(treeIdExpr, "x", Error), lookupTreeDef(treeIdExpr, "y", Error));
+    });
 
-convertEGraphToExpression(graph : EGraph<Expression>, rootClass : int, exp : Expression) -> Expression {
+    // (x + z) + (y - z) -> (x + y)
+    pattern5 : EPattern<Expression> = EPatternTerm(Var("+"), 
+                                                [EPatternTerm(Var("+"), [EPatternVar("x"), EPatternVar("z")]), 
+                                                EPatternTerm(Var("-"), [EPatternVar("y"), EPatternVar("z")])]);
+    replacement5 = EReplacement(pattern5, \treeIdExpr -> {
+        BinOp("+", lookupTreeDef(treeIdExpr, "x", Error), lookupTreeDef(treeIdExpr, "y", Error));
+    });
+
+    // x*y -> y*x
+    pattern6 : EPattern<Expression> = EPatternTerm(Var("+"), 
+                                                [EPatternTerm(Var("+"), [EPatternVar("x"), EPatternVar("z")]), 
+                                                EPatternTerm(Var("-"), [EPatternVar("y"), EPatternVar("z")])]);
+    replacement6 = EReplacement(pattern6, \treeIdExpr -> {
+        x = lookupTreeDef(treeIdExpr, "x", Error);
+        y = lookupTreeDef(treeIdExpr, "y", Error);
+        res = tryCalculate(BinOp("*", y, x));
+        switch(res) {
+            Some(r) : r;
+            None() : BinOp("*", y, x); 
+        }
+    });
+
+    // x + (-x)
+    pattern7 : EPattern<Expression> = EPatternTerm(Var("+"), [EPatternVar("x"),
+                                                EPatternTerm(Var("Neg"), [EPatternVar("x")])]);
+    replacement7 = EReplacement(pattern7, \treeIdExpr -> {
+        RationalZero;
+    });
+    
+    // (x * z) + (y * z) -> (x + y) * z
+    pattern8 : EPattern<Expression> = EPatternTerm(Var("+"), [EPatternTerm(Var("*"), [EPatternVar("x"),EPatternVar("z")]), 
+                                                    EPatternTerm(Var("*"), [EPatternVar("y"),EPatternVar("z")])]);
+    replacement8 = EReplacement(pattern8, \treeIdExpr -> {
+        x = lookupTreeDef(treeIdExpr, "x", Error);
+        y = lookupTreeDef(treeIdExpr, "y", Error);
+        z = lookupTreeDef(treeIdExpr, "z", Error);
+        BinOp("*", BinOp("+", x, y), z);
+    });
+
+    // z + (x + y) ->  (z + x) + y
+    pattern9 : EPattern<Expression> = EPatternTerm(Var("+"), [EPatternVar("z"), EPatternTerm(Var("+"), [EPatternVar("x"), EPatternVar("y")])]);
+    replacement9 = EReplacement(pattern9, \treeIdExpr -> {
+        x = lookupTreeDef(treeIdExpr, "x", Error);
+        y = lookupTreeDef(treeIdExpr, "y", Error);
+        z = lookupTreeDef(treeIdExpr, "z", Error);
+        BinOp("+", BinOp("+", z, x), y);
+    });
+
+    // (x + y) + z ->  x + (y + z)
+    pattern10 : EPattern<Expression> = EPatternTerm(Var("+"), [EPatternTerm(Var("+"), [EPatternVar("x"), EPatternVar("y")]), EPatternVar("z")]);
+    replacement10 = EReplacement(pattern10, \treeIdExpr -> {
+        x = lookupTreeDef(treeIdExpr, "x", Error);
+        y = lookupTreeDef(treeIdExpr, "y", Error);
+        z = lookupTreeDef(treeIdExpr, "z", Error);
+
+        BinOp("+", x, BinOp("+", y, z));
+    });
+
+    // (x * z) + (y * z) -> (x + y) * z
+    pattern12 : EPattern<Expression> = EPatternTerm(Var("+"), [EPatternTerm(Var("*"), [EPatternVar("x"), EPatternVar("z")]),
+                                                                EPatternTerm(Var("*"), [EPatternVar("y"), EPatternVar("z")])]);
+    replacement12 = EReplacement(pattern12, \treeIdExpr -> {
+        x = lookupTreeDef(treeIdExpr, "x", Error);
+        y = lookupTreeDef(treeIdExpr, "y", Error);
+        z = lookupTreeDef(treeIdExpr, "z", Error);
+        BinOp("*", BinOp("+", x, y), z);
+    });
+
+    // (x + y) * z -> (x * z + y * z)
+    pattern11 : EPattern<Expression> = EPatternTerm(Var("+"), [EPatternTerm(Var("*"), [EPatternVar("x"), EPatternVar("z")]),
+                                                                EPatternTerm(Var("*"), [EPatternVar("y"), EPatternVar("z")])]);
+    replacement11 = EReplacement(pattern11, \treeIdExpr -> {
+        x = lookupTreeDef(treeIdExpr, "x", Error);
+        y = lookupTreeDef(treeIdExpr, "y", Error);
+        z = lookupTreeDef(treeIdExpr, "z", Error);
+        BinOp("+", BinOp("*", x, z), BinOp("*", y, z));
+    });
+
+    // x + (x*y) -> x * (1  +  y)
+    pattern13 : EPattern<Expression> = EPatternTerm(Var("+"), [EPatternVar("x"),
+                                                                EPatternTerm(Var("*"), [EPatternVar("x"), EPatternVar("y")])]);
+    replacement13 = EReplacement(pattern13, \treeIdExpr -> {
+        x = lookupTreeDef(treeIdExpr, "x", Error);
+        y = lookupTreeDef(treeIdExpr, "y", Error);
+        z = lookupTreeDef(treeIdExpr, "z", Error);
+        BinOp("*", x, BinOp("+", RationalOne, y) );
+    });
+
+    // x + (y*x) -> x * (1  +  y)
+    pattern21 : EPattern<Expression> = EPatternTerm(Var("+"), [EPatternVar("x"),
+                                                                EPatternTerm(Var("*"), [EPatternVar("y"), EPatternVar("x")])]);
+    replacement21 = EReplacement(pattern21, \treeIdExpr -> {
+        x = lookupTreeDef(treeIdExpr, "x", Error);
+        y = lookupTreeDef(treeIdExpr, "y", Error);
+        z = lookupTreeDef(treeIdExpr, "z", Error);
+        BinOp("*", x, BinOp("+", RationalOne, y));
+    });
+
+    // (x + y) - y -> x + 0 
+    pattern14 : EPattern<Expression> = EPatternTerm(Var("-"), [EPatternTerm(Var("+"), [EPatternVar("x"), EPatternVar("y")]),
+                                                                EPatternVar("y")]);
+    replacement14 = EReplacement(pattern14, \treeIdExpr -> {
+        x = lookupTreeDef(treeIdExpr, "x", Error);
+        y = lookupTreeDef(treeIdExpr, "y", Error);
+        BinOp("+", x, BinOp("-", y, y));
+    });
+
+    // (x * y) * z -> x * (y*z)
+    pattern15 : EPattern<Expression> = EPatternTerm(Var("*"), [EPatternTerm(Var("*"), [EPatternVar("x"), EPatternVar("y")]),
+                                                                EPatternVar("z")]);
+    replacement15 = EReplacement(pattern15, \treeIdExpr -> {
+        x = lookupTreeDef(treeIdExpr, "x", Error);
+        y = lookupTreeDef(treeIdExpr, "y", Error);
+        z = lookupTreeDef(treeIdExpr, "z", Error);
+        BinOp("*", x, BinOp("*", y, z));
+    });
+
+    // z * (x * y) -> (z*x) * y
+    pattern20 : EPattern<Expression> = EPatternTerm(Var("*"), [EPatternVar("z"), EPatternTerm(Var("*"), [EPatternVar("x"), EPatternVar("y")])]);
+    replacement20 = EReplacement(pattern20, \treeIdExpr -> {
+        x = lookupTreeDef(treeIdExpr, "x", Error);
+        y = lookupTreeDef(treeIdExpr, "y", Error);
+        z = lookupTreeDef(treeIdExpr, "z", Error);
+        BinOp("*", BinOp("*", z, x), y);
+    });
+
+    // x * x - y * y -> (x - y) * (x + y) 
+    pattern16 : EPattern<Expression> = EPatternTerm(Var("-"), [EPatternTerm(Var("*"), [EPatternVar("x"), EPatternVar("x")]),
+                                                                EPatternTerm(Var("*"), [EPatternVar("y"), EPatternVar("y")])]);
+    replacement16 = EReplacement(pattern16, \treeIdExpr -> {
+        x = lookupTreeDef(treeIdExpr, "x", Error);
+        y = lookupTreeDef(treeIdExpr, "y", Error);
+        BinOp("*", BinOp("-", x, y), BinOp("+", x, y));
+    });
+    
+
+    // (x - y) * (x + y) -> x*x - y*y 
+    pattern17 : EPattern<Expression> = EPatternTerm(Var("*"), [EPatternTerm(Var("-"), [EPatternVar("x"), EPatternVar("y")]),
+                                                                EPatternTerm(Var("+"), [EPatternVar("x"), EPatternVar("y")])]);
+    replacement17 = EReplacement(pattern17, \treeIdExpr -> {
+        x = lookupTreeDef(treeIdExpr, "x", Error);
+        y = lookupTreeDef(treeIdExpr, "y", Error);
+        BinOp("-", BinOp("*", x, x), BinOp("*", y, y));
+    });
+    
+
+    // (x-y) * (x-y) -> (x*x + y*y) - (2 * (x*y)) 
+    pattern18 : EPattern<Expression> = EPatternTerm(Var("*"), [EPatternTerm(Var("-"), [EPatternVar("x"), EPatternVar("y")]),
+                                                                EPatternTerm(Var("-"), [EPatternVar("x"), EPatternVar("y")])]);
+    replacement18 = EReplacement(pattern18, \treeIdExpr -> {
+        x = lookupTreeDef(treeIdExpr, "x", Error);
+        y = lookupTreeDef(treeIdExpr, "y", Error);
+        BinOp("-", BinOp("+", BinOp("*", x, x), BinOp("*", y, y)), BinOp("*", Rational(2,1), BinOp("*", x, y)));
+    });
+
+    // (x+y) * (x+y) -> (x*x + y*y) + (2 * (x*y)) 
+    pattern19 : EPattern<Expression> = EPatternTerm(Var("*"), [EPatternTerm(Var("+"), [EPatternVar("x"), EPatternVar("y")]),
+                                                                EPatternTerm(Var("+"), [EPatternVar("x"), EPatternVar("y")])]);
+    replacement19 = EReplacement(pattern19, \treeIdExpr -> {
+        x = lookupTreeDef(treeIdExpr, "x", Error);
+        y = lookupTreeDef(treeIdExpr, "y", Error);
+        BinOp("+", BinOp("+", BinOp("*", x, x), BinOp("*", y, y)), BinOp("*", Rational(2,1), BinOp("*", x, y)));
+    });
+
+
+    patterns : [EReplacement<Expression>] = [replacement1, replacement2, replacement3, replacement4, replacement5, replacement6, replacement7, replacement8, replacement9, replacement10, replacement11, replacement12, replacement13, replacement14, replacement15, replacement17, replacement16, replacement18, replacement19, replacement20, replacement21];
+
+    performEReplacements(myEMatchEngine, 3, rootClass, patterns);
+
+
+
+    getCost = \c -> c.cost;
+
+    defineNodeCost = \node, childrenCostArray -> {
+        currNodeChildrenCost = map(childrenCostArray, \c -> getCost(c));
+        childrenCost = fold(currNodeChildrenCost, 0, \x, y -> x + y);
+
+        nodeCost = switch(node.head) {
+            Rational(l,r) : 1;
+            Var(v) : 10; 
+            BinOp(OpName, l, r) : {
+                if (l == r) {
+                    1;
+                }
+                else if (OpName == "+") {
+                    30;
+                }
+                else if (OpName == "-") {
+                    30;
+                }
+                else if (OpName == "*") {
+                    5;
+                }
+                else if (OpName == "/") {
+                    30;
+                }
+                else {
+                    //error
+                    10000;
+                }
+
+            };
+            Neg(n) : 1;
+            Diff(n,x) : 1;
+        }
+        
+        //println(InfixToString(node.head));
+        //println(i2s(childrenCost) + i2s(nodeCost));
+        //println("");
+
+        nodeCost + childrenCost;
+    }
+    
+    // Extracts the best enode for each class
+    //	extractEGraph(e : EGraph<?>, 
+    //		// Given a node, and the cost of the children, what is the cost of this node?
+    //		costFn : (ENode<?>, [EClassCost<?>]) -> int
+    //	) -> Tree<int, EClassCost<?>>;
+    //
+    //	EClassCost(
+    //		// The cost of this. The smaller, the better
+    //		cost : int,
+    //		// The node that wins
+    //		node : ENode<?>
+    //	);
+
+
+    bestSimplification = extractEGraph(graph, defineNodeCost);
+    bestSimplificationNodes = mapTree(bestSimplification, \v -> (v.node));
+    bestSimplificationCosts = mapTree(bestSimplification, \v -> (v.cost));
+    treeValues = getTreeValues(bestSimplificationCosts);
+    treeKeys = getTreeKeys(bestSimplification);
+
+    rootIdx = findi(treeValues, \n -> {
+        maxCost = maxA(treeValues);
+        switch(maxCost) {
+            Some(c) : {
+                if (n == c) {
+                    true;
+                }
+                else {
+                    false;
+                }
+            }
+            None() : false;
+        }
+    });
+
+    newRootClass = switch (rootIdx) {
+        Some(idx) : treeKeys[idx];
+        None(): rootClass;
+    }
+
+    //println("rootClass " + i2s(rootClass));
+    //println("newRootClass " + i2s(newRootClass));
+
+    //printGraph(graph, bestSimplificationNodes);
+
+    convertEGraphToExpression(graph, newRootClass, bestSimplificationNodes);
+}    
+
+convertEGraphToExpression(graph : EGraph<Expression>, rootClass : int, bestSimplification : Tree<int, ENode<Expression>>) -> Expression {
 
     isOp = \e -> {
         switch(e) {
@@ -553,46 +897,133 @@ convertEGraphToExpression(graph : EGraph<Expression>, rootClass : int, exp : Exp
         }
     }
 
+    currNode = lookupTreeDef(bestSimplification, rootClass, ENode(Error, []));
 
-    println("RootClass = " + i2s(rootClass));
-
-    // println(InfixToString(getCurrNode(graph, rootClass).head));
-
-    currNode = getCurrNode(graph, rootClass);
     if (isOp(currNode.head)) {
+
         switch(currNode.head) {
             Var(v) : {
                 if (v == "Neg") {
-                    n = ;
-                    Neg(n);
-                }
-                else {
-                    left = ;
-                    right = ;
-                    if (v == "+") {
-                        BinOp("+", left, right);
-                    }
-                    else if (v == "-") {
-                        BinOp("-", left, right);
-                    }
-                    else if (v == "*") {
-                        BinOp("*", left, right);
-                    }
-                    else if (v == "/") {
-                        BinOp("/", left, right);
+                    if (length(currNode.args) == 1) {
+                        childClass = currNode.args[0];
+                        child = convertEGraphToExpression(graph, childClass, bestSimplification);
+                        Neg(child);
                     }
                     else {
-                        false;
+                        Error;
+                    }
+                }
+                else {
+                    //println("children :: " + i2s(length(currNode.args)));
+                    if (length(currNode.args) == 2) {
+                        leftChildClass = currNode.args[0];
+                        leftChild = convertEGraphToExpression(graph, leftChildClass,bestSimplification);
+                        //println("left = " + InfixToString(leftChild));
+
+                        rightChildClass = currNode.args[1];
+                        rightChild = convertEGraphToExpression(graph, rightChildClass,bestSimplification);
+                        //println("right = " + InfixToString(rightChild));
+
+                        if (v == "+") {
+                            BinOp("+", leftChild, rightChild);
+                        }
+                        else if (v == "-") {
+                            BinOp("-", leftChild, rightChild);
+                        }
+                        else if (v == "*") {
+                            BinOp("*", leftChild, rightChild);
+                        }
+                        else if (v == "/") {
+                            BinOp("/", leftChild, rightChild);
+                        }
+                        else {
+                            Error;
+                        }
+                    }
+                    else {
+                        Error;
                     }
                 }
             }
             default: Error;
+        }
     }
-
-    exp;
+    else {
+        currNode.head;
+    }
+    
+    //Var("aboba");
 }
 
-getCurrNode(graph : EGraph<Expression>, currClass : int) -> ENode<Expression> {
-    currNode = set2array(getEClassNodes(graph, currClass));
-    currNode[0];
+printGraph(graph : EGraph<Expression>, bestSimplification : Tree<int, ENode<Expression>> ) -> void {
+
+    isOp = \e -> {
+        switch(e) {
+            Var(v) : {
+                if (v == "+") {
+                    true;
+                }
+                else if (v == "-") {
+                    true;
+                }
+                else if (v == "*") {
+                    true;
+                }
+                else if (v == "/") {
+                    true;
+                }
+                else if (v == "Neg") {
+                    true;
+                }
+                else {
+                    false;
+                }
+            }
+            default : false;
+        }
+    }
+
+    label = \currNode -> {
+        if (isOp(currNode.head)) {
+
+            switch(currNode.head) {
+                Var(v) : {
+                    if (v == "Neg") {
+                        childClass = currNode.args[0];
+                        child = convertEGraphToExpression(graph, childClass, bestSimplification);
+                        InfixToString(Neg(child));
+                    }
+                    else {
+                        leftChildClass = currNode.args[0];
+                        leftChild = convertEGraphToExpression(graph, leftChildClass, bestSimplification);
+
+                        rightChildClass = currNode.args[1];
+                        rightChild = convertEGraphToExpression(graph, rightChildClass, bestSimplification);
+
+                        if (v == "+") {
+                            InfixToString(BinOp("+", leftChild, rightChild));
+                        }
+                        else if (v == "-") {
+                            InfixToString(BinOp("-", leftChild, rightChild));
+                        }
+                        else if (v == "*") {
+                            InfixToString(BinOp("*", leftChild, rightChild));
+                        }
+                        else if (v == "/") {
+                            InfixToString(BinOp("/", leftChild, rightChild));
+                        }
+                        else {
+                            InfixToString(Error);
+                        }
+                    }
+                }
+                default: InfixToString(Error);
+            }
+        }
+        else {
+            InfixToString(currNode.head);
+        }
+    };
+
+    println(egraph2dot(graph, label));
 }

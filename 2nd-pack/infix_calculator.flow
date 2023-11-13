@@ -6,7 +6,16 @@ import infix;
 
 main() {
     // get an expression
-    expr = getUrlParameter("expr");
+    //expr = getUrlParameter("expr");
+
+    //expr = "(x + x)"; // = 2 * x
+    //expr = "(x - x)"; // = 0
+    //expr = "(x / x)"; // = 1
+    //expr = "(-x + x)"; // = 0
+    //expr = "(x-y)*(x+y)"; //= x*x - y*y
+    expr = "a+b+a";
+    //expr = "(x+x+x) * y / (2*z + 2)";
+    //expr = "a+v+c+a";
 
     // get tree with constants
     VarsTree : Tree<string, Rational> = inputVariablesIntoTree();
