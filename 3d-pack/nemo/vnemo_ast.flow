@@ -1,0 +1,57 @@
+import nemo/nemo_ast;
+
+export {
+
+VNemoProgram(
+	decls : [NemoDeclaration],
+	body : [VNemoStatement],
+);
+
+VNemoStatement ::= VNemoAssign, VNemoIf, VNemoPrint;
+	VNemoAssign(var : string, val : NemoExp, goto : [int]);
+	VNemoIf(cond : string, lhs : NemoExp, rhs : NemoExp, pos : [int], neg : [int]);
+	VNemoPrint(expr : NemoExp, goto : [int]);
+
+vnemoStatementToString(s : VNemoStatement) -> string {
+	switch (s) {
+		VNemoAssign(var, val, goto): var + " := " + nemoExpressionToString(val) + " goto {" + strGlue(map(goto, i2s), " ") + "}";
+		VNemoIf(c, l, r, pos, neg): 
+			"if (" + nemoExpressionToString(l) + " " + c + " " + nemoExpressionToString(r) + ") " +
+			"goto {" + strGlue(map(pos, i2s), " ") + "} else " + 
+			"goto {" + strGlue(map(neg, i2s), " ") + "}";
+		VNemoPrint(e, goto): "print(" + nemoExpressionToString(e) + ")" + " goto {" + strGlue(map(goto, i2s), " ") + "}";
+	}
+}
+
+vnemoProgramToString(p : VNemoProgram) -> string {
+	fold(p.decls, "", \acc, decl -> acc + nemoDeclarationToString(decl) + "\n") + "\n" +
+	foldi(p.body, "", \i, acc, s -> acc + i2s(i) + ": " + vnemoStatementToString(s) + "\n")
+}
+
+//
+vnemoStatementToAST(stat : VNemoStatement) -> string {
+	indentStr = \str -> strGlue(map(strSplit(str, "\n"), \s -> "\t" + s), "\n");
+	switch (stat) {
+		VNemoAssign(var, val, goto): "VNemoAssign(\"" + var + "\", " + nemoExpressionToAST(val) + ", " + arrayToString(goto) + ")";
+		VNemoIf(c, l, r, pos, neg): "VNemoIf(\""+ c + "\", " + nemoExpressionToAST(l) + ", " + nemoExpressionToAST(r) + arrayToString(pos) + ", " + arrayToString(neg) + ")";
+		VNemoPrint(e, goto): "VNemoPrint(" + nemoExpressionToAST(e) + ", " + arrayToString(goto) + ")";
+	}
+}
+
+arrayToString(arr:[int])->string{
+		"[" + strGlue(map(arr, i2s), ", ") + "]"
+}
+
+//
+vnemoProgramToAST(p:VNemoProgram)->string{
+	"VNemoProgram([\n" + strGlue(map(p.decls, nemoDeclarationToAST), ",\n") + "\n], [\n" +
+	strGlue(mapi(p.body, \ i, stat ->  vnemoStatementToAST(stat)), ",\n") + "\n])"
+}
+
+vnemo_parser = compilePegGrammar("#include lingo/vnemo.lingo");
+
+stringToVNemo(str : string) -> VNemoProgram {
+	parsic(vnemo_parser, str, defaultPegActions)
+}
+
+}

@@ -1,0 +1,220 @@
+import ds/set;
+import nemo/vnemo_ast;
+
+export {
+
+NemoVal ::= NemoValInt, NemoValArr;
+NemoValInt(val : int);
+NemoValArr(arr : [NemoVal]);
+
+NemoState(
+	vars : Tree<string, NemoVal>
+);
+
+runVnemo(prog : VNemoProgram, init : NemoState) -> void;
+
+}
+
+VNemoConf(
+	lab : int,
+	state : NemoState
+);
+
+vmStep(prog : VNemoProgram, conf : VNemoConf) -> Set<VNemoConf> {
+	switch (prog.body[conf.lab]) {
+		VNemoAssign(var, val, goto):
+			eitherMap(vmEval(val, conf.state), 
+				\new_val -> {
+					new_state = NemoState(setTree(conf.state.vars, var, new_val));
+					fold(goto, makeSet(), \acc, lab -> insertSet(acc, VNemoConf(lab, new_state)));
+				},
+				makeSet()
+			);
+		VNemoIf(c, l, r, pos, neg):
+			eitherMap(vmEvalCond(c, l, r, conf.state), 
+				\b -> 
+					if (b) {
+						fold(pos, makeSet(), \acc, lab -> insertSet(acc, VNemoConf(lab, conf.state)));
+					} else {
+						fold(neg, makeSet(), \acc, lab -> insertSet(acc, VNemoConf(lab, conf.state)));
+					},
+				makeSet()
+			);
+		VNemoPrint(e, goto): 
+			eitherMap(vmEval(e, conf.state),
+				\v -> {
+					println(nmVal2s(v));
+					fold(goto, makeSet(), \acc, lab -> insertSet(acc, VNemoConf(lab, conf.state)));
+				},
+				makeSet()
+			);
+	}
+}
+
+nmVal2s(val : NemoVal) -> string {
+	switch (val) {
+		NemoValInt(n): i2s(n);
+		NemoValArr(arr): "[" + strGlue(map(arr, nmVal2s), ", ") + "]";
+	}
+}
+
+vmEvalCond(op : string, e1 : NemoExp, e2 : NemoExp, state : NemoState) -> Maybe<bool> {
+	cond_op = \x, y -> {
+		if (op == "==") x == y else
+		if (op == "!=") x != y else
+		if (op == "<=") x <= y else
+		if (op == ">=") x >= y else
+		if (op == "<") x < y else
+		if (op == ">") x > y else
+		false;
+	}
+	maybeBind2(\e1v, e2v ->
+		switch (e1v) {
+			NemoValInt(i1):
+				switch (e2v) {
+					NemoValInt(i2): Some(cond_op(i1, i2));
+					default: {
+						println(op + "operand is not an integer: " + nmVal2s(e2v));
+						None();
+					}
+				}
+			default: {
+				println(op + "operand is not an integer: " + nmVal2s(e1v));
+				None();
+			}
+		}
+	)(vmEval(e1, state), vmEval(e2, state))
+}
+
+vmEval(e : NemoExp, state : NemoState) -> Maybe<NemoVal> {
+	apply_bin_op = \op, x : int, y : int -> {
+		if (op == "+") x + y else
+		if (op == "*") x * y else
+		if (op == "-") x - y else
+		if (op == "/") x / y else
+		0
+	};
+	apply_un_op = \op, x : int -> {
+		if (op == "+") x else
+		if (op == "-") -x else
+		0
+	};
+	switch (e) {
+		NemoBinOp(op, le, re):
+			maybeBind2(\lv, rv -> 
+				switch (lv) {
+					NemoValInt(x): {
+						switch (rv) {
+							NemoValInt(y):
+								Some(NemoValInt(apply_bin_op(op, x, y)));
+							default: {
+								println(op + "operand is not an integer: " + nmVal2s(rv));
+								None();
+							}
+						}
+					}
+					default: {
+						println(op + "operand is not an integer: " + nmVal2s(lv));
+						None();
+					}
+				}
+			)(vmEval(le, state), vmEval(re, state));
+		NemoUnOp(op, ee): 
+			maybeBind(vmEval(ee, state), \ev ->
+				switch (ev) {
+					NemoValInt(x): {
+						Some(NemoValInt(apply_un_op(op, x)));
+					}
+					default: {
+						println(op + "operand is not an integer: " + nmVal2s(ev));
+						None();
+					}
+				}
+			);
+		NemoUpd(ae, ie, ve):
+			maybeBind(vmEval(ve, state), \vv ->
+				maybeBind2(\av, iv ->
+					switch (av) {
+						NemoValArr(arr): {
+							switch (iv) {
+								NemoValInt(i):
+									if (i < length(arr)) {
+										Some(NemoValArr(foldi(arr, [], \j, acc, x -> concat(acc, [if (i == j) vv else x]))))
+									} else if (i == length(arr)) {
+										Some(NemoValArr(concat(arr, [vv])));
+									} else {
+										println("index out of bounds: " + i2s(i) + " > " + i2s(length(arr)));
+										None();
+									}
+								default: {
+									println("array index is not an integer: " + nmVal2s(iv));
+									None();
+								}
+							}
+						}
+						default: {
+							println("array value is not an array: " + nmVal2s(av));
+							None();
+						}
+					}
+				)
+				(vmEval(ae, state), vmEval(ie, state))
+			);
+		NemoApp(ae, ie):
+			maybeBind2(\av, iv ->
+				switch (av) {
+					NemoValArr(arr): {
+						switch (iv) {
+							NemoValInt(i):
+								if (i < length(arr)) {
+									Some(arr[i]) 
+								} else {
+									None();
+								}
+							default: {
+								println("array index is not an integer: " + nmVal2s(iv));
+								None();
+							}
+						}
+					}
+					default: {
+						println("array value is not an array: " + nmVal2s(av));
+						None();
+					}
+				}
+			)(vmEval(ae, state), vmEval(ie, state));
+		NemoVar(n): {
+			ret = lookupTree(state.vars, n);
+			if (ret == None()) {
+				println("variable " + n + " has no value");
+			}
+			ret
+		}
+		NemoInt(val): Some(NemoValInt(val));
+	}
+}
+
+makeDefaultValue(type : NemoType) -> NemoVal {
+	switch (type) {
+		NemoIntType(): NemoValInt(0);
+		NemoArrType(a): NemoValArr([]);
+	}
+}
+
+runVnemo(prog : VNemoProgram, init : NemoState) -> void {
+	max_lab = length(prog.body);
+	start_state = NemoState(fold(prog.decls, init.vars, \acc, decl ->
+		switch (lookupTree(acc, decl.var)) {
+			Some(__): acc;
+			None(): setTree(acc, decl.var, makeDefaultValue(decl.type));
+		}
+	));
+	final = for(
+		makeSet1(VNemoConf(0, start_state)),
+		\curr -> existsSet(curr, \conf -> conf.lab != max_lab),
+		\curr -> foldSet(curr, makeSet(), \acc, conf ->
+			mergeSets(acc, vmStep(prog, conf))
+		)
+	)
+}
+

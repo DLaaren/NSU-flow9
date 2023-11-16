@@ -1,0 +1,147 @@
+import nemo/nemo_ast;
+
+export {
+	typecheckNemoProgram(prog : NemoProgram, onError : (string) -> void) -> void;
+	nmProgTypedecls(prog : NemoProgram, onError : (string) -> void) -> Tree<string, NemoType>;
+	evalNemoType(expr : NemoExp, typedecls : Tree<string, NemoType>, onError : (string) -> void) -> Maybe<NemoType>;
+}
+
+nmProgTypedecls(prog : NemoProgram, onError : (string) -> void) -> Tree<string, NemoType> {
+	fold(prog.decls, makeTree(), \acc, decl -> {
+		if (containsKeyTree(acc, decl.var)) {
+			onError("duplicate variable declararion: " + decl.var);
+		}
+		setTree(acc, decl.var, decl.type)
+	})
+}
+
+typecheckNemoProgram(prog : NemoProgram, onError : (string) -> void) -> void {
+	typecheckNemoStatement(prog.body, nmProgTypedecls(prog, onError), onError)
+}
+
+typecheckNemoStatement(stat : NemoStatement, typedecls : Tree<string, NemoType>, onError : (string) -> void) -> void {
+	switch (stat) {
+		NemoAssign(var, val):
+			switch (lookupTree(typedecls, var)) {
+				Some(var_type): {
+					maybeApply(evalNemoType(val, typedecls, onError), \val_type ->
+						if (val_type != var_type) { 
+							onError("variable declared " + var + " type " + nemoTypeToString(var_type) + 
+									" differs from the assigned expression type: " + nemoTypeToString(val_type)
+							);
+						}
+					)
+				}
+				None(): onError("variable " + var + " is not declared");
+			}
+		NemoTest(op, l, r):
+			maybeApply(evalNemoType(l, typedecls, onError), \l_type ->
+				maybeApply(evalNemoType(r, typedecls, onError), \r_type -> {
+					if (l_type != NemoIntType()) {
+						onError("in comparison " + op + " left side must be of integer type, but is: " + nemoTypeToString(l_type));
+					}
+					if (r_type != NemoIntType()) {
+						onError("in comparison " + op + " right side must be of integer type, but is: " + nemoTypeToString(r_type));
+					}
+				})
+			);
+		NemoSeq(stats):
+			iter(stats, \s -> typecheckNemoStatement(s, typedecls, onError));
+		NemoChoice(stats):
+			iter(stats, \s -> typecheckNemoStatement(s, typedecls, onError));
+		NemoLoop(body):
+			typecheckNemoStatement(body, typedecls, onError)
+		NemoPrint(e): {
+			evalNemoType(e, typedecls, onError);
+			{}
+		}
+	}
+}
+
+evalNemoType(expr : NemoExp, typedecls : Tree<string, NemoType>, onError : (string) -> void) -> Maybe<NemoType> {
+	switch (expr) {
+		NemoBinOp(op, l, r):
+			maybeBind2(
+				\l_type, r_type -> {
+					if (l_type != NemoIntType()) {
+						onError("in binary operation " + op + " left side must be of integer type, but is: " + nemoTypeToString(l_type));
+						None();
+					} else {
+						if (r_type != NemoIntType()) {
+							onError("in binary operation " + op + " right side must be of integer type, but is: " + nemoTypeToString(r_type));
+							None();
+						} else {
+							Some(NemoIntType());
+						}
+					}
+				}
+			)
+			(evalNemoType(l, typedecls, onError), evalNemoType(r, typedecls, onError));
+		NemoUnOp(op, e):
+			maybeBind(evalNemoType(e, typedecls, onError), 
+				\e_type -> {
+					if (e_type != NemoIntType()) {
+						onError("in unary operation " + op + " operand must be of integer type, but is: " + nemoTypeToString(e_type));
+						None()
+					} else {
+						Some(NemoIntType());
+					}
+				}
+			);
+		NemoUpd(arr, ind, upd):
+			maybeBind(evalNemoType(upd, typedecls, onError), \upd_type ->
+				maybeBind2(
+					\arr_type, ind_type -> {
+						switch (arr_type) {
+							NemoArrType(val_type): {
+								if (ind_type != NemoIntType()) {
+									onError("in array update operation index side must be of integer type, but is: " + nemoTypeToString(ind_type));
+									None();
+								} else {
+									if (upd_type == val_type) {
+										Some(NemoArrType(val_type));
+									} else {
+										onError("in array update operation update type must coincide with the array value type, but is: " + nemoTypeToString(upd_type));
+										None();
+									}
+								}
+							}
+							default: {
+								onError("in array update operation array side must be of array type, but is: " + nemoTypeToString(arr_type));
+								None();
+							}
+						}
+					}
+				)
+				(evalNemoType(arr, typedecls, onError), evalNemoType(ind, typedecls, onError))
+			);
+		NemoApp(arr, ind):
+			maybeBind2(
+				\arr_type, ind_type -> {
+					switch (arr_type) {
+						NemoArrType(val_type): {
+							if (ind_type != NemoIntType()) {
+								onError("in array index operation index side must be of integer type, but is: " + nemoTypeToString(ind_type));
+								None();
+							} else {
+								Some(val_type);
+							}
+						}
+						default: {
+							onError("in array index operation array side must be of array type, but is: " + nemoTypeToString(arr_type));
+							None();
+						}
+					}
+				}
+			)
+			(evalNemoType(arr, typedecls, onError), evalNemoType(ind, typedecls, onError));
+		NemoVar(name): {
+			ret = lookupTree(typedecls, name);
+			if (ret == None()) {
+				onError("variable is not declared: " + name);
+			}
+			ret
+		}
+		NemoInt(__): Some(NemoIntType());
+	}
+}

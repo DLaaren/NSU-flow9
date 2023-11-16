@@ -1,0 +1,147 @@
+import ds/tree;
+import ds/set;
+import string;
+import lingo/pegcode/driver;
+
+export {
+	NemoProgram(
+		decls : [NemoDeclaration],
+		body : NemoStatement,
+	);
+
+	NemoDeclaration(
+		var : string,
+		type : NemoType,
+	);
+
+	NemoType ::= NemoIntType, NemoArrType;
+		NemoIntType();
+		NemoArrType(type : NemoType);
+
+	NemoExp ::= NemoBinOp, NemoUnOp, NemoUpd, NemoApp, NemoVar, NemoInt;
+		NemoBinOp(op: string, lhs : NemoExp, rhs : NemoExp);
+		NemoUnOp(op: string, e : NemoExp);
+		NemoUpd(arr : NemoExp, ind : NemoExp, val : NemoExp);
+		NemoApp(arr : NemoExp, ind : NemoExp);
+		NemoVar(name : string);
+		NemoInt(val : int);
+
+	NemoStatement ::= NemoAssign, NemoTest, NemoSeq, NemoChoice, NemoLoop, NemoPrint;
+		NemoAssign(var : string, val : NemoExp);
+		NemoTest(cond : string, lhs : NemoExp, rhs : NemoExp);
+		NemoSeq(stats : [NemoStatement]);
+		NemoChoice(stats : [NemoStatement]);
+		NemoLoop(body : NemoStatement);
+		NemoPrint(e : NemoExp);
+
+	nemoTypeToString(t : NemoType) -> string {
+		switch (t) {
+			NemoIntType(): "int";
+			NemoArrType(a): "[" + nemoTypeToString(a) + "]";
+		}
+	}
+
+	nemoDeclarationToString(d : NemoDeclaration) -> string {
+		"var " + d.var + " : " + nemoTypeToString(d.type) + ";"
+	}
+
+	nemoExpressionToString(e : NemoExp) -> string {
+		switch (e) {
+			NemoBinOp(op, l, r): "(" + nemoExpressionToString(l) + " " + op + " " + nemoExpressionToString(r) + ")";
+			NemoUnOp(op, e1): op + " " + nemoExpressionToString(e1);
+			NemoUpd(a, i, v): "upd(" + nemoExpressionToString(a) + ", " + nemoExpressionToString(i) + ", " + nemoExpressionToString(v) + ")";
+			NemoApp(a, i): "app(" + nemoExpressionToString(a) + ", " + nemoExpressionToString(i) + ")";
+			NemoVar(name): name;
+			NemoInt(val): i2s(val);
+		}
+	}
+
+	nemoStatementToString(stat : NemoStatement) -> string {
+		indentStr = \str -> strGlue(map(strSplit(str, "\n"), \s -> "\t" + s), "\n");
+		switch (stat) {
+			NemoAssign(var, val): var + " := " + nemoExpressionToString(val);
+			NemoTest(c, l, r): "(" + nemoExpressionToString(l) + " " + c + " " + nemoExpressionToString(r) + ")";
+			NemoSeq(ss): "{\n" + strGlue(map(ss, \s -> indentStr(nemoStatementToString(s))), ";\n") + "\n}";
+			NemoChoice(ss): "{\n" + strGlue(map(ss, \s -> indentStr(nemoStatementToString(s))), "U\n") + "\n}";
+			NemoLoop(body): "*" + nemoStatementToString(body);
+			NemoPrint(e): "print(" + nemoExpressionToString(e) + ")";
+		}
+	}
+
+	nemoProgramToString(p : NemoProgram) -> string {
+		strGlue(map(p.decls, nemoDeclarationToString), "\n") + "\n" +
+		nemoStatementToString(p.body)
+	}
+
+	nemoExpressionToAST(e : NemoExp) -> string {
+		switch (e) {
+			NemoBinOp(op, l, r): "NemoBinOp(\"" + op +"\", "+ nemoExpressionToAST(l) + ", " + nemoExpressionToAST(r) + ")";
+			NemoUnOp(op, e1): "NemoUnOp(\""+op + "\", " + nemoExpressionToAST(e1)+")";
+			NemoUpd(a, i, v): "NemoUpd(" + nemoExpressionToAST(a) + ", " + nemoExpressionToAST(i) + ", " + nemoExpressionToAST(v) + ")";
+			NemoApp(a, i): "NemoApp(" + nemoExpressionToAST(a) + ", " + nemoExpressionToAST(i) + ")";
+			NemoVar(name): "NemoVar(\""+name+"\")";
+			NemoInt(val): "NemoInt("+i2s(val)+")";
+		}
+	}
+
+	nemoStatementToAST(stat : NemoStatement) -> string {
+		indentStr = \str -> strGlue(map(strSplit(str, "\n"), \s -> "\t" + s), "\n");
+		switch (stat) {
+			NemoAssign(var, val): "NemoAssign(\""+var+"\", "+nemoExpressionToAST(val)+")";
+			NemoTest(c, l, r): "NemoTest(\""+c+"\", " + nemoExpressionToAST(l) + ", " + nemoExpressionToAST(r) + ")";
+			NemoSeq(ss): "NemoSeq([\n" + strGlue(map(ss, \s -> indentStr(nemoStatementToAST(s))), "\n") + "\n])";
+			NemoChoice(ss): "NemoChoice([\n" + strGlue(map(ss, \s -> indentStr(nemoStatementToAST(s))), "U\n") + "\n])";
+			NemoLoop(body): "NemoLoop(" + nemoStatementToAST(body)+")";
+			NemoPrint(e): "NemoPrint(" + nemoExpressionToAST(e) + ")";
+		}
+	}
+
+	nemoTypeToAST(t : NemoType) -> string {
+		switch (t) {
+			NemoIntType(): "NemoIntType()";
+			NemoArrType(a): "NemoArrayType(" + nemoTypeToAST(a) + ")";
+		}
+	}
+
+	nemoDeclarationToAST(d : NemoDeclaration) -> string {
+		"NemoDeclaration(\"" + d.var + "\", " + nemoTypeToAST(d.type) + ")"
+	}
+
+	nemoProgramToAST(p:NemoProgram)->string{
+		"NemoProgram([\n" + strGlue(map(p.decls, nemoDeclarationToAST), ",\n") + "\n], \n" + nemoStatementToAST(p.body) + "\n)"
+	}
+
+	stringToNemo(str : string) -> NemoProgram {
+		neg_op = \op -> {
+			if (op == "!=") "==" else
+			if (op == "==") "!=" else
+			if (op == "<") ">=" else
+			if (op == ">") "<=" else
+			if (op == "<=") ">" else
+			if (op == ">=") "<" else "";
+		}
+		parsic(nemo_parser, str, 
+			SemanticActions(
+				mergeTree(defaultPegActions.t,
+				pairs2tree([
+					Pair("createSeq", \s -> NemoSeq(concat3([s[0]], [s[1]], s[2]))),
+					Pair("createChoice", \s -> NemoChoice(concat3([s[0]], [s[1]], s[2]))),
+					Pair("createIfElse", \s -> 
+						NemoChoice([
+							NemoSeq([NemoTest(s[0], s[1], s[2]), s[3]]),
+							NemoSeq([NemoTest(neg_op(s[0]), s[1], s[2]), s[4]])
+						])
+					),
+					Pair("createWhile", \s -> 
+						NemoSeq([
+							NemoLoop(NemoSeq([NemoTest(s[0], s[1], s[2]), s[3]])),
+							NemoTest(neg_op(s[0]), s[1], s[2])
+						])
+					),
+				]))
+			)
+		)
+	}
+}
+
+nemo_parser = compilePegGrammar("#include lingo/nemo.lingo");

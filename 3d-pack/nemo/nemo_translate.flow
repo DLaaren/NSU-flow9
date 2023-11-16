@@ -1,0 +1,111 @@
+import nemo/nemo_typecheck;
+import nemo/vnemo_ast;
+
+export {
+
+nemoToVNemo(prog : NemoProgram) -> Maybe<VNemoProgram> {
+	err_count = ref 0;
+	onError = \err -> {
+		println("error: " + err);
+		err_count := ^err_count + 1;
+	}
+	typecheckNemoProgram(prog, onError);
+	if (^err_count == 0) {
+		Some(VNemoProgram(prog.decls, nmStat2vnmStat(prog.body)))
+	} else {
+		None()
+	}
+}
+
+}
+
+maxVmLabel(ss : [VNemoStatement]) -> int {
+	max_lab = \labs -> fold(labs, -1, max);
+	max_stat = \s -> {
+		switch (s) {
+			VNemoAssign(__,__, goto):    max_lab(goto);
+			VNemoIf(__,__,__, pos, neg): max(max_lab(pos), max_lab(neg));
+			VNemoPrint(__, goto):        max_lab(goto);
+		}
+	}
+	fold(ss, -1, \acc, s -> max(acc, max_stat(s)))
+}
+
+addVmLabel(ss : [VNemoStatement], n : int) -> [VNemoStatement] {
+	add_lab = \labs -> fold(labs, [], \acc, l -> concat(acc, [l + n]));
+	add_stat = \s -> {
+		switch (s) {
+			VNemoAssign(var, val, goto): VNemoAssign(var, val, add_lab(goto));
+			VNemoIf(c, l, r, pos, neg):  VNemoIf(c, l, r, add_lab(pos), add_lab(neg));
+			VNemoPrint(e, goto):         VNemoPrint(e, add_lab(goto));
+		}
+	}
+	fold(ss, [], \acc, s -> concat(acc, [add_stat(s)]))
+}
+
+replaceVmLabel(ss : [VNemoStatement], n : int, m : int) -> [VNemoStatement] {
+	replace_lab = \labs -> fold(labs, [], \acc, l -> concat(acc, if (l == n) [m] else [l]));
+	replace_stat = \s -> {
+		switch (s) {
+			VNemoAssign(var, val, goto): VNemoAssign(var, val, replace_lab(goto));
+			VNemoIf(c, l, r, pos, neg):  VNemoIf(c, l, r, replace_lab(pos), replace_lab(neg));
+			VNemoPrint(e, goto):         VNemoPrint(e, replace_lab(goto));
+		}
+	}
+	fold(ss, [], \acc, s -> concat(acc, [replace_stat(s)]))
+}
+
+VNemoSeqAcc(
+	stats : [[VNemoStatement]],
+	max_lab : int
+);
+
+VNemoChoiceAcc(
+	stats : [[VNemoStatement]],
+	starts : [int],
+	ends : [int],
+	max_lab : int
+);
+
+nmStat2vnmStat(stat : NemoStatement) -> [VNemoStatement] {
+	switch(stat) {
+		NemoAssign(var, val): [VNemoAssign(var, val, [1])];
+		NemoPrint(e): [VNemoPrint(e, [1])];
+		NemoTest(c, l, r): [VNemoIf(c, l, r, [1], [])];
+		NemoSeq(ss): 
+			concatA(fold(ss, VNemoSeqAcc([], 0), \acc, s -> {
+					vs = nmStat2vnmStat(s);
+					size = maxVmLabel(vs);
+					VNemoSeqAcc(concat(acc.stats, [addVmLabel(vs, acc.max_lab)]), acc.max_lab + size);
+				}
+			).stats);
+		NemoChoice(ss): {
+			choices = fold(ss, VNemoChoiceAcc([], [], [], 1), \acc, s -> {
+					vs = nmStat2vnmStat(s);
+					size = maxVmLabel(vs);
+					VNemoChoiceAcc(
+						concat(acc.stats, [addVmLabel(vs, acc.max_lab)]),
+						concat(acc.starts, [acc.max_lab]),
+						concat(acc.ends, [acc.max_lab + size]),
+						acc.max_lab + size
+					);
+				}
+			);
+			concat(
+				[VNemoIf("==", NemoInt(0), NemoInt(0), choices.starts, [])],
+				foldi(choices.stats, [], \i, acc, s ->
+					concat(acc, replaceVmLabel(s, choices.ends[i], choices.max_lab))
+				)
+			);
+		}
+		NemoLoop(b): {
+			vs = addVmLabel(nmStat2vnmStat(b), 1);
+			size = maxVmLabel(vs);
+			concat(
+				[VNemoIf("==", NemoInt(0), NemoInt(0), [1, size], [])],
+				replaceVmLabel(vs, size, 0)
+			)
+		}
+	}
+}
+

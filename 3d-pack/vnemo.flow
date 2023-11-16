@@ -1,0 +1,59 @@
+import nemo/nemo_ast;
+import nemo/nemo_typecheck;
+import fs/filesystem;
+import nemo/vnemo_run;
+import nemo/nemo_translate;
+
+getVariables() -> Tree<string, NemoValInt> {
+	parameters_array = getAllUrlParametersArray();
+	fold(parameters_array, makeTree(),\ tree, parameter-> {
+			setTree(tree, parameter[0], NemoValInt(s2i(parameter[1])))
+		}
+	);
+}
+
+run(file : string) -> void{
+	src = getFileContent(file);
+	vprogram = stringToVNemo(src);
+	if(isUrlParameterSet("ast")) {
+		println("\nVNemo AST:");
+		println(vprogram);
+		println("\nVNemo Formatted AST:");
+		println(vnemoProgramToAST(vprogram));
+	}
+	println("\nRunning:");
+	println(vnemoProgramToString(vprogram));
+	println("\nResult:");
+	runVnemo(vprogram, NemoState(getVariables()));
+}
+
+
+main() {
+	file = if (isUrlParameterSet("file")) {
+		getUrlParameter("file");
+	} else {
+        "tests/sort.nm";
+	}
+
+	src = getFileContent(file);
+	println("File "+ file + ":");
+	println(src);
+
+	if (getFileExt(file) == ".vnm"){
+		run(file);
+	} else {
+		program = stringToNemo(src);
+		switch (nemoToVNemo(program)) {
+			Some(vprogram): {
+				vfile = changeFileExt(file, ".vnm");
+				println("Saving " + vfile);
+				vnmprogstring = vnemoProgramToString(vprogram);
+				setFileContent(vfile, vnmprogstring);
+				run(vfile);
+			}
+			None():{}
+		}
+
+	}
+	quit(0);
+}

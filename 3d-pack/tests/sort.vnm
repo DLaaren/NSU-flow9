@@ -1,0 +1,37 @@
+var n : int;
+var i : int;
+var j : int;
+var a : [int];
+var nothing : int;
+var tmp : int;
+
+0: n := 12 goto {1}
+1: i := 0 goto {2}
+2: if (0 == 0) goto {3 10} else goto {}
+3: if (i < n) goto {4} else goto {}
+4: if (0 == 0) goto {5 7} else goto {}
+5: if (i <= (n / 2)) goto {6} else goto {}
+6: a := upd(a, i, (n - i)) goto {9}
+7: if (i > (n / 2)) goto {8} else goto {}
+8: a := upd(a, i, (- n + i)) goto {9}
+9: i := (i + 1) goto {2}
+10: if (i >= n) goto {11} else goto {}
+11: print(a) goto {12}
+12: i := 0 goto {13}
+13: if (0 == 0) goto {14 28} else goto {}
+14: if (i < n) goto {15} else goto {}
+15: j := (i + 1) goto {16}
+16: if (0 == 0) goto {17 26} else goto {}
+17: if (j < n) goto {18} else goto {}
+18: if (0 == 0) goto {19 23} else goto {}
+19: if (app(a, j) < app(a, i)) goto {20} else goto {}
+20: tmp := app(a, i) goto {21}
+21: a := upd(a, i, app(a, j)) goto {22}
+22: a := upd(a, j, tmp) goto {25}
+23: if (app(a, j) >= app(a, i)) goto {24} else goto {}
+24: nothing := 0 goto {25}
+25: j := (j + 1) goto {16}
+26: if (j >= n) goto {27} else goto {}
+27: i := (i + 1) goto {13}
+28: if (i >= n) goto {29} else goto {}
+29: print(a) goto {30}

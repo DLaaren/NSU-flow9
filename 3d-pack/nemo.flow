@@ -1,0 +1,35 @@
+import nemo/nemo_ast;
+import nemo/nemo_typecheck;
+import fs/filesystem;
+
+main() {
+	file = if (isUrlParameterSet("file")) {
+		getUrlParameter("file");
+	} else {
+        "tests/sort.nm";
+	}
+	src = getFileContent(file);
+	println("File "+file+":");
+	println(src);
+	error_count = ref 0;
+	on_error = \msg -> {
+		error_count := ^error_count + 1;
+		println(msg)
+	}
+	program = stringToNemo(src);
+
+	typecheckNemoProgram(program, on_error);
+	if (^error_count == 0) {
+		if(isUrlParameterSet("nemo2s")) {
+			println("\nNemo program to string:");
+			println(nemoProgramToString(program));
+		}
+		if(isUrlParameterSet("ast")) {
+			println("\nAST:");
+			println(program);
+			println("\nFormatted AST:");
+			println(nemoProgramToAST(program));
+		}
+	}
+	quit(0);
+}

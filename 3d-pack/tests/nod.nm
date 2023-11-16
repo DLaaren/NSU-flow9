@@ -1,0 +1,13 @@
+var n : int;
+var x : int;
+var y : int;
+{
+	x := 10 ; 
+	y := 15 ;
+	*{
+		{ (x > y) ? ; x := (x - y) } U
+		{ (x < y) ? ; y := (y - x) }
+	};
+	(x == y) ?;
+	print(x)
+}
