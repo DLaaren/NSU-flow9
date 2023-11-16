@@ -12,8 +12,7 @@ main() {
     //expr = "(x - x)"; // = 0
     //expr = "(x / x)"; // = 1
     //expr = "(-x + x)"; // = 0
-    //expr = "(x-y)*(x+y)"; //= x*x - y*y
-    expr = "a+b+a";
+    expr = "(a + (b + c)) + (a + b + c)"; // 2*(a+(b+c))
     //expr = "(x+x+x) * y / (2*z + 2)";
     //expr = "a+v+c+a";
 
@@ -32,6 +31,7 @@ main() {
 
         result : Pair<string, Maybe<Rational>> = calculateWrapper(e, VarsTree);
         println("simplified expression :: " + firstOfPair(result));
+        //println()
 
         switch(secondOfPair(result)) {
             Some(res) : println(firstOfPair(result) + " = " + InfixToString(res));

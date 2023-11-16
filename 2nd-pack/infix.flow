@@ -588,6 +588,8 @@ simplify(exp: Expression) -> Expression {
         }
     });
 
+    pattern = [replacement1];
+
     // x - x -> 0
     pattern2 : EPattern<Expression> = EPatternTerm(Var("-"), [EPatternVar("x"), EPatternVar("x")]);
     replacement2 = EReplacement(pattern2, \treeIdExpr -> {
@@ -647,23 +649,23 @@ simplify(exp: Expression) -> Expression {
         BinOp("*", BinOp("+", x, y), z);
     });
 
-    // z + (x + y) ->  (z + x) + y
-    pattern9 : EPattern<Expression> = EPatternTerm(Var("+"), [EPatternVar("z"), EPatternTerm(Var("+"), [EPatternVar("x"), EPatternVar("y")])]);
+    // x + (y + z) ->  y + (z + x)
+    pattern9 : EPattern<Expression> = EPatternTerm(Var("+"), [EPatternVar("x"), EPatternTerm(Var("+"), [EPatternVar("y"), EPatternVar("z")])]);
     replacement9 = EReplacement(pattern9, \treeIdExpr -> {
         x = lookupTreeDef(treeIdExpr, "x", Error);
         y = lookupTreeDef(treeIdExpr, "y", Error);
         z = lookupTreeDef(treeIdExpr, "z", Error);
-        BinOp("+", BinOp("+", z, x), y);
+        BinOp("+", y, BinOp("+", z, x));
     });
 
-    // (x + y) + z ->  x + (y + z)
+    // (x + y) + z ->  (y + z) + x
     pattern10 : EPattern<Expression> = EPatternTerm(Var("+"), [EPatternTerm(Var("+"), [EPatternVar("x"), EPatternVar("y")]), EPatternVar("z")]);
     replacement10 = EReplacement(pattern10, \treeIdExpr -> {
         x = lookupTreeDef(treeIdExpr, "x", Error);
         y = lookupTreeDef(treeIdExpr, "y", Error);
         z = lookupTreeDef(treeIdExpr, "z", Error);
 
-        BinOp("+", x, BinOp("+", y, z));
+        BinOp("+", BinOp("+", y, z), x);
     });
 
     // (x * z) + (y * z) -> (x + y) * z
@@ -696,14 +698,14 @@ simplify(exp: Expression) -> Expression {
         BinOp("*", x, BinOp("+", RationalOne, y) );
     });
 
-    // x + (y*x) -> x * (1  +  y)
+    // (x * y) + x -> (1  +  y) + x
     pattern21 : EPattern<Expression> = EPatternTerm(Var("+"), [EPatternVar("x"),
                                                                 EPatternTerm(Var("*"), [EPatternVar("y"), EPatternVar("x")])]);
     replacement21 = EReplacement(pattern21, \treeIdExpr -> {
         x = lookupTreeDef(treeIdExpr, "x", Error);
         y = lookupTreeDef(treeIdExpr, "y", Error);
         z = lookupTreeDef(treeIdExpr, "z", Error);
-        BinOp("*", x, BinOp("+", RationalOne, y));
+        BinOp("*", BinOp("+", RationalOne, y), x);
     });
 
     // (x + y) - y -> x + 0 
@@ -772,10 +774,9 @@ simplify(exp: Expression) -> Expression {
         BinOp("+", BinOp("+", BinOp("*", x, x), BinOp("*", y, y)), BinOp("*", Rational(2,1), BinOp("*", x, y)));
     });
 
-
     patterns : [EReplacement<Expression>] = [replacement1, replacement2, replacement3, replacement4, replacement5, replacement6, replacement7, replacement8, replacement9, replacement10, replacement11, replacement12, replacement13, replacement14, replacement15, replacement17, replacement16, replacement18, replacement19, replacement20, replacement21];
 
-    performEReplacements(myEMatchEngine, 3, rootClass, patterns);
+    performEReplacements(myEMatchEngine, 15, rootClass, patterns);
 
 
 
@@ -787,7 +788,7 @@ simplify(exp: Expression) -> Expression {
 
         nodeCost = switch(node.head) {
             Rational(l,r) : 1;
-            Var(v) : 10; 
+            Var(v) : 5; 
             BinOp(OpName, l, r) : {
                 if (l == r) {
                     1;
